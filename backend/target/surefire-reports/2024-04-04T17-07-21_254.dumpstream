@@ -1,5 +1,0 @@
-# Created at 2024-04-04T17:07:22.480
-Boot Manifest-JAR contains absolute paths in classpath 'D:\Kuba\projects\ASO\backend\target\test-classes'
-Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
-'other' has different root
-
