@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5332/aso # docker
-#    url: jdbc:postgresql://localhost:5432/aso # local
+#    url: jdbc:postgresql://localhost:5332/aso # docker
+    url: jdbc:postgresql://localhost:5432/aso # local
     username: postgres
     password: postgres
   jpa:
@@ -21,9 +21,13 @@ spring:
   codec:
     max-in-memory-size: 10MB
 
-#logging:
-#  level:
-#    org:
-#      hibernate:
-#        orm.jdbc.bind: trace
+logging:
+  level:
+    org:
+      hibernate:
+        orm.jdbc.bind: trace
 #        SQL: debug
+
+server:
+  error:
+    include-message: always
