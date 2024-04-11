@@ -1,5 +1,6 @@
 package com.example.modules.user;
 
+import com.example.modules.user.web.UserDTO;
 import com.example.shared.IMapper;
 import org.springframework.stereotype.Component;
 
@@ -7,11 +8,22 @@ import org.springframework.stereotype.Component;
 public class UserMapper implements IMapper<User, UserDTO> {
     @Override
     public UserDTO toDto(User user) {
-        return null;
+        return UserDTO.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .telephoneNumber(user.getTelephoneNumber())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
     }
     
     @Override
-    public User toEntity(UserDTO entityDto) {
-        return null;
+    public void toEntity(UserDTO userDTO, User user) {
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setTelephoneNumber(userDTO.getTelephoneNumber());
+        user.setEmail(userDTO.getEmail());
+        user.setRole(userDTO.getRole());
     }
 }
