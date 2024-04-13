@@ -1,10 +1,8 @@
 import Navbar from "../../components/navbar/Navbar"
 
-const Home = () =>{
-
-
+const Signup = () => {
     return (
         <Navbar/>
     )
 }
-export default Home
+export default Signup
