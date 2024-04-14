@@ -14,7 +14,9 @@ public class UserMapper implements IMapper<User, UserDTO> {
                 .lastName(user.getLastName())
                 .telephoneNumber(user.getTelephoneNumber())
                 .email(user.getEmail())
+                .createdAt(user.getCreatedAt())
                 .role(user.getRole())
+                .address(user.getAddress())
                 .build();
     }
     

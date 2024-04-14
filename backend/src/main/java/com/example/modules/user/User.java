@@ -2,6 +2,7 @@ package com.example.modules.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -22,10 +23,14 @@ public class User {
     private String telephoneNumber;
     private String email;
     private String password;
-    private String role;
+    
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    
+    @CreationTimestamp
     private LocalDateTime createdAt;
     
-    @OneToOne
+    @OneToOne // consider cascade
     @JoinColumn(name = "address_id")
-    private Address addresses;
+    private Address address;
 }
