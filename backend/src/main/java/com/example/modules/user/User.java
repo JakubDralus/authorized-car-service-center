@@ -1,5 +1,6 @@
 package com.example.modules.user;
 
+import com.example.modules.address.Address;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,7 +31,7 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
     
-    @OneToOne // consider cascade
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 }
