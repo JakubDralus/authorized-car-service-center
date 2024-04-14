@@ -1,4 +1,4 @@
-package com.example.modules.user;
+package com.example.modules.address;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,8 +16,8 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String country;
-    private String city;
     private String street;
+    private String city;
     private String postalCode;
+    private String country;
 }

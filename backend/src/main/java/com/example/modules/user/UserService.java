@@ -56,8 +56,7 @@ public class UserService implements IService<UserDTO> {
 //                .email("dupa@gmail.com")
 //                .password("123")
 //                .telephoneNumber("123456789")
-//                .role("GUEST")
-//                .createdAt(LocalDateTime.now())
+//                .role(Role.valueOf("USER"))
 //                .build();
 //        userRepository.save(user);
 //    }
