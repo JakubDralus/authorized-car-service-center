@@ -8,6 +8,7 @@ const Navbar = () => {
         <div className="navbar">
             <div className="wrapper-normal flex">
                 <div className="left-navbar">
+                    {/* here sidebar */}
                     <p>&#9776;Menu</p>
                 </div>
                 <div className="mid-navbar">

@@ -28,33 +28,82 @@
 
     /* text border */
     color: white;
-    text-shadow: -1px 1px 0 #000,
-        1px 1px 0 #000,
-        1px -1px 0 #000,
-        -1px -1px 0 #000;
+    text-shadow: -1px 1px 0 #494949,
+        1px 1px 0 #494949,
+        1px -1px 0 #494949,
+        -1px -1px 0 #494949;
 }
 
 .banner-info-container h1{
     margin: 0;
 }
 
-.banner-info-container a{
+.banner-info-container > .home-button{
     margin-bottom: 30px;
+}
+
+.home-button{
     text-decoration: none;
     color:white;
     border: 1px solid white;
-    padding: 8px 18px;
+    padding: 12px 18px;
     border-radius: 22px;
 
     background-color: var(--buttons-color);
     transition: all 0.2s ease-in-out;
 }
 
-.banner-info-container a:hover{
+.home-button:hover{
     background-color: var(--buttons-color-hover);
 }
 
+.home-wrapper{
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100%;
+}
 
 .home-slogan{
+    height: 200px;
+}
+
+.home-slogan h1{
+    font-size: 2.8rem;
+}
+
+.home-slogan span{
+    font-size: 1.2rem;
+    max-width: 700px;
+    display: block;
+}
+
+.home-example-services{
     height: 1000px;
+    background-color: rgb(247, 247, 247);
+}
+
+.home-schedule{
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(75,24,255,1) 100%);
+}
+
+.home-schedule-info{
+    max-width: 580px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap:30px;
+
+    color:white;
+}
+
+.home-schedule-info h1{
+    text-align: center;
+    font-size: 2.7rem;
+    margin: 0;
 }

@@ -10,6 +10,7 @@
     background-color: var(--nav-bg-color);
     position: sticky;
     top: 0;
+    border-bottom: 1px solid rgb(230, 230, 230);
 }
 
 .wrapper-normal{
@@ -18,13 +19,13 @@
     height: 100%;
 }
 
-.left-navbar{
+/* .left-navbar{
     
-}
+}*
 
 .mid-navbar{
 
-}
+} */
 
 .right-navbar{
     display: flex;
@@ -46,6 +47,7 @@
 }
 
 .nav-user a:last-child{
+    color:white;
     border: 1px solid white;
     padding: 8px 24px;
     border-radius: 22px;
