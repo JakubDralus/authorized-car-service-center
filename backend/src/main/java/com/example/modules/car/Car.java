@@ -26,6 +26,6 @@ public class Car {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user_id;
+    private User user;
 
 }
