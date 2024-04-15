@@ -33,7 +33,7 @@ public class UserService implements IService<UserDTO> {
     
     @Override
     public UserDTO update(UserDTO userDTO) {
-        User user = userRepository.getReferenceById(userDTO.getId());
+        User user = userRepository.getReferenceById(userDTO.getUser_id());
         userMapper.toEntity(userDTO, user); // apply changes
         user = userRepository.save(user);
         return userMapper.toDto(user);

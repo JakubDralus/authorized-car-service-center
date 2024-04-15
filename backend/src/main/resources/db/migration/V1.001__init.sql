@@ -1,14 +1,14 @@
 create table address (
-    id bigserial not null,
+    address_id serial not null,
     country varchar(255),
     city varchar(255),
     street varchar(255),
     postal_code varchar(255),
-    primary key (id)
+    primary key (address_id)
 );
 
 CREATE TABLE user_data (
-    id bigserial not null,
+    user_data_id serial not null,
     first_name varchar(255),
     last_name varchar(255),
     telephone_number varchar(255),
@@ -17,6 +17,6 @@ CREATE TABLE user_data (
     role varchar(255),
     created_at timestamp(6),
     address_id bigint,
-    primary key (id),
-    foreign key (address_id) references address(id)
+    primary key (user_data_id),
+    foreign key (address_id) references address(address_id)
 );

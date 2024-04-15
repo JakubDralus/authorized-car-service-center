@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class AddressDTO {
-    private Long id;
+    private Long address_id;
     private String street;
     private String city;
     private String postalCode;
