@@ -1,9 +1,12 @@
 package com.example.modules.user;
 
 import com.example.modules.user.web.UserDTO;
+import com.example.modules.user.web.UserSmallDTO;
 import com.example.shared.IService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +16,7 @@ public class UserService implements IService<UserDTO> {
     
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final ModelMapper modelMapper;
     
     public List<UserDTO> getAll() {
         return userRepository.findAll().stream().map(userMapper::toDto).toList();
@@ -20,7 +24,14 @@ public class UserService implements IService<UserDTO> {
     
     @Override
     public UserDTO get(Long id) {
-        return userMapper.toDto(userRepository.findById(id).orElseThrow());
+        User user = userRepository.findById(id).orElseThrow();
+        return modelMapper.map(user, UserDTO.class);
+        //        return userMapper.toDto(userRepository.findById(id).orElseThrow());
+    }
+    
+    public UserSmallDTO getSmallDTO(Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        return modelMapper.map(user, UserSmallDTO.class);
     }
     
     @Override
@@ -31,6 +42,7 @@ public class UserService implements IService<UserDTO> {
         return userMapper.toDto(user);
     }
     
+    @Transactional
     @Override
     public UserDTO update(UserDTO userDTO) {
         User user = userRepository.getReferenceById(userDTO.getId());
