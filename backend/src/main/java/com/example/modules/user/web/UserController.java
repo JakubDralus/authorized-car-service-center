@@ -24,6 +24,11 @@ public class UserController {
         return userService.get(userId);
     }
     
+    @GetMapping("/test/{userId}")
+    public UserSmallDTO getSmall(@PathVariable Long userId) {
+        return userService.getSmallDTO(userId);
+    }
+    
     @PostMapping
     public UserDTO create(@RequestBody UserDTO userDTO) {
         return userService.create(userDTO);
