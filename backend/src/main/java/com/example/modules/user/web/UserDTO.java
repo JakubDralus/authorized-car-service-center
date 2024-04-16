@@ -1,8 +1,12 @@
 package com.example.modules.user.web;
 
+import com.example.modules.address.web.AddressDTO;
+import com.example.modules.user.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,6 +17,7 @@ public class UserDTO {
     private String lastName;
     private String telephoneNumber;
     private String email;
-    private String role;
-//    private Address addresses;
+    private LocalDateTime createdAt;
+    private Role role;
+    private AddressDTO address;
 }
