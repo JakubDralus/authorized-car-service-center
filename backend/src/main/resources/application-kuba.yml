@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:p6spy:postgresql://localhost:5432/aso # local
+
+server:
+  port: 8080
