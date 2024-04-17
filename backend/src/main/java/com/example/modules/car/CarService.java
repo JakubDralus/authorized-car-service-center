@@ -1,16 +1,19 @@
 package com.example.modules.car;
 
 import com.example.modules.car.web.CarDTO;
-import com.example.shared.IService;
+import com.example.shared.CrudService;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CarService implements IService<CarDTO> {
+public class CarService implements CrudService<CarDTO> {
     private final CarRepository carRepository;
     private final CarMapper carMapper;
 
@@ -38,11 +41,11 @@ public class CarService implements IService<CarDTO> {
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public void delete(Long id) {
         if(carRepository.existsById(id)){
             carRepository.deleteById(id);
-            return true;
+
         }
-        else return false;
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find the user.");
     }
 }
