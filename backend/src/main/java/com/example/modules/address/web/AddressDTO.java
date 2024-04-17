@@ -1,12 +1,14 @@
 package com.example.modules.address.web;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class AddressDTO {
     private Long id;
     private String street;

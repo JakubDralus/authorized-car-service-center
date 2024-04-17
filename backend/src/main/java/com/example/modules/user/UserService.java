@@ -1,18 +1,25 @@
 package com.example.modules.user;
 
 import com.example.modules.user.web.UserDTO;
-import com.example.shared.IService;
+
+import com.example.modules.user.web.UserReadDTO;
+import com.example.shared.CrudService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements IService<UserDTO> {
+public class UserService implements CrudService<UserDTO> {
     
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final ModelMapper modelMapper;
     
     public List<UserDTO> getAll() {
         return userRepository.findAll().stream().map(userMapper::toDto).toList();
@@ -20,7 +27,14 @@ public class UserService implements IService<UserDTO> {
     
     @Override
     public UserDTO get(Long id) {
-        return userMapper.toDto(userRepository.findById(id).orElseThrow());
+        User user = userRepository.findById(id).orElseThrow();
+        return modelMapper.map(user, UserDTO.class);
+        //        return userMapper.toDto(userRepository.findById(id).orElseThrow());
+    }
+    
+    public UserReadDTO getSmallDTO(Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        return modelMapper.map(user, UserReadDTO.class);
     }
     
     @Override
@@ -31,6 +45,7 @@ public class UserService implements IService<UserDTO> {
         return userMapper.toDto(user);
     }
     
+    @Transactional
     @Override
     public UserDTO update(UserDTO userDTO) {
         User user = userRepository.getReferenceById(userDTO.getId());
@@ -40,12 +55,9 @@ public class UserService implements IService<UserDTO> {
     }
     
     @Override
-    public Boolean delete(Long id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-            return true;
-        }
-        else return false;
+    public void delete(Long id) {
+        if (userRepository.existsById(id)) userRepository.deleteById(id);
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find the user.");
     }
     
 //    @PostConstruct
