@@ -22,13 +22,13 @@ public class UserController {
         return userService.getAll();
     }
     
-    @GetMapping("{userId}")
+    @GetMapping("/{userId}")
     public UserDTO get(@PathVariable Long userId) {
         return userService.get(userId);
     }
     
     @GetMapping("/test/{userId}")
-    public UserSmallDTO getSmall(@PathVariable Long userId) {
+    public UserReadDTO getSmall(@PathVariable Long userId) {
         return userService.getSmallDTO(userId);
     }
     
@@ -42,7 +42,7 @@ public class UserController {
         return userService.update(userDTO);
     }
     
-    @DeleteMapping("{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long userId) {
         userService.delete(userId);
         return ResponseEntity.ok().body(ApiHttpResponse.builder()

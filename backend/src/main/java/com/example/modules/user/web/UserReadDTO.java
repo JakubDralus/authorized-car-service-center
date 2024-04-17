@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserSmallDTO {
+public class UserReadDTO {
+    private Long userId;
     private String firstName;
     private String lastName;
     private String email;

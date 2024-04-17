@@ -2,7 +2,7 @@ package com.example.modules.user;
 
 import com.example.modules.user.web.UserDTO;
 
-import com.example.modules.user.web.UserSmallDTO;
+import com.example.modules.user.web.UserReadDTO;
 import com.example.shared.CrudService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -32,9 +32,9 @@ public class UserService implements CrudService<UserDTO> {
         //        return userMapper.toDto(userRepository.findById(id).orElseThrow());
     }
     
-    public UserSmallDTO getSmallDTO(Long id) {
+    public UserReadDTO getSmallDTO(Long id) {
         User user = userRepository.findById(id).orElseThrow();
-        return modelMapper.map(user, UserSmallDTO.class);
+        return modelMapper.map(user, UserReadDTO.class);
     }
     
     @Override
@@ -56,10 +56,8 @@ public class UserService implements CrudService<UserDTO> {
     
     @Override
     public void delete(Long id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-        }
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find the provided user.");
+        if (userRepository.existsById(id)) userRepository.deleteById(id);
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find the user.");
     }
     
 //    @PostConstruct

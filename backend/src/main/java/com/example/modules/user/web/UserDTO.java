@@ -2,6 +2,7 @@ package com.example.modules.user.web;
 
 import com.example.modules.address.web.AddressDTO;
 import com.example.modules.user.Role;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class UserDTO {
     private Long id;
     private String firstName;
