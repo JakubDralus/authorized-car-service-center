@@ -1,4 +1,6 @@
 package com.example.modules.mechanic;
 
-public interface MechanicRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MechanicRepository extends JpaRepository<Mechanic, Long> {
 }

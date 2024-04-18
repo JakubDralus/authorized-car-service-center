@@ -1,9 +1,12 @@
 package com.example.modules.user.web;
 
 import com.example.modules.user.UserService;
+import com.example.shared.ApiHttpResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -33,9 +36,13 @@ public class UserController {
     public UserDTO update(@RequestBody UserDTO userDTO) {
         return userService.update(userDTO);
     }
-    
+
     @DeleteMapping("{userId}")
-    public Boolean delete(@PathVariable Long userId) {
-        return userService.delete(userId);
+    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long userId) {
+        userService.delete(userId);
+        return ResponseEntity.ok().body(ApiHttpResponse.builder()
+                .timeStamp(LocalDateTime.now().toString())
+                .message("User deleted")
+                .build());
     }
 }

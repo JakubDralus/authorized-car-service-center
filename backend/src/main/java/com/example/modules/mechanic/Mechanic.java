@@ -4,8 +4,7 @@ import com.example.modules.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Builder
 @NoArgsConstructor
@@ -14,7 +13,8 @@ import lombok.*;
 public class Mechanic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mechanic_id;
+    @Column(name = "mechanic_id")
+    private Long mechanicId;
     private String specialization;
     public int salary;
 

@@ -1,12 +1,13 @@
 spring:
   datasource:
-#    url: jdbc:postgresql://localhost:5332/aso # docker
-    url: jdbc:postgresql://localhost:5432/aso # local
+    url: jdbc:p6spy:postgresql://localhost:5332/aso # docker
+    #url: jdbc:postgresql://localhost:5432/aso # local
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     username: postgres
     password: postgres
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -29,5 +30,6 @@ logging:
 #        SQL: debug
 
 server:
+  port: 8081
   error:
     include-message: always
