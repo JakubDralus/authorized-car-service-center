@@ -34,7 +34,7 @@ public class CarService implements CrudService<CarDTO> {
 
     @Override
     public CarDTO update(CarDTO carDTO) {
-        Car car = carRepository.getReferenceById(carDTO.getId());
+        Car car = carRepository.findById(carDTO.getCarId()).orElseThrow();
         carMapper.toEntity(carDTO,car);
         car = carRepository.save(car);
         return carMapper.toDto(car);

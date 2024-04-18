@@ -11,21 +11,21 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_data")
+@Table(name = "car")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long carId;
 
     private String model;
-    private int manufactured_year;
-    private String license_plate;
+    private Integer manufacturedYear;
+    private String licensePlate;
     private String vin;
     private String color;
-    private int mileage;
+    private Integer mileage;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "owner_id")
+    private User owner;
 
 }

@@ -9,12 +9,12 @@ import lombok.Setter;
 @Setter
 @Builder
 public class CarDTO {
-    private Long id;
+    private Long carId;
     private String model;
-    private int manufactured_year;
-    private String license_plate;
+    private Integer manufacturedYear;
+    private String licensePlate;
     private String vin;
     private String color;
-    private int mileage;
-    private UserDTO user;
+    private Integer mileage;
+    private UserDTO owner;
 }
