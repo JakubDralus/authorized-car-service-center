@@ -15,17 +15,22 @@ import java.util.List;
 public class CarController {
     private final CarService carService;
     @GetMapping()
-    public List<CarDTO> getAll(){ return carService.getAll();}
+    public List<CarDTO> getAll() {
+        return carService.getAll();
+    }
 
     @GetMapping("/{carId}")
-    public CarDTO get(@PathVariable Long carId){return carService.get(carId);}
+    public CarDTO get(@PathVariable Long carId) {
+        return carService.get(carId);
+    }
 
     @PostMapping
-    public CarDTO create(@RequestBody CarDTO carDTO){
+    public CarDTO create(@RequestBody CarDTO carDTO) {
         return carService.create(carDTO);
     }
+
     @PutMapping
-    public CarDTO update(@RequestBody CarDTO carDTO){
+    public CarDTO update(@RequestBody CarDTO carDTO) {
         return carService.update(carDTO);
     }
 
@@ -37,6 +42,4 @@ public class CarController {
                 .message("Car deleted")
                 .build());
     }
-
-
 }
