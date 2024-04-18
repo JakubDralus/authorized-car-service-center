@@ -14,7 +14,6 @@ public class CarMapper implements IMapper<Car, CarDTO> {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
-
     @Override
     public CarDTO toDto(Car car) {
         return CarDTO.builder()
@@ -27,7 +26,6 @@ public class CarMapper implements IMapper<Car, CarDTO> {
                 .mileage(car.getMileage())
                 .owner(userMapper.toDto(car.getOwner()))
                 .build();
-
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.modules.car;
 
-
 import com.example.modules.user.User;
 import jakarta.persistence.*;
 import lombok.*;
