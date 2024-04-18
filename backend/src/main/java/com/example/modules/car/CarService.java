@@ -43,6 +43,6 @@ public class CarService implements CrudService<CarDTO> {
     @Override
     public void delete(Long id) {
         if(carRepository.existsById(id)) carRepository.deleteById(id);
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find the user.");
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find the car.");
     }
 }
