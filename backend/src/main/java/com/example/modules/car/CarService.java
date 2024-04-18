@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CarService implements CrudService<CarDTO> {
+
     private final CarRepository carRepository;
     private final CarMapper carMapper;
 
@@ -42,9 +42,7 @@ public class CarService implements CrudService<CarDTO> {
 
     @Override
     public void delete(Long id) {
-        if(carRepository.existsById(id)){
-            carRepository.deleteById(id);
-        }
+        if(carRepository.existsById(id)) carRepository.deleteById(id);
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find the user.");
     }
 }

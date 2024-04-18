@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarController {
     private final CarService carService;
-
     @GetMapping()
     public List<CarDTO> getAll(){ return carService.getAll();}
 
