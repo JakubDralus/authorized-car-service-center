@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ManagerMapper implements IMapper<Manager, ManagerDTO> {
+    
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -33,7 +34,8 @@ public class ManagerMapper implements IMapper<Manager, ManagerDTO> {
     }
     
     private void setUserToManager(ManagerDTO managerDTO, Manager manager) {
-        User user = userRepository.findById(managerDTO.getUser().getId()).orElseThrow();
+        User user = userRepository.findById(managerDTO.getUser().getId()).orElse(null);
+        if (user == null) user = new User();
         userMapper.toEntity(managerDTO.getUser(), user);
         manager.setUser(user);
     }
