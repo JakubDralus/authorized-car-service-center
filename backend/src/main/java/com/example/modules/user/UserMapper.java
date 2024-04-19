@@ -16,7 +16,7 @@ public class UserMapper implements IMapper<User, UserDTO> {
     @Override
     public UserDTO toDto(User user) {
         return UserDTO.builder()
-                .id(user.getId())
+                .userId(user.getUserId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .telephoneNumber(user.getTelephoneNumber())
