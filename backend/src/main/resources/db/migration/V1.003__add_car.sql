@@ -7,5 +7,5 @@ CREATE TABLE car (
     color VARCHAR(255),
     mileage INT,
     owner_id BIGINT,
-    foreign key (owner_id) references user_data(id)
+    foreign key (owner_id) references user_data(user_id)
 );

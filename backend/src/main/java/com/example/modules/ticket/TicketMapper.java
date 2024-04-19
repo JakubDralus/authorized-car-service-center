@@ -36,7 +36,7 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
                 .fullCost(ticket.getFullCost())
                 .createdAt(ticket.getCreatedAt())
                 .lastUpdatedAt(ticket.getLastUpdatedAt())
-                .customerId(ticket.getCustomer().getId())
+                .customerId(ticket.getCustomer().getUserId())
                 .build();
     }
     
@@ -50,7 +50,7 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
     }
     
     private void setCustomer(TicketDTO ticketDTO, Ticket ticket) {
-        User user = userRepository.getReferenceById(ticketDTO.getCustomer().getId());
+        User user = userRepository.getReferenceById(ticketDTO.getCustomer().getUserId());
         ticket.setCustomer(user);
     }
 }

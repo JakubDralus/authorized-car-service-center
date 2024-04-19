@@ -34,7 +34,7 @@ public class ManagerMapper implements IMapper<Manager, ManagerDTO> {
     }
     
     private void setUserToManager(ManagerDTO managerDTO, Manager manager) {
-        User user = userRepository.findById(managerDTO.getUser().getId()).orElse(null);
+        User user = userRepository.findById(managerDTO.getUser().getUserId()).orElse(null);
         if (user == null) user = new User();
         userMapper.toEntity(managerDTO.getUser(), user);
         manager.setUser(user);

@@ -7,5 +7,5 @@ CREATE TABLE ticket (
     last_updated_at TIMESTAMP,
     finished_at TIMESTAMP,
     customer_id BIGINT,
-    FOREIGN KEY (customer_id) REFERENCES user_data(id)
+    FOREIGN KEY (customer_id) REFERENCES user_data(user_id)
 );
