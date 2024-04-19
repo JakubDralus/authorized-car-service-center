@@ -16,7 +16,7 @@ public class UserMapper implements IMapper<User, UserDTO> {
     @Override
     public UserDTO toDto(User user) {
         return UserDTO.builder()
-                .id(user.getId())
+                .userId(user.getUserId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .telephoneNumber(user.getTelephoneNumber())
@@ -36,7 +36,7 @@ public class UserMapper implements IMapper<User, UserDTO> {
         user.setRole(userDTO.getRole());
         setAddress(userDTO, user);
     }
-    
+
     private void setAddress(UserDTO userDTO, User user) {
         Address address = user.getAddress(); // when editing
         if (address == null) address = new Address(); // when creating new user

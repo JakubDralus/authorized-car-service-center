@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class UserDTO {
-    private Long id;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String telephoneNumber;
