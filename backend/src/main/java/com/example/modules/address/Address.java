@@ -3,8 +3,7 @@ package com.example.modules.address;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Builder
 @NoArgsConstructor

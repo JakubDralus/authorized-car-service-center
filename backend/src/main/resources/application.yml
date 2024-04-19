@@ -1,18 +1,19 @@
 spring:
   datasource:
     url: jdbc:p6spy:postgresql://localhost:5332/aso # docker
-    #url: jdbc:postgresql://localhost:5432/aso # local
+#    url: jdbc:p6spy:postgresql://localhost:5432/aso # local
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     username: postgres
     password: postgres
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: false
-    show-sql: true
+        default_batch_fetch_size: 20 # n+1
+    show-sql: false # because p6spy is logging
   flyway:
     default-schema: public
   servlet:
@@ -22,12 +23,13 @@ spring:
   codec:
     max-in-memory-size: 10MB
 
-logging:
-  level:
-    org:
-      hibernate:
-        orm.jdbc.bind: trace
-#        SQL: debug
+
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        orm.jdbc.bind: trace
+##        SQL: debug
 
 server:
   port: 8081
