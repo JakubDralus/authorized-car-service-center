@@ -30,7 +30,7 @@ public class MechanicService implements CrudService<MechanicDTO> {
     }
     @Override
     public MechanicDTO update(MechanicDTO mechanicDTO){
-        Mechanic mechanic = mechanicRepository.getReferenceById(mechanicDTO.getMechanic_id());
+        Mechanic mechanic = mechanicRepository.getReferenceById(mechanicDTO.getMechanicId());
         mechanicMapper.toEntity(mechanicDTO, mechanic);
         mechanic = mechanicRepository.save(mechanic);
         return mechanicMapper.toDto(mechanic);

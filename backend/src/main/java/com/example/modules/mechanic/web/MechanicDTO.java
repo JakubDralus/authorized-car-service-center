@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class MechanicDTO {
-    private Long mechanic_id;
+    private Long mechanicId;
     private String specialization;
     private int salary;
     private UserDTO user;

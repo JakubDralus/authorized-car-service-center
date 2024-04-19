@@ -16,7 +16,7 @@ public class MechanicMapper implements IMapper<Mechanic, MechanicDTO> {
     @Override
     public MechanicDTO toDto(Mechanic mechanic){
         return MechanicDTO.builder()
-                .mechanic_id(mechanic.getMechanicId())
+                .mechanicId(mechanic.getMechanicId())
                 .specialization(mechanic.getSpecialization())
                 .salary(mechanic.getSalary())
                 .user(userMapper.toDto(mechanic.getUser()))
@@ -25,7 +25,7 @@ public class MechanicMapper implements IMapper<Mechanic, MechanicDTO> {
 
     @Override
     public void toEntity(MechanicDTO mechanicDTO,Mechanic mechanic) {
-        mechanic.setMechanicId(mechanicDTO.getMechanic_id());
+        mechanic.setMechanicId(mechanicDTO.getMechanicId());
         mechanic.setSpecialization(mechanicDTO.getSpecialization());
         mechanic.setSalary(mechanicDTO.getSalary());
         setUser(mechanicDTO, mechanic);
