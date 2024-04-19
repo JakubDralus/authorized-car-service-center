@@ -9,7 +9,7 @@ public class AddressMapper implements IMapper<Address, AddressDTO> {
     @Override
     public AddressDTO toDto(Address address) {
         return AddressDTO.builder()
-                .address_id(address.getAddress_id())
+                .addressId(address.getAddressId())
                 .street(address.getStreet())
                 .city(address.getCity())
                 .postalCode(address.getPostalCode())

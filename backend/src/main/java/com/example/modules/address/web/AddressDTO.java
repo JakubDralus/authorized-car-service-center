@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class AddressDTO {
-    private Long address_id;
+    private Long addressId;
     private String street;
     private String city;
     private String postalCode;
