@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import com.example.modules.service.ServiceModel;
 import org.springframework.web.server.ResponseStatusException;
 
 
@@ -19,7 +18,7 @@ public class ServiceServ implements CrudService<ServiceDTO> {
     private final ModelMapper modelMapper;
     private final ServiceMapper serviceMapper;
 
-    public List<ServiceDTO> getALL() {
+    public List<ServiceDTO> getAll() {
         return serviceRepository.findAll()
                 .stream()
                 .map(service -> modelMapper.map(service, ServiceDTO.class))
