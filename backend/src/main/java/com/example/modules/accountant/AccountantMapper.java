@@ -1,6 +1,7 @@
-package com.example.modules.accountant.web;
+package com.example.modules.accountant;
 
 import com.example.modules.accountant.Accountant;
+import com.example.modules.accountant.web.AccountantDTO;
 import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.UserRepository;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class AccountantMapper implements IMapper<Accountant,AccountantDTO> {
+public class AccountantMapper implements IMapper<Accountant, AccountantDTO> {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
