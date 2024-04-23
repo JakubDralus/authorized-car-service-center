@@ -35,7 +35,7 @@ public class AccountantController {
         return accountantService.update(accountant);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{accountantId}")
     public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long accountantId){
         accountantService.delete(accountantId);
         return ResponseEntity.ok().body(ApiHttpResponse.builder()
