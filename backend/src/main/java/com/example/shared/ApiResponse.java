@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @SuperBuilder
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@JsonInclude(JsonInclude.Include.NON_DEFAULT) // excludes empty fields
 public class ApiResponse<T> {
     private LocalDateTime timeStamp;
     @Builder.Default private HttpStatusCode status = HttpStatus.OK;
