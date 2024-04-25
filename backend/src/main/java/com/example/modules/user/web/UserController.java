@@ -4,7 +4,6 @@ import com.example.modules.ticket.web.TicketDTO;
 import com.example.modules.user.UserService;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -44,12 +43,11 @@ public class UserController {
     }
     
     @DeleteMapping("/{userId}")
-    public ResponseEntity<ApiResponse<TicketDTO>> delete(@PathVariable Long userId) {
+    public ApiResponse<TicketDTO> delete(@PathVariable Long userId) {
         userService.delete(userId);
-        ApiResponse<TicketDTO> responseBody = ApiResponse.<TicketDTO>builder()
+        return ApiResponse.<TicketDTO>builder()
                 .timeStamp(LocalDateTime.now())
                 .message("User deleted")
                 .build();
-        return ResponseEntity.ok().body(responseBody);
     }
 }

@@ -6,17 +6,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
 import java.time.LocalDateTime;
 
+/**
+ * Generic response template for clean JSON response structure.
+ * @param <T> parameter of the data you want to return
+ */
 @Data
 @SuperBuilder
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT) // excludes empty fields
 public class ApiResponse<T> {
-    private LocalDateTime timeStamp;
-    @Builder.Default private HttpStatusCode status = HttpStatus.OK;
+    @Builder.Default private LocalDateTime timeStamp = LocalDateTime.now();
+    @Builder.Default private int status = HttpStatus.OK.value();
     @Builder.Default private boolean success = true;
     private String message;
     private T data;
