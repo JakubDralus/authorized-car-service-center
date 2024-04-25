@@ -3,7 +3,6 @@ package com.example.modules.manager.web;
 import com.example.modules.manager.ManagerService;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -30,12 +29,11 @@ public class ManagerController {
     }
     
     @DeleteMapping("/{managerId}")
-    public ResponseEntity<ApiResponse<?>> delete(@PathVariable Long managerId) {
+    public ApiResponse<?> delete(@PathVariable Long managerId) {
         managerService.delete(managerId);
-        ApiResponse<?> responseBody = ApiResponse.builder()
+        return ApiResponse.builder()
                 .timeStamp(LocalDateTime.now())
                 .message("Manager deleted")
                 .build();
-        return ResponseEntity.ok().body(responseBody);
     }
 }
