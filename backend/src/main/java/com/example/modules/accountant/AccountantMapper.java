@@ -1,8 +1,6 @@
 package com.example.modules.accountant;
 
-import com.example.modules.accountant.Accountant;
 import com.example.modules.accountant.web.AccountantDTO;
-import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.UserRepository;
 import com.example.shared.IMapper;
@@ -31,7 +29,6 @@ public class AccountantMapper implements IMapper<Accountant, AccountantDTO> {
     }
 
     private void setUser(AccountantDTO accountantDTO, Accountant accountant) {
-        User user = userRepository.findById(accountantDTO.getUser().getUserId()).orElseThrow();
-        accountant.setUser(user);
+        accountant.setUser(userRepository.findById(accountantDTO.getUser().getUserId()).orElseThrow());
     }
 }
