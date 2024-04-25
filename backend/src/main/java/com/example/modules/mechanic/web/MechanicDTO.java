@@ -1,14 +1,15 @@
 package com.example.modules.mechanic.web;
 
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 import com.example.modules.user.web.UserDTO;
-import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class MechanicDTO {
     private Long mechanicId;
     private String specialization;
