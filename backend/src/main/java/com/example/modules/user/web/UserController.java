@@ -1,7 +1,8 @@
 package com.example.modules.user.web;
 
+import com.example.modules.ticket.web.TicketDTO;
 import com.example.modules.user.UserService;
-import com.example.shared.ApiHttpResponse;
+import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,11 +44,12 @@ public class UserController {
     }
     
     @DeleteMapping("/{userId}")
-    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long userId) {
+    public ResponseEntity<ApiResponse<TicketDTO>> delete(@PathVariable Long userId) {
         userService.delete(userId);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .message("User deleted")
-                    .build());
+        ApiResponse<TicketDTO> responseBody = ApiResponse.<TicketDTO>builder()
+                .timeStamp(LocalDateTime.now())
+                .message("User deleted")
+                .build();
+        return ResponseEntity.ok().body(responseBody);
     }
 }

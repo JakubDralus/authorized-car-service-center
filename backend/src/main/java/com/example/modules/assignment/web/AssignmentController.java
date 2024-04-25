@@ -1,7 +1,6 @@
 package com.example.modules.assignment.web;
 
 import com.example.modules.assignment.AssignmentService;
-import com.example.shared.ApiHttpResponse;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,24 +20,24 @@ public class AssignmentController {
     public ResponseEntity<ApiResponse<List<AssignmentDTO>>> getAll() {
         List<AssignmentDTO> assignmentDTOS = assignmentService.getAll();
         
-        ApiResponse<List<AssignmentDTO>> build = ApiResponse.<List<AssignmentDTO>>builder()
+        ApiResponse<List<AssignmentDTO>> responseBody = ApiResponse.<List<AssignmentDTO>>builder()
                 .timeStamp(LocalDateTime.now())
                 .message("Assignments fetched.")
                 .data(assignmentDTOS)
                 .build();
-        return ResponseEntity.ok(build);
+        return ResponseEntity.ok(responseBody);
     }
     
     @GetMapping("/{assignmentId}")
     public ResponseEntity<ApiResponse<AssignmentDTO>> get(@PathVariable Long assignmentId) {
         AssignmentDTO assignmentDTO = assignmentService.get(assignmentId);
         
-        ApiResponse<AssignmentDTO> build = ApiResponse.<AssignmentDTO>builder()
+        ApiResponse<AssignmentDTO> responseBody = ApiResponse.<AssignmentDTO>builder()
                 .timeStamp(LocalDateTime.now())
                 .message("Assignment fetched.")
                 .data(assignmentDTO)
                 .build();
-        return ResponseEntity.ok(build);
+        return ResponseEntity.ok(responseBody);
     }
     
     @PostMapping
@@ -52,12 +51,12 @@ public class AssignmentController {
     }
     
     @DeleteMapping("/{assignmentId}")
-    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long assignmentId) {
+    public ResponseEntity<ApiResponse<?>> delete(@PathVariable Long assignmentId) {
         assignmentService.delete(assignmentId);
-        ApiHttpResponse build = ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
+        ApiResponse<?> responseBody = ApiResponse.builder()
+                .timeStamp(LocalDateTime.now())
                 .message("Assignment deleted.")
                 .build();
-        return ResponseEntity.ok(build);
+        return ResponseEntity.ok(responseBody);
     }
 }

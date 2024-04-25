@@ -1,7 +1,7 @@
 package com.example.modules.car.web;
 
 import com.example.modules.car.CarService;
-import com.example.shared.ApiHttpResponse;
+import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,11 +35,12 @@ public class CarController {
     }
 
     @DeleteMapping("/{carId}")
-    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long carId) {
+    public ResponseEntity<ApiResponse<?>> delete(@PathVariable Long carId) {
         carService.delete(carId);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
+        ApiResponse<?> responseBody = ApiResponse.builder()
+                .timeStamp(LocalDateTime.now())
                 .message("Car deleted")
-                .build());
+                .build();
+        return ResponseEntity.ok().body(responseBody);
     }
 }

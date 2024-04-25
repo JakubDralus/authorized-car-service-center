@@ -2,7 +2,7 @@ package com.example.modules.mechanic.web;
 
 
 import com.example.modules.mechanic.MechanicService;
-import com.example.shared.ApiHttpResponse;
+import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +38,12 @@ public class MechanicController {
     }
 
     @DeleteMapping("{mechanicId}")
-    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long mechanicId) {
+    public ResponseEntity<ApiResponse<?>> delete(@PathVariable Long mechanicId) {
         mechanicService.delete(mechanicId);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
+        ApiResponse<?> responseBody = ApiResponse.builder()
+                .timeStamp(LocalDateTime.now())
                 .message("Mechanic deleted")
-                .build());
+                .build();
+        return ResponseEntity.ok().body(responseBody);
     }
 }
