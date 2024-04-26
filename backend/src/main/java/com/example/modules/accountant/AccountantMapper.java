@@ -1,6 +1,7 @@
 package com.example.modules.accountant;
 
 import com.example.modules.accountant.web.AccountantDTO;
+import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.UserRepository;
 import com.example.shared.IMapper;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AccountantMapper implements IMapper<Accountant, AccountantDTO> {
     private final UserMapper userMapper;
-    private final UserRepository userRepository;
 
     @Override
     public AccountantDTO toDto(Accountant accountant) {
@@ -29,6 +29,9 @@ public class AccountantMapper implements IMapper<Accountant, AccountantDTO> {
     }
 
     private void setUser(AccountantDTO accountantDTO, Accountant accountant) {
-        accountant.setUser(userRepository.findById(accountantDTO.getUser().getUserId()).orElseThrow());
+        User user = accountant.getUser();
+        if(user == null) user = new User();
+        userMapper.toEntity(accountantDTO.getUser(),user);
+        accountant.setUser(user);
     }
 }
