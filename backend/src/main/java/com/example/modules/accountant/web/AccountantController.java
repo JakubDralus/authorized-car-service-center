@@ -37,7 +37,7 @@ public class AccountantController {
     public ApiResponse<?> delete(@PathVariable Long accountantId){
         accountantService.delete(accountantId);
         return ApiResponse.builder()
-                .message("Accounant deleted")
+                .message("Accountant deleted.")
                 .build();
     }
 }
