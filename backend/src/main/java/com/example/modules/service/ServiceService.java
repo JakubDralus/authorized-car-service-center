@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ServiceServ implements CrudService<ServiceDTO> {
+public class ServiceService implements CrudService<ServiceDTO> {
     private final ServiceRepository serviceRepository;
     private final ModelMapper modelMapper;
     private final ServiceMapper serviceMapper;
@@ -30,7 +30,6 @@ public class ServiceServ implements CrudService<ServiceDTO> {
         ServiceModel service = serviceRepository.findById(id).orElse(null);
         if(service==null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No match for id: " + id);
         return serviceMapper.toDto(service);
-
     }
 
     @Override
@@ -43,7 +42,7 @@ public class ServiceServ implements CrudService<ServiceDTO> {
 
     @Override
     public ServiceDTO update(ServiceDTO serviceDTO) {
-        ServiceModel service = serviceRepository.getReferenceById(serviceDTO.getServiceId());
+        ServiceModel service = serviceRepository.findById(serviceDTO.getServiceId()).orElseThrow();
         serviceMapper.toEntity(serviceDTO, service);
         service = serviceRepository.save(service);
         return modelMapper.map(service, ServiceDTO.class);

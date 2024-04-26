@@ -1,61 +1,54 @@
 package com.example.modules.service.web;
 
-import com.example.modules.service.ServiceServ;
-import com.example.shared.ApiHttpResponse;
+import com.example.modules.service.ServiceService;
+import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/services")
+@RequestMapping("api/v1/service")
 @RequiredArgsConstructor
 public class ServiceController {
-    private final ServiceServ serviceServ;
+    private final ServiceService serviceService;
 
     @GetMapping()
     public List<ServiceDTO> getAll(){
-        return serviceServ.getAll();
+        return serviceService.getAll();
     }
 
     @GetMapping("/{serviceId}")
-    public ResponseEntity<ApiHttpResponse> get(@PathVariable Long serviceId){
-        ServiceDTO fetched = serviceServ.get(serviceId);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
-                .message("Service fetched.")
-                .object(fetched)
-                .build());
+    public ApiResponse<ServiceDTO> get(@PathVariable Long serviceId){
+        ServiceDTO fetched = serviceService.get(serviceId);
+        return ApiResponse.<ServiceDTO>builder()
+                .message("Service fetched")
+                .data(fetched)
+                .build();
     }
 
     @PostMapping
-    public ResponseEntity<ApiHttpResponse> create(@RequestBody ServiceDTO serviceDTO){
-        ServiceDTO created = serviceServ.create(serviceDTO);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
+    public ApiResponse<ServiceDTO> create(@RequestBody ServiceDTO serviceDTO){
+        ServiceDTO created = serviceService.create(serviceDTO);
+        return ApiResponse.<ServiceDTO>builder()
                 .message("Service created.")
-                .object(created)
-                .build());
+                .data(created)
+                .build();
     }
 
     @PutMapping
-    public ResponseEntity<ApiHttpResponse> update(@RequestBody ServiceDTO serviceDTO){
-        ServiceDTO updated = serviceServ.update(serviceDTO);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
+    public ApiResponse<ServiceDTO> update(@RequestBody ServiceDTO serviceDTO){
+        ServiceDTO updated = serviceService.update(serviceDTO);
+        return ApiResponse.<ServiceDTO>builder()
                 .message("Service updated.")
-                .object(updated)
-                .build());
+                .data(updated)
+                .build();
     }
 
     @DeleteMapping("/{serviceId}")
-    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long serviceId){
-        serviceServ.delete(serviceId);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
+    public ApiResponse<ServiceDTO> delete(@PathVariable Long serviceId){
+        serviceService.delete(serviceId);
+        return ApiResponse.<ServiceDTO>builder()
                 .message("Service deleted.")
-                .build());
+                .build();
     }
 }
