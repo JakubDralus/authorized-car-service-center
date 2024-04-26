@@ -3,7 +3,6 @@ package com.example.modules.manager;
 import com.example.modules.manager.web.ManagerDTO;
 import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
-import com.example.modules.user.UserRepository;
 import com.example.modules.user.web.UserDTO;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component;
 public class ManagerMapper implements IMapper<Manager, ManagerDTO> {
     
     private final ModelMapper modelMapper;
-    private final UserRepository userRepository;
     private final UserMapper userMapper;
     
     @Override
@@ -34,7 +32,7 @@ public class ManagerMapper implements IMapper<Manager, ManagerDTO> {
     }
     
     private void setUserToManager(ManagerDTO managerDTO, Manager manager) {
-        User user = userRepository.findById(managerDTO.getUser().getUserId()).orElse(null);
+        User user = manager.getUser();
         if (user == null) user = new User();
         userMapper.toEntity(managerDTO.getUser(), user);
         manager.setUser(user);

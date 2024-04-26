@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/mechanic")
+@RequestMapping("api/v1/mechanics")
 @RequiredArgsConstructor
 public class MechanicController {
 
