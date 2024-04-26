@@ -5,12 +5,11 @@ import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/assignments")
 @RequiredArgsConstructor
+@RequestMapping("api/v1/assignments")
 public class AssignmentController {
     
     private final AssignmentService assignmentService;
@@ -28,20 +27,27 @@ public class AssignmentController {
     public ApiResponse<AssignmentDTO> get(@PathVariable Long assignmentId) {
         AssignmentDTO assignmentDTO = assignmentService.get(assignmentId);
         return ApiResponse.<AssignmentDTO>builder()
-                .timeStamp(LocalDateTime.now())
                 .message("Assignment fetched.")
                 .data(assignmentDTO)
                 .build();
     }
     
     @PostMapping
-    public AssignmentDTO create(@RequestBody AssignmentDTO assignmentDTO) {
-        return assignmentService.create(assignmentDTO);
+    public ApiResponse<AssignmentDTO> create(@RequestBody AssignmentDTO assignmentDTO) {
+        AssignmentDTO created = assignmentService.create(assignmentDTO);
+        return ApiResponse.<AssignmentDTO>builder()
+                .message("Assignment created.")
+                .data(created)
+                .build();
     }
     
     @PutMapping
-    public AssignmentDTO update(@RequestBody AssignmentDTO assignmentDTO) {
-        return assignmentService.update(assignmentDTO);
+    public ApiResponse<AssignmentDTO> update(@RequestBody AssignmentDTO assignmentDTO) {
+        AssignmentDTO updated = assignmentService.update(assignmentDTO);
+        return ApiResponse.<AssignmentDTO>builder()
+                .message("Assignment changed.")
+                .data(updated)
+                .build();
     }
     
     @DeleteMapping("/{assignmentId}")
