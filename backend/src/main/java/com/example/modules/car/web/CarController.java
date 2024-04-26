@@ -1,12 +1,10 @@
 package com.example.modules.car.web;
 
 import com.example.modules.car.CarService;
-import com.example.shared.ApiHttpResponse;
+import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,11 +33,8 @@ public class CarController {
     }
 
     @DeleteMapping("/{carId}")
-    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long carId) {
+    public ApiResponse<?> delete(@PathVariable Long carId) {
         carService.delete(carId);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
-                .message("Car deleted")
-                .build());
+        return ApiResponse.builder().message("Car deleted").build();
     }
 }
