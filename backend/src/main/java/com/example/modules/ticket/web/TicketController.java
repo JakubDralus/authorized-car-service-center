@@ -50,7 +50,7 @@ public class TicketController {
     public ApiResponse<TicketDTO> delete(@PathVariable Long ticketId) {
         ticketService.delete(ticketId);
         return ApiResponse.<TicketDTO>builder()
-                .message("Ticket deleted")
+                .message("Ticket deleted.")
                 .build();
     }
     

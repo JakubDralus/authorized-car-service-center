@@ -6,12 +6,11 @@ import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/users")
 @RequiredArgsConstructor
+@RequestMapping("api/v1/users")
 //@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     
@@ -46,7 +45,6 @@ public class UserController {
     public ApiResponse<TicketDTO> delete(@PathVariable Long userId) {
         userService.delete(userId);
         return ApiResponse.<TicketDTO>builder()
-                .timeStamp(LocalDateTime.now())
                 .message("User deleted")
                 .build();
     }
