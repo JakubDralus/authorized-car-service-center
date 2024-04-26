@@ -42,7 +42,7 @@ public class AssignmentService implements CrudService<AssignmentDTO> {
     
     @Override
     public AssignmentDTO update(AssignmentDTO assignmentDTO) {
-        Assignment assignment = assignmentRepository.getReferenceById(assignmentDTO.getAssignmentId());
+        Assignment assignment = assignmentRepository.findById(assignmentDTO.getAssignmentId()).orElseThrow();
         assignmentMapper.toEntity(assignmentDTO, assignment);
         assignment = assignmentRepository.save(assignment);
         return modelMapper.map(assignment, AssignmentDTO.class);
