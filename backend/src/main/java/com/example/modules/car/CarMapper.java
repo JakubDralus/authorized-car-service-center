@@ -40,7 +40,7 @@ public class CarMapper implements IMapper<Car, CarDTO> {
     }
 
     private void setUser(CarDTO carDTO, Car car){
-        User user = userRepository.findById(carDTO.getOwner().getId()).orElseThrow();
+        User user = userRepository.findById(carDTO.getOwner().getUserId()).orElseThrow();
         car.setOwner(user);
     }
 }
