@@ -18,9 +18,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT) // excludes empty fields
 public class ApiResponse<T> {
-    @Builder.Default private LocalDateTime timeStamp = LocalDateTime.now();
-    @Builder.Default private int status = HttpStatus.OK.value();
-    @Builder.Default private boolean success = true;
+    @Builder.Default
+    private LocalDateTime timeStamp = LocalDateTime.now();
+    
+    @Builder.Default
+    private int status = HttpStatus.OK.value();
+    
+    @Builder.Default
+    private boolean success = true;
+    
     private String message;
+    
     private T data;
 }
