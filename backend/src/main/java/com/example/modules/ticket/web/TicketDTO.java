@@ -1,5 +1,7 @@
 package com.example.modules.ticket.web;
 
+import com.example.modules.car.web.CarDTO;
+import com.example.modules.service.web.ServiceDTO;
 import com.example.modules.ticket.Ticket;
 import com.example.modules.user.web.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -23,6 +26,8 @@ public class TicketDTO {
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdatedAt;
     private LocalDateTime finishedAt;
+    
     private UserDTO customer;
-//    private Vehicle vehicle;
+    private CarDTO car;
+    private List<ServiceDTO> services;
 }

@@ -24,8 +24,7 @@ public class ServiceModel {
     private String type;
 
     private Double cost;
-
-    // should be ok?
+    
 //    @ManyToMany
 //    private List<Ticket> tickets;
 }
