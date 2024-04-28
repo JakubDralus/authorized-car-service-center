@@ -1,5 +1,11 @@
 package com.example.modules.ticket;
 
+import com.example.modules.car.Car;
+import com.example.modules.car.CarMapper;
+import com.example.modules.car.CarRepository;
+import com.example.modules.service.ServiceMapper;
+import com.example.modules.service.ServiceModel;
+import com.example.modules.service.ServiceRepository;
 import com.example.modules.ticket.web.TicketDTO;
 import com.example.modules.ticket.web.TicketReadDTO;
 import com.example.modules.user.User;
@@ -9,12 +15,21 @@ import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class TicketMapper implements IMapper<Ticket, TicketDTO> {
     
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    
+    private final CarRepository carRepository;
+    private final CarMapper carMapper;
+    
+    private final ServiceRepository serviceRepository;
+    private final ServiceMapper serviceMapper;
     
     @Override
     public TicketDTO toDto(Ticket ticket) {
@@ -26,6 +41,8 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
                 .createdAt(ticket.getCreatedAt())
                 .lastUpdatedAt(ticket.getLastUpdatedAt())
                 .customer(userMapper.toDto(ticket.getCustomer()))
+                .car(carMapper.toDto(ticket.getCar()))
+                .services(ticket.getServices().stream().map(serviceMapper::toDto).toList())
                 .build();
     }
     
@@ -37,6 +54,7 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
                 .createdAt(ticket.getCreatedAt())
                 .lastUpdatedAt(ticket.getLastUpdatedAt())
                 .customerId(ticket.getCustomer().getUserId())
+                .carId(ticket.getCar().getCarId())
                 .build();
     }
     
@@ -47,10 +65,26 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
         ticket.setStatus(ticketDTO.getStatus());
         ticket.setFinishedAt(ticketDTO.getFinishedAt());
         if (ticketDTO.getCustomer() != null) setCustomer(ticketDTO, ticket);
+        if (ticketDTO.getCar() != null) setCar(ticketDTO, ticket);
+        if (ticketDTO.getServices() != null) setServices(ticketDTO, ticket); // Set services
+    }
+    
+    private void setServices(TicketDTO ticketDTO, Ticket ticket) {
+        List<ServiceModel> services = new ArrayList<>(ticketDTO.getServices().size());
+        for (var serviceDTO : ticketDTO.getServices()) {
+            ServiceModel service = serviceRepository.findById(serviceDTO.getServiceId()).orElseThrow();
+            services.add(service);
+        }
+        ticket.setServices(services);
+    }
+    
+    private void setCar(TicketDTO ticketDTO, Ticket ticket) {
+        Car car = carRepository.findById(ticketDTO.getCar().getCarId()).orElseThrow();
+        ticket.setCar(car);
     }
     
     private void setCustomer(TicketDTO ticketDTO, Ticket ticket) {
-        User user = userRepository.getReferenceById(ticketDTO.getCustomer().getUserId());
+        User user = userRepository.findById(ticketDTO.getCustomer().getUserId()).orElseThrow();
         ticket.setCustomer(user);
     }
 }

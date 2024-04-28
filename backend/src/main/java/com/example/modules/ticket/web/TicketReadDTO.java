@@ -21,5 +21,6 @@ public class TicketReadDTO {
     private Ticket.Status status;
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdatedAt;
-    private Long customerId; //?
+    private Long customerId;
+    private Long carId;
 }
