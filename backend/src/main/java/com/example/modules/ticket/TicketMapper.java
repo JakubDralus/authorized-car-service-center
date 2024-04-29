@@ -6,6 +6,7 @@ import com.example.modules.car.CarRepository;
 import com.example.modules.service.ServiceMapper;
 import com.example.modules.service.ServiceModel;
 import com.example.modules.service.ServiceRepository;
+import com.example.modules.service.web.ServiceDTO;
 import com.example.modules.ticket.web.TicketDTO;
 import com.example.modules.ticket.web.TicketReadDTO;
 import com.example.modules.user.User;
@@ -15,7 +16,6 @@ import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -70,11 +70,11 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
     }
     
     private void setServices(TicketDTO ticketDTO, Ticket ticket) {
-        List<ServiceModel> services = new ArrayList<>(ticketDTO.getServices().size());
-        for (var serviceDTO : ticketDTO.getServices()) {
-            ServiceModel service = serviceRepository.findById(serviceDTO.getServiceId()).orElseThrow();
-            services.add(service);
-        }
+        List<Long> serviceIds = ticketDTO.getServices()
+                .stream()
+                .map(ServiceDTO::getServiceId)
+                .toList();
+        List<ServiceModel> services = serviceRepository.findAllById(serviceIds);
         ticket.setServices(services);
     }
     
