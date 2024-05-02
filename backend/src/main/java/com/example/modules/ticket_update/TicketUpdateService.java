@@ -28,8 +28,9 @@ public class TicketUpdateService implements CrudService<TicketUpdateDTO> {
     
     @Override
     public TicketUpdateDTO get(Long id) {
-        TicketUpdate ticketUpdate = ticketUpdateRepository.findById(id).orElse(null);
-        if (ticketUpdate == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No match for id: " + id);
+        TicketUpdate ticketUpdate = ticketUpdateRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No ticket with id: " + id + " found.")
+        );
         return ticketUpdateMapper.toDto(ticketUpdate);
     }
     
@@ -45,10 +46,10 @@ public class TicketUpdateService implements CrudService<TicketUpdateDTO> {
     @Override
     @Transactional
     public TicketUpdateDTO update(TicketUpdateDTO ticketDTO) {
-        TicketUpdate ticketUpdate = ticketUpdateRepository.findById(ticketDTO.getTicketUpdateId())
-                .orElseThrow(() -> new ResponseStatusException(
+        TicketUpdate ticketUpdate = ticketUpdateRepository.findById(ticketDTO.getTicketUpdateId()).orElseThrow(
+                () -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
-                        "No match for id: " + ticketDTO.getTicketUpdateId())
+                        "No ticket with id: " + ticketDTO.getTicketUpdateId() + " found.")
                 );
         ticketUpdateMapper.toEntity(ticketDTO, ticketUpdate);
         ticketUpdate = ticketUpdateRepository.save(ticketUpdate);
