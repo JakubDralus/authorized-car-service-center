@@ -1,5 +1,7 @@
 package com.example.modules.ticket;
 
+import com.example.modules.car.Car;
+import com.example.modules.service.ServiceModel;
 import com.example.modules.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -36,18 +39,21 @@ public class Ticket {
     
     private LocalDateTime finishedAt;
     
-    //todo
-//    @ManyToMany
-//    List<Service> services;
-    
     @ManyToOne
     @JoinColumn(name="customer_id")
     private User customer;
     
-//    @ManyToOne
-//    @JoinColumn(name="vehicle_id")
-//    private Vehicle vehicle;
+    @ManyToOne
+    @JoinColumn(name="car_id")
+    private Car car;
     
+    @ManyToMany
+    @JoinTable(
+            name = "ticket_service",
+            joinColumns = @JoinColumn(name = "ticket_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
+    List<ServiceModel> services;
     
     // status of the ticket seen by the user
     public enum Status {

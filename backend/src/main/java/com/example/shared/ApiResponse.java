@@ -21,14 +21,14 @@ public class ApiResponse<T> {
 
     @Builder.Default
     private LocalDateTime timeStamp = LocalDateTime.now();
-
+    
     @Builder.Default
     private int status = HttpStatus.OK.value();
-
+    
     @Builder.Default
     private boolean success = true;
-
+    
     private String message;
-
+    
     private T data;
 }

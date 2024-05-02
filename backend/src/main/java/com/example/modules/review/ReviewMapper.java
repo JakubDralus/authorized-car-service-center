@@ -4,7 +4,6 @@ import com.example.modules.review.web.ReviewDTO;
 import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.UserRepository;
-import com.example.modules.user.UserService;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class ReviewMapper implements IMapper<Review, ReviewDTO> {
 
     private final UserMapper userMapper;
-    private final UserService userService;
     private final UserRepository userRepository;
 
     @Override
