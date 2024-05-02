@@ -23,6 +23,7 @@ public class Review {
     public String description;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @ManyToOne

@@ -19,5 +19,5 @@ public class ReviewDTO {
     private String title;
     private String description;
     private LocalDateTime createdAt;
-    private UserDTO user;
+    private Long userId;
 }

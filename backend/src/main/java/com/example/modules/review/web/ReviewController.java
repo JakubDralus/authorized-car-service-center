@@ -4,6 +4,7 @@ import com.example.modules.mechanic.MechanicService;
 import com.example.modules.mechanic.web.MechanicDTO;
 import com.example.modules.review.ReviewService;
 import com.example.shared.ApiHttpResponse;
+import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,26 +25,56 @@ public class ReviewController {
     }
 
     @GetMapping("/{reviewId}")
-    public ReviewDTO get(@PathVariable Long reviewId){
-        return reviewService.get(reviewId);
+    public ApiResponse<ReviewDTO> get(@PathVariable Long reviewId) {
+        ReviewDTO reviewDTO = reviewService.get(reviewId);
+        return ApiResponse.<ReviewDTO>builder()
+                .message("Review fetched.")
+                .data(reviewDTO)
+                .build();
     }
+
+//    public ReviewDTO get(@PathVariable Long reviewId){
+//        return reviewService.get(reviewId);
+//    }
 
     @PostMapping
-    public ReviewDTO create(@RequestBody ReviewDTO reviewDTO){
-        return reviewService.create(reviewDTO);
+    public ApiResponse<ReviewDTO> create(@RequestBody ReviewDTO reviewDTO) {
+        ReviewDTO created = reviewService.create(reviewDTO);
+        return ApiResponse.<ReviewDTO>builder()
+                .message("Review created.")
+                .data(created)
+                .build();
     }
+//    public ReviewDTO create(@RequestBody ReviewDTO reviewDTO){
+//        return reviewService.create(reviewDTO);
+//    }
 
     @PutMapping
-    public ReviewDTO update(@RequestBody ReviewDTO reviewDTO){
-        return reviewService.update(reviewDTO);
+    public ApiResponse<ReviewDTO> update(@RequestBody ReviewDTO reviewDTO) {
+        ReviewDTO updated = reviewService.update(reviewDTO);
+        return ApiResponse.<ReviewDTO>builder()
+                .message("Review created.")
+                .data(updated)
+                .build();
     }
 
+//    public ReviewDTO update(@RequestBody ReviewDTO reviewDTO){
+//        return reviewService.update(reviewDTO);
+//    }
+
     @DeleteMapping("{reviewId}")
-    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long reviewId) {
+    public ApiResponse<ReviewDTO> delete(@PathVariable Long reviewId) {
         reviewService.delete(reviewId);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
-                .message("Review deleted")
-                .build());
+        return ApiResponse.<ReviewDTO>builder()
+                .message("Review deleted.")
+                .build();
     }
+
+//    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long reviewId) {
+//        reviewService.delete(reviewId);
+//        return ResponseEntity.ok().body(ApiHttpResponse.builder()
+//                .timeStamp(LocalDateTime.now().toString())
+//                .message("Review deleted")
+//                .build());
+//    }
 }
