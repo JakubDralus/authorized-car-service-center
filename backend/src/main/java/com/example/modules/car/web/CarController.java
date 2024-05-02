@@ -1,12 +1,10 @@
 package com.example.modules.car.web;
 
 import com.example.modules.car.CarService;
-import com.example.shared.ApiHttpResponse;
+import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -20,26 +18,32 @@ public class CarController {
     }
 
     @GetMapping("/{carId}")
-    public CarDTO get(@PathVariable Long carId) {
-        return carService.get(carId);
+    public ApiResponse<CarDTO> get(@PathVariable Long carId) {
+        return ApiResponse.<CarDTO>builder()
+                .message("car edited.")
+                .data(carService.get(carId))
+                .build();
     }
 
     @PostMapping
-    public CarDTO create(@RequestBody CarDTO carDTO) {
-        return carService.create(carDTO);
+    public ApiResponse<CarDTO> create(@RequestBody CarDTO carDTO) {
+        return ApiResponse.<CarDTO>builder()
+                .message("Car added.")
+                .data(carService.create(carDTO))
+                .build();
     }
 
     @PutMapping
-    public CarDTO update(@RequestBody CarDTO carDTO) {
-        return carService.update(carDTO);
+    public ApiResponse<CarDTO> update(@RequestBody CarDTO carDTO) {
+        return ApiResponse.<CarDTO>builder()
+                .message("Car edited.")
+                .data(carService.update(carDTO))
+                .build();
     }
 
     @DeleteMapping("/{carId}")
-    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long carId) {
+    public ApiResponse<?> delete(@PathVariable Long carId) {
         carService.delete(carId);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
-                .message("Car deleted")
-                .build());
+        return ApiResponse.builder().message("Car deleted").build();
     }
 }

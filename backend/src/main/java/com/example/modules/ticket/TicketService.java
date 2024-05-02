@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class TicketService implements CrudService<TicketDTO> {
         return ticketMapper.toDto(ticket);
     }
     
+    @Transactional
     @Override
     public TicketDTO create(TicketDTO ticketDTO) {
         Ticket ticket = new Ticket();
@@ -42,6 +44,7 @@ public class TicketService implements CrudService<TicketDTO> {
         return modelMapper.map(ticket, TicketDTO.class);
     }
     
+    @Transactional
     @Override
     public TicketDTO update(TicketDTO ticketDTO) {
         Ticket ticket = ticketRepository.getReferenceById(ticketDTO.getTicketId());

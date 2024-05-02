@@ -1,12 +1,10 @@
 package com.example.modules.ticket.web;
 
 import com.example.modules.ticket.TicketService;
-import com.example.shared.ApiHttpResponse;
+import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,59 +20,51 @@ public class TicketController {
     }
     
     @GetMapping("/{ticketId}")
-    public ResponseEntity<ApiHttpResponse> get(@PathVariable Long ticketId) {
+    public ApiResponse<TicketDTO> get(@PathVariable Long ticketId) {
         TicketDTO ticketDTO = ticketService.get(ticketId);
-        ApiHttpResponse build = ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
+        return ApiResponse.<TicketDTO>builder()
                 .message("Ticket fetched.")
-                .object(ticketDTO)
+                .data(ticketDTO)
                 .build();
-        return ResponseEntity.ok().body(build);
     }
     
     @PostMapping
-    public ResponseEntity<ApiHttpResponse> create(@RequestBody TicketDTO ticketDTO) {
+    public ApiResponse<TicketDTO> create(@RequestBody TicketDTO ticketDTO) {
         TicketDTO created = ticketService.create(ticketDTO);
-        ApiHttpResponse build = ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
+        return ApiResponse.<TicketDTO>builder()
                 .message("Ticket created.")
-                .object(created)
+                .data(created)
                 .build();
-        return ResponseEntity.ok().body(build);
     }
     
     @PutMapping
-    public ResponseEntity<ApiHttpResponse> update(@RequestBody TicketDTO ticketDTO) {
+    public ApiResponse<TicketDTO> update(@RequestBody TicketDTO ticketDTO) {
         TicketDTO updated = ticketService.update(ticketDTO);
-        ApiHttpResponse build = ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
+        return ApiResponse.<TicketDTO>builder()
                 .message("Ticket updated.")
-                .object(updated)
+                .data(updated)
                 .build();
-        return ResponseEntity.ok().body(build);
     }
     
     @DeleteMapping("/{ticketId}")
-    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long ticketId) {
+    public ApiResponse<TicketDTO> delete(@PathVariable Long ticketId) {
         ticketService.delete(ticketId);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                .timeStamp(LocalDateTime.now().toString())
-                .message("Ticket deleted")
-                .build());
+        return ApiResponse.<TicketDTO>builder()
+                .message("Ticket deleted.")
+                .build();
     }
-    
     
 //    private final UserRepository userRepository;
 //    private final ModelMapper modelMapper;
 //
 //    @PostConstruct
 //    public void setup() {
-//        TicketDTO ticketDTO = TicketDTO.builder()
+//        TicketDTO ticketDTO = TicketDTO.responseBodyer()
 //                .description("please help my car is broken, stupid shit cant even turn on")
 //                .status(Ticket.Status.REQUESTED)
 //                .fullCost(14324)
 //                .customer(modelMapper.map(userRepository.findById(6L).get(), UserDTO.class))
-//                .build();
+//                .responseBody();
 //        ticketService.create(ticketDTO);
 //    }
 }

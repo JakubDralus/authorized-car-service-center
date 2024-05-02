@@ -6,14 +6,13 @@ import com.example.modules.review.web.ReviewDTO;
 import com.example.shared.ApiHttpResponse;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/mechanic")
+@RequestMapping("api/v1/mechanics")
 @RequiredArgsConstructor
 public class MechanicController {
 
@@ -32,9 +31,6 @@ public class MechanicController {
                 .data(mechanicDTO)
                 .build();
     }
-//    public MechanicDTO get(@PathVariable Long mechanicId){
-//        return mechanicService.get(mechanicId);
-//    }
 
     @PostMapping
     public ApiResponse<MechanicDTO> create(@RequestBody MechanicDTO mechanicDTO) {
@@ -45,10 +41,6 @@ public class MechanicController {
                 .build();
     }
 
-//    public MechanicDTO create(@RequestBody MechanicDTO mechanicDTO){
-//        return mechanicService.create(mechanicDTO);
-//    }
-
     @PutMapping
     public ApiResponse<MechanicDTO> update(@RequestBody MechanicDTO mechanicDTO) {
         MechanicDTO updated = mechanicService.update(mechanicDTO);
@@ -57,9 +49,6 @@ public class MechanicController {
                 .data(updated)
                 .build();
     }
-//    public MechanicDTO update(@RequestBody MechanicDTO mechanicDTO){
-//        return mechanicService.update(mechanicDTO);
-//    }
 
     @DeleteMapping("{mechanicId}")
     public ApiResponse<MechanicDTO> delete(@PathVariable Long mechanicId) {
@@ -68,12 +57,4 @@ public class MechanicController {
                 .message("Mechanic deleted.")
                 .build();
     }
-
-//    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long mechanicId) {
-//        mechanicService.delete(mechanicId);
-//        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-//                .timeStamp(LocalDateTime.now().toString())
-//                .message("Mechanic deleted")
-//                .build());
-//    }
 }

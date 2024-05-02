@@ -1,17 +1,16 @@
 package com.example.modules.user.web;
 
+import com.example.modules.ticket.web.TicketDTO;
 import com.example.modules.user.UserService;
-import com.example.shared.ApiHttpResponse;
+import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/users")
 @RequiredArgsConstructor
+@RequestMapping("api/v1/users")
 //@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     
@@ -43,11 +42,10 @@ public class UserController {
     }
     
     @DeleteMapping("/{userId}")
-    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long userId) {
+    public ApiResponse<TicketDTO> delete(@PathVariable Long userId) {
         userService.delete(userId);
-        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-                    .timeStamp(LocalDateTime.now().toString())
-                    .message("User deleted")
-                    .build());
+        return ApiResponse.<TicketDTO>builder()
+                .message("User deleted")
+                .build();
     }
 }
