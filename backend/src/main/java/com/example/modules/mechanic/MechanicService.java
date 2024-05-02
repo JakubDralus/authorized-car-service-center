@@ -16,18 +16,23 @@ public class MechanicService implements CrudService<MechanicDTO> {
     private final MechanicRepository mechanicRepository;
     private final MechanicMapper mechanicMapper;
 
-    public List<MechanicDTO> getAll(){return mechanicRepository.findAll().stream().map(mechanicMapper::toDto).toList();}
+    public List<MechanicDTO> getAll() {
+        return mechanicRepository.findAll().stream().map(mechanicMapper::toDto).toList();
+    }
 
     @Override
-    public MechanicDTO get(Long id){return mechanicMapper.toDto(mechanicRepository.findById(id).orElseThrow());}
+    public MechanicDTO get(Long id) {
+        return mechanicMapper.toDto(mechanicRepository.findById(id).orElseThrow());
+    }
 
     @Override
-    public MechanicDTO create(MechanicDTO mechanicDTO){
+    public MechanicDTO create(MechanicDTO mechanicDTO) {
         Mechanic mechanic = new Mechanic();
         mechanicMapper.toEntity(mechanicDTO, mechanic);
         mechanic = mechanicRepository.save(mechanic);
         return mechanicMapper.toDto(mechanic);
     }
+  
     @Override
     public MechanicDTO update(MechanicDTO mechanicDTO){
         Mechanic mechanic = mechanicRepository.findById(mechanicDTO.getMechanicId()).orElseThrow();
@@ -37,8 +42,8 @@ public class MechanicService implements CrudService<MechanicDTO> {
     }
 
     @Override
-    public void delete(Long id){
-        if(mechanicRepository.existsById(id)){
+    public void delete(Long id) {
+        if(mechanicRepository.existsById(id)) {
             mechanicRepository.deleteById(id);
         }
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find the provided mechanic.");

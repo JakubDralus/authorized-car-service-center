@@ -2,6 +2,8 @@ package com.example.modules.mechanic.web;
 
 
 import com.example.modules.mechanic.MechanicService;
+import com.example.modules.review.web.ReviewDTO;
+import com.example.shared.ApiHttpResponse;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,26 +24,37 @@ public class MechanicController {
     }
 
     @GetMapping("/{mechanicId}")
-    public MechanicDTO get(@PathVariable Long mechanicId){
-        return mechanicService.get(mechanicId);
+    public ApiResponse<MechanicDTO> get(@PathVariable Long mechanicId) {
+        MechanicDTO mechanicDTO = mechanicService.get(mechanicId);
+        return ApiResponse.<MechanicDTO>builder()
+                .message("Mechanic fetched.")
+                .data(mechanicDTO)
+                .build();
     }
 
     @PostMapping
-    public MechanicDTO create(@RequestBody MechanicDTO mechanicDTO){
-        return mechanicService.create(mechanicDTO);
+    public ApiResponse<MechanicDTO> create(@RequestBody MechanicDTO mechanicDTO) {
+        MechanicDTO created = mechanicService.create(mechanicDTO);
+        return ApiResponse.<MechanicDTO>builder()
+                .message("Mechanic created.")
+                .data(created)
+                .build();
     }
 
     @PutMapping
-    public MechanicDTO update(@RequestBody MechanicDTO mechanicDTO){
-        return mechanicService.update(mechanicDTO);
+    public ApiResponse<MechanicDTO> update(@RequestBody MechanicDTO mechanicDTO) {
+        MechanicDTO updated = mechanicService.update(mechanicDTO);
+        return ApiResponse.<MechanicDTO>builder()
+                .message("Mechanic updated.")
+                .data(updated)
+                .build();
     }
 
     @DeleteMapping("{mechanicId}")
-    public ApiResponse<?> delete(@PathVariable Long mechanicId) {
+    public ApiResponse<MechanicDTO> delete(@PathVariable Long mechanicId) {
         mechanicService.delete(mechanicId);
-        return ApiResponse.builder()
-                .timeStamp(LocalDateTime.now())
-                .message("Mechanic deleted")
+        return ApiResponse.<MechanicDTO>builder()
+                .message("Mechanic deleted.")
                 .build();
     }
 }

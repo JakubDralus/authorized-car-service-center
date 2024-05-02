@@ -1,11 +1,13 @@
 package com.example.modules.user;
 
 import com.example.modules.address.Address;
+import com.example.modules.review.Review;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Entity
