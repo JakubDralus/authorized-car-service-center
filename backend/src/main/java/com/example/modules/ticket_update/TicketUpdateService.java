@@ -33,8 +33,8 @@ public class TicketUpdateService implements CrudService<TicketUpdateDTO> {
         return ticketUpdateMapper.toDto(ticketUpdate);
     }
     
-    @Transactional
     @Override
+    @Transactional
     public TicketUpdateDTO create(TicketUpdateDTO ticketDTO) {
         TicketUpdate ticketUpdate = new TicketUpdate();
         ticketUpdateMapper.toEntity(ticketDTO, ticketUpdate);
@@ -42,10 +42,14 @@ public class TicketUpdateService implements CrudService<TicketUpdateDTO> {
         return modelMapper.map(ticketUpdate, TicketUpdateDTO.class);
     }
     
-    @Transactional
     @Override
+    @Transactional
     public TicketUpdateDTO update(TicketUpdateDTO ticketDTO) {
-        TicketUpdate ticketUpdate = ticketUpdateRepository.getReferenceById(ticketDTO.getTicketId());
+        TicketUpdate ticketUpdate = ticketUpdateRepository.findById(ticketDTO.getTicketUpdateId())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "No match for id: " + ticketDTO.getTicketUpdateId())
+                );
         ticketUpdateMapper.toEntity(ticketDTO, ticketUpdate);
         ticketUpdate = ticketUpdateRepository.save(ticketUpdate);
         return modelMapper.map(ticketUpdate, TicketUpdateDTO.class);

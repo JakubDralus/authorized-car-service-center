@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/ticket-update")
+@RequestMapping("api/v1/ticket-updates")
 public class TicketUpdateController {
     
     private final TicketUpdateService ticketUpdateService;
