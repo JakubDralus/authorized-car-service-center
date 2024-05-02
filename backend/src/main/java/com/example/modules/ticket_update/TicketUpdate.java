@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -30,6 +33,7 @@ public class TicketUpdate {
     
     @ManyToOne(optional = false)
     @JoinColumn(name = "ticket_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Ticket ticket;
     
     public enum Severity {
