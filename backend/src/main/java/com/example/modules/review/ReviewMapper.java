@@ -5,7 +5,6 @@ import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.UserRepository;
 import com.example.modules.user.UserService;
-import com.example.modules.user.web.UserDTO;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,6 +15,7 @@ public class ReviewMapper implements IMapper<Review, ReviewDTO> {
 
     private final UserMapper userMapper;
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @Override
     public ReviewDTO toDto(Review review) {
@@ -24,7 +24,7 @@ public class ReviewMapper implements IMapper<Review, ReviewDTO> {
                 .title(review.getTitle())
                 .description(review.getDescription())
                 .createdAt(review.getCreatedAt())
-                .userId(review.getUser().getUserId())
+                .user(userMapper.toDto(review.getUser()))
                 .build();
     }
 
@@ -33,16 +33,11 @@ public class ReviewMapper implements IMapper<Review, ReviewDTO> {
         review.setTitle(reviewDTO.getTitle());
         review.setDescription(reviewDTO.getDescription());
         review.setCreatedAt(reviewDTO.getCreatedAt());
-        setUser(reviewDTO, review);
+        if(reviewDTO.getUser() != null) setUser(reviewDTO, review);
     }
 
     private void setUser(ReviewDTO reviewDTO, Review review) {
-        User user = review.getUser(); // when editing
-        UserDTO userDto = new UserDTO();
-        if (user == null) user = new User(); // when creating new user
-        userDto = userService.get(reviewDTO.getUserId());
-        userMapper.toEntity(userDto, user);
-        user.setUserId(userDto.getUserId());
+        User user = userRepository.findById(reviewDTO.getUser().getUserId()).orElseThrow();
         review.setUser(user);
     }
 }

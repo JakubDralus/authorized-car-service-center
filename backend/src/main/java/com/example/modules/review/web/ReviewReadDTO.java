@@ -1,8 +1,6 @@
 package com.example.modules.review.web;
 
 
-import com.example.modules.user.User;
-import com.example.modules.user.web.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -14,10 +12,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class ReviewDTO {
+public class ReviewReadDTO {
     private Long reviewId;
     private String title;
     private String description;
     private LocalDateTime createdAt;
-    private UserDTO user;
+    private long userId;
 }
