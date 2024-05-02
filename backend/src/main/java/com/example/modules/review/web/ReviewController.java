@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/review")
+@RequestMapping("api/v1/reviews")
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -33,10 +33,6 @@ public class ReviewController {
                 .build();
     }
 
-//    public ReviewDTO get(@PathVariable Long reviewId){
-//        return reviewService.get(reviewId);
-//    }
-
     @PostMapping
     public ApiResponse<ReviewDTO> create(@RequestBody ReviewDTO reviewDTO) {
         ReviewDTO created = reviewService.create(reviewDTO);
@@ -45,9 +41,6 @@ public class ReviewController {
                 .data(created)
                 .build();
     }
-//    public ReviewDTO create(@RequestBody ReviewDTO reviewDTO){
-//        return reviewService.create(reviewDTO);
-//    }
 
     @PutMapping
     public ApiResponse<ReviewDTO> update(@RequestBody ReviewDTO reviewDTO) {
@@ -58,10 +51,6 @@ public class ReviewController {
                 .build();
     }
 
-//    public ReviewDTO update(@RequestBody ReviewDTO reviewDTO){
-//        return reviewService.update(reviewDTO);
-//    }
-
     @DeleteMapping("{reviewId}")
     public ApiResponse<ReviewDTO> delete(@PathVariable Long reviewId) {
         reviewService.delete(reviewId);
@@ -69,12 +58,4 @@ public class ReviewController {
                 .message("Review deleted.")
                 .build();
     }
-
-//    public ResponseEntity<ApiHttpResponse> delete(@PathVariable Long reviewId) {
-//        reviewService.delete(reviewId);
-//        return ResponseEntity.ok().body(ApiHttpResponse.builder()
-//                .timeStamp(LocalDateTime.now().toString())
-//                .message("Review deleted")
-//                .build());
-//    }
 }
