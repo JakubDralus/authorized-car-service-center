@@ -36,7 +36,7 @@ public class ReviewMapper implements IMapper<Review, ReviewDTO> {
     }
 
     private void setUser(ReviewDTO reviewDTO, Review review) {
-        User user = userRepository.findById(ticketDTO.getCustomer().getUserId()).orElseThrow();
+        User user = userRepository.findById(reviewDTO.getUser().getUserId()).orElseThrow();
         review.setUser(user);
     }
 }
