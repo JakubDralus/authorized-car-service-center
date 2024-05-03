@@ -1,14 +1,9 @@
 package com.example.modules.mechanic.web;
 
-
 import com.example.modules.mechanic.MechanicService;
-import com.example.modules.review.web.ReviewDTO;
-import com.example.shared.ApiHttpResponse;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController

@@ -1,15 +1,10 @@
 package com.example.modules.review.web;
 
-import com.example.modules.mechanic.MechanicService;
-import com.example.modules.mechanic.web.MechanicDTO;
 import com.example.modules.review.ReviewService;
-import com.example.shared.ApiHttpResponse;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
