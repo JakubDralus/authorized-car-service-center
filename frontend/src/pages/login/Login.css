@@ -13,6 +13,7 @@
 
 .login-logo{
     position: absolute;
+    padding:15px;
     font-size: 40px;
 }
 
@@ -24,11 +25,22 @@
 
 .login-items-container{
     height: 100%;
+}
 
+.login-left h1{
+    font-size: 3.3rem;
+}
+
+.login-right h1{
+    font-size: 2.9rem;
+}
+
+.login-left .gap{
+    gap:15px;
 }
 
 .login-socials{
-
+    gap:5px;
 }
 
 
@@ -38,14 +50,37 @@
 }
 
 .login-form form > button{
-    background-color: red;
+    background-color: var(--buttons-color);
+    color:white;
     margin-top: 10px;
+    width: 180px;
+    height: 43px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
+
+.login-form form > button:hover{
+    background-color: var(--buttons-color-hover);
+}
+
+.login-form form > input{
+    width: 370px;
+    height: 32px;
+    font-size: 18px;
+    border-radius: 20px;
+    padding: 5px 10px;
+    border: 1px solid rgb(194, 194, 194);
+    background-color: rgb(245, 245, 245);
+}
+
 
 .login-right{
     height:100%;
     width:40%;
-    background-color: rgb(209, 255, 255);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgb(132, 24, 255) 100%);
+    color: white;
 }
 
 .login-right-items{

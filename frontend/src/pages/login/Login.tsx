@@ -12,23 +12,25 @@ const Login = () => {
                 <div className="login-left">
                     <div className="login-items-container flex-column-center">
                         <h1>Login to Your Account</h1>
-                        <div className="login-socials flex-column-center">
-                            <div className="login-google-text">
-                                Log in using Google
+                        <div className="flex-column-center gap">
+                            <div className="login-socials flex-column-center">
+                                <div className="login-google-text">
+                                    Login using Google
+                                </div>
+                                <div className="login-google-button">
+                                    aaaa
+                                </div>
                             </div>
-                            <div className="login-google-button">
-                                aaaa
+                            <div className="login-break">
+                                ----------or----------
                             </div>
-                        </div>
-                        <div className="login-break">
-                            ----------or----------
-                        </div>
-                        <div className="login-form">
-                            <form className="flex-column-center" onSubmit={() => console.log("login")}>
-                                <input type="text" placeholder="Email"></input>
-                                <input type="password" placeholder="Password"></input>
-                                <button type="submit">Log In</button>
-                            </form>
+                            <div className="login-form">
+                                <form className="flex-column-center" onSubmit={() => console.log("login")}>
+                                    <input type="email" placeholder="Email"></input>
+                                    <input type="password" placeholder="Password"></input>
+                                    <button type="submit">Sign in</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
