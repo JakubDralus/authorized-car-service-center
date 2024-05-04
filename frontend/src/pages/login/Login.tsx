@@ -34,15 +34,16 @@ const Login = () => {
         });
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         //validation
-        setError(validateLogin(formData));
-        if(error===""){
-            loginMutation.mutate(formData);
+        const error = validateLogin(formData);
+        setError(error);
+        if(error!==""){
+            return;
         }
-
+        loginMutation.mutate(formData);
     }
 
     return(
@@ -62,8 +63,8 @@ const Login = () => {
                                     <img src={require('./google.png')} alt="Google"></img>
                                 </div>
                             </div>
-                            <div className="login-break">
-                                ----------or----------
+                            <div className="login-line">
+                                or
                             </div>
                             <div className="login-form flex-column-center">
                                 <form className="flex-column-center" onSubmit={handleSubmit}>

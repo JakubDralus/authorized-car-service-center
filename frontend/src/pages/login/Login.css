@@ -42,11 +42,41 @@
 }
 
 .login-left .gap{
-    gap:15px;
+    gap:30px;
 }
 
 .login-socials{
-    gap:13px;
+    gap:20px;
+}
+
+.login-socials .login-google-button > img {
+    cursor: pointer;
+}
+
+/* line */
+.login-line {
+    position: relative;
+    text-align: center;
+    color: #868686;
+  }
+  
+.login-line::before,
+.login-line::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    /* width: calc(50% - 40px); */
+    border-top: 1px solid #c0c0c0;
+    width: 88px;
+    height: 1px;
+}
+
+.login-line::before {
+    margin-right: 5px;
+}
+
+.login-line::after {
+    margin-left: 5px;
 }
 
 .login-form{
@@ -111,7 +141,7 @@
 
 
 /* responsive layout */
-@media only screen and (max-width:600px) {
+@media only screen and (max-width:680px) {
     .login-container{
         flex-direction: column;
     }
