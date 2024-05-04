@@ -1,55 +1,57 @@
-.flex-column-center{
+.flex-column-center {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.login-container{
+.login-container {
     width: 100%;
     height: 100vh;
     display: flex;
 }
 
-.login-logo{
+.login-logo {
     position: absolute;
-    padding:0 0 0 10px;
+    padding: 0 0 0 10px;
     font-size: 40px;
 }
 
-.login-logo a{
+.login-logo a {
     text-decoration: none;
 }
 
-.login-left{
-    height:100%;
-    width:60%;
+.login-left {
+    height: 100%;
+    width: 60%;
     background-color: white;
+
+    transition: width 0.5s ease;
 }
 
-.login-items-container{
+.login-items-container {
     height: 100%;
 }
 
-.login-left h1{
+.login-left h1 {
     font-size: 3.3rem;
     text-align: center;
 }
 
-.login-right h1{
+.login-right h1 {
     font-size: 2.9rem;
-    max-width: 500px;
+    max-width: 490px;
 }
 
-.login-left .gap{
-    gap:30px;
+.login-left .gap {
+    gap: 30px;
 }
 
-.login-socials{
-    gap:20px;
+.login-socials {
+    gap: 20px;
 }
 
-.login-socials .login-google-button > img {
+.login-socials .login-google-button>img {
     cursor: pointer;
 }
 
@@ -58,8 +60,8 @@
     position: relative;
     text-align: center;
     color: #868686;
-  }
-  
+}
+
 .login-line::before,
 .login-line::after {
     content: "";
@@ -67,7 +69,7 @@
     vertical-align: middle;
     /* width: calc(50% - 40px); */
     border-top: 1px solid #c0c0c0;
-    width: 88px;
+    width: 130px;
     height: 1px;
 }
 
@@ -79,19 +81,19 @@
     margin-left: 5px;
 }
 
-.login-form{
-    gap:30px;
+.login-form {
+    gap: 30px;
 }
 
-.login-form form{
-    
-    gap:10px;
+.login-form form {
+
+    gap: 10px;
 }
 
-.login-form form > button,
+.login-form form>button,
 .login-right-items button {
     background-color: var(--buttons-color);
-    color:white;
+    color: white;
     margin-top: 10px;
     width: 180px;
     height: 43px;
@@ -102,16 +104,17 @@
     font-size: 18px;
 }
 
-.login-right-items button{
+.login-right-items button {
     margin-top: 30px;
 }
 
-.login-form form > button:hover{
+.login-form form>button:hover,
+.login-right-items button:hover {
     background-color: var(--buttons-color-hover);
 }
 
-.login-form form > input{
-    width: 370px;
+.login-form form>input {
+    width: 400px;
     height: 32px;
     font-size: 1.1rem;
     border-radius: 20px;
@@ -120,40 +123,63 @@
     background-color: rgb(245, 245, 245);
 }
 
-.login-error{
+.login-error {
     min-height: 26px;
 }
 
 /* right */
 
 
-.login-right{
-    height:100%;
-    width:40%;
-    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgb(132, 24, 255) 100%);
+.login-right {
+    height: 100%;
+    width: 40%;
+    background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgb(132, 24, 255) 100%);
     color: white;
+
+    transition: width 0.6s ease;
 }
 
-.login-right-items{
+.login-right-items {
     height: 100%;
     text-align: center;
 }
 
 
+/* animation */
+.login-left.expanded {
+    width: 70%;
+}
+
+.login-right.expanded {
+    width: 60%;
+}
+
+
 /* responsive layout */
 @media only screen and (max-width:680px) {
-    .login-container{
+    .login-container {
         flex-direction: column;
     }
-    .login-left{
+
+    .login-left {
         width: 100%;
         padding-bottom: 30px;
     }
-    .login-right{
-        width:100%;
+
+    .login-right {
+        width: 100%;
         padding-bottom: 50px;
     }
-    .login-form form > input{
+
+    .login-form form>input {
         width: 280px;
+    }
+
+    .login-left.expanded {
+        width: 100%;
+    }
+    
+    .login-right.expanded {
+        width: 100%;
     }
 }
