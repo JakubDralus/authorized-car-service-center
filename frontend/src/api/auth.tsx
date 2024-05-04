@@ -9,22 +9,44 @@ interface ApiResponse {
     //maybe used inside of AxiosResponse instead of any
 }
 
-export const validateLogin = (formData: LoginData): string => {
-    if(formData.email==="" && formData.password===""){
-        return "Both email and password is empty.";
-    }
-    if(formData.password===""){
-        return "Password is empty.";
-    }
-    if(formData.email===""){
-        return "Email is empty.";
-    }
-
-    return "";
+export interface ValidationData {
+    error: string;
+    isEmailInvalid: boolean;
+    isPasswordInvalid: boolean;
 }
 
-export const loginUser = (loginData: LoginData) => {
-    return axios.post<AxiosResponse>('http://localhost:8081/api/auth/login', loginData).then((res) => res.data);
+export const validateLogin = (formData: LoginData): ValidationData => {
+    let data: ValidationData = {
+        error: "",
+        isEmailInvalid: false,
+        isPasswordInvalid: false,
+    }
+
+    if (formData.email === "" && formData.password === "") {
+        data.error="Both email and password is empty.";
+        data.isEmailInvalid = true;
+        data.isPasswordInvalid = true;
+        return data;
+    }
+    if (formData.password === "") {
+        data.error = "Password is empty.";
+        data.isEmailInvalid=false;
+        data.isPasswordInvalid=true;
+        return data;
+    }
+    if (formData.email === "") {
+        data.error = "Email is empty.";
+        data.isEmailInvalid=true;
+        data.isPasswordInvalid=false;
+        return data;
+    }
+
+    return data;
+}
+
+export const loginUser = async (loginData: LoginData) => {
+    const res = await axios.post<AxiosResponse>('http://localhost:8081/api/auth/login', loginData);
+    return res.data;
 }
 
 //---------------register-----------------------

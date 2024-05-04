@@ -2,12 +2,15 @@
 import { Link } from "react-router-dom"
 import "./Login.css"
 import { useMutation } from "react-query"
-import { loginUser, validateLogin } from "../../api/auth"
+import { loginUser, validateLogin, ValidationData } from "../../api/auth"
 import { AxiosError, AxiosResponse } from "axios"
 import { useState } from "react"
 // import Navbar from "../../components/navbar/Navbar"
 
 const Login = () => {
+    const [invalidEmail, setInvalidEmail] = useState(false);
+    const [invalidPassword, setInvalidPassword] = useState(false);
+
     // left and right animation
     const [expandedSide, setExpandedSide] = useState<'left' | 'right' | null>(null);
 
@@ -49,11 +52,17 @@ const Login = () => {
         e.preventDefault();
 
         //validation
-        const error = validateLogin(formData);
-        setError(error);
-        if (error !== "") {
+        const validationData: ValidationData = validateLogin(formData);
+
+        setInvalidEmail(validationData.isEmailInvalid);
+        setInvalidPassword(validationData.isPasswordInvalid);
+
+        setError(validationData.error);
+        if (validationData.error !== "") {
             return;
         }
+
+        //api call
         loginMutation.mutate(formData);
     }
 
@@ -83,8 +92,8 @@ const Login = () => {
                             </div>
                             <div className="login-form flex-column-center">
                                 <form className="flex-column-center" onSubmit={handleSubmit}>
-                                    <input type="email" placeholder="Email" name="email" value={formData.email} onChange={handleChange}></input>
-                                    <input type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange}></input>
+                                    <input className={invalidEmail ? "invalid-input" : "valid-input"} type="email" placeholder="Email" name="email" value={formData.email} onChange={handleChange}></input>
+                                    <input className={invalidPassword ? "invalid-input" : "valid-input"} type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange}></input>
                                     <button type="submit">Sign in</button>
                                 </form>
                                 <div className="login-error">{error ? error : ""}</div>
