@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root{
   --nav-bg-color: white;
   --buttons-color: rgb(107, 29, 196);
