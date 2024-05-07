@@ -39,7 +39,7 @@ public class InvoiceController {
 
     @PutMapping
     public ApiResponse<InvoiceDTO> update(@RequestBody InvoiceDTO invoiceDTO){
-        InvoiceDTO updated = invoiceService.create(invoiceDTO);
+        InvoiceDTO updated = invoiceService.update(invoiceDTO);
         return ApiResponse.<InvoiceDTO>builder()
                 .message("Invoice updated")
                 .data(updated)

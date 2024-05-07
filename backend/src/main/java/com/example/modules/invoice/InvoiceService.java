@@ -18,10 +18,7 @@ public class InvoiceService implements CrudService<InvoiceDTO> {
     private final InvoiceMapper invoiceMapper;
 
     public List<InvoiceDTO> getAll(){
-        return invoiceRepository.findAll()
-                .stream()
-                .map(invoice -> modelMapper.map(invoice,InvoiceDTO.class))
-                .toList();
+        return invoiceRepository.findAll().stream().map(invoiceMapper::toDto).toList();
     }
 
 
@@ -38,7 +35,7 @@ public class InvoiceService implements CrudService<InvoiceDTO> {
         invoiceMapper.toEntity(invoiceDTO,invoice);
         invoice = invoiceRepository.save(invoice);
         return invoiceMapper.toDto(invoice);
-        /*return modelMapper.map(invoice, InvoiceDTO.class);*/
+
     }
 
     @Override
@@ -46,7 +43,7 @@ public class InvoiceService implements CrudService<InvoiceDTO> {
         Invoice invoice = invoiceRepository.getReferenceById(invoiceDTO.getInvoiceId());
         invoiceMapper.toEntity(invoiceDTO,invoice);
         invoice = invoiceRepository.save(invoice);
-        return modelMapper.map(invoice, InvoiceDTO.class);
+        return invoiceMapper.toDto(invoice);
     }
 
     @Override
