@@ -37,7 +37,8 @@ public class InvoiceService implements CrudService<InvoiceDTO> {
         Invoice invoice = new Invoice();
         invoiceMapper.toEntity(invoiceDTO,invoice);
         invoice = invoiceRepository.save(invoice);
-        return modelMapper.map(invoice, InvoiceDTO.class);
+        return invoiceMapper.toDto(invoice);
+        /*return modelMapper.map(invoice, InvoiceDTO.class);*/
     }
 
     @Override

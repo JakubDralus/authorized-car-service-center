@@ -4,7 +4,8 @@ import com.example.modules.accountant.Accountant;
 import com.example.modules.ticket.Ticket;
 import jakarta.persistence.*;
 import lombok.*;
-
+@Getter
+@Setter
 @Data
 @Entity
 @Builder
@@ -14,7 +15,6 @@ import lombok.*;
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "invoice_id")
     private Long invoiceId;
 
     @ManyToOne
