@@ -1,13 +1,3 @@
-backend/HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-**/target/
-**/.idea/
-**/node_modules/
-**/.DS_Store
-**/*.iml
-
-
 ### STS ###
 .apt_generated
 .classpath
@@ -36,3 +26,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+###
+backend/HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+**/target/
+**/.idea/
+**/node_modules/
+**/.DS_Store
+**/*.iml
+/.env
