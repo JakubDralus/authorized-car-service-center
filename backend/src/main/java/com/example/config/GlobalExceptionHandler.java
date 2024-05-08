@@ -11,10 +11,10 @@ import org.springframework.web.server.ResponseStatusException;
 public class GlobalExceptionHandler {
 
     // temporary solution for not displaying exceptions on 'prod' profile
-    @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex, WebRequest request) {
-        return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
-    }
+//    @ExceptionHandler(ResponseStatusException.class)
+//    public ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex, WebRequest request) {
+//        return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
+//    }
     
     
     // can't resolve exceptions during filtering so this don't work
