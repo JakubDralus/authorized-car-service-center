@@ -123,7 +123,92 @@
     margin-bottom: 10px;
     word-wrap: break-word;
 }
+.form-row-content-wrap{
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
 
+  margin-top: 50px;
+  background-color: #f7f7f7;
+}
+.form-row-content{
+  flex: 1 1 auto;
+
+  max-width: 100%;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 0;
+}
+.form-col-group{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+.form-col{
+  display: flex;
+  flex: 1 1 auto;
+  width: 50%;
+  float: left;
+  min-height: 1px;
+}
+.form-col-content{
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-shrink: 1;
+  min-width: 1px;
+  max-width: 100%;
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+}
+.form-col-header{
+  margin-top: 30px;
+  margin-bottom: 0;
+  margin-left: 40px
+}
+
+.form-col-module{
+  width: 100%;
+}
+.form-col-module-content{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.form-col-module-content-inner{
+  padding:20px;
+}
+.form-col-module-wrapper{
+  margin-bottom: 16px;
+  margin-top: 16px;
+  max-width: 100%;
+}
+.form-body{
+  text-align: left;
+  max-width: 100%;
+}
+.form-list-fields{
+  list-style: none;
+  list-style-type: none;
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+  text-indent: 0;
+  box-sizing: border-box;
+}
+.list-field{
+  margin-top: 16px;
+  padding-top: 0;
+  clear:both;
+  list-style: none;
+  margin-left: 0;
+  overflow: visible;
+}
 @media (max-width: 767px) {
   body {
       font-size: 14px;

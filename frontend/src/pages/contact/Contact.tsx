@@ -153,6 +153,44 @@ const Contact = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="form-row-content-wrap">
+                  <div className="form-row-content">
+                    <div className="form-col-group">
+                      <div className="form-col"></div>
+
+                      <div className="form-col">
+                        <div className="form-col-content">
+                          <div className="form-col-header">
+                            <h2>
+                              <span> Message us</span>
+                            </h2>
+                          </div>
+
+                          <div className="form-col-module">
+                            <div className="form-col-module-content">
+                              <div className="form-col-module-content-inner">
+                                <div className="form-col-module-wrapper">
+                                  <form>
+                                    <div className="form-body">
+                                      <ul className="form-list-fields">
+                                        <li className="list-field"></li>
+                                        <li className="list-field"></li>
+                                        <li className="list-field"></li>
+                                        <li className="list-field"></li>
+                                      </ul>
+                                    </div>
+                                    <div className="form-footer"></div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>            
+                      </div>
+                    </div>
+                  </div>
+                </div>
            </div>
         <Footer/>
     </>)
