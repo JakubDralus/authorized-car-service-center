@@ -5,7 +5,7 @@ interface LoginData {
     password: string;
 }
 
-interface ApiResponse {
+interface LoginResponse {
     //maybe used inside of AxiosResponse instead of any
 }
 
@@ -60,3 +60,33 @@ interface RegisterData {
     age: number,
     phone: number
 }
+
+export interface FormError {
+    // passwordError: string,
+    // rePasswordError: string,
+} 
+
+// needs testing
+interface RegisterResponse {
+    emailValid: boolean
+}
+
+//email validation
+export const validateEmail = async (email: string) => {
+    const res = await axios.post('http://localhost:8081/api/auth/checkEmail', email);
+    return res.data;
+}
+
+//password validation
+export const registerFormValidation = (formData: RegisterData): FormError => {
+
+    return {};
+}
+
+//registration
+export const registerUser = async (userData: RegisterData) => {
+    const res = await axios.post('http://localhost:8081/api/auth/register', userData);
+    return res.data;
+}
+
+// export const useRegisterUser

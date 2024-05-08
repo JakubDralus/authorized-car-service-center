@@ -1,6 +1,9 @@
 import "./Signup.css";
 import "../../assets/index.css"
 import { useState } from "react";
+import { useMutation } from "react-query";
+import { FormError, validateEmail, registerFormValidation, registerUser } from "../../api/auth";
+import { AxiosResponse, AxiosError } from "axios";
 
 const Signup = () => {
     //registration
@@ -16,8 +19,23 @@ const Signup = () => {
         phone: ''
     })
 
+    const emailValidationMutation = useMutation({
+        mutationFn: validateEmail,
+        onSuccess: (data: AxiosResponse, variables, context) => {
+            //data retrieved
+            console.log("Email data obtained!");
+        },
+        onError: (error: AxiosError<Error, any>) => {
+            //error login
+            setError(error.response?.data.message || "An error occurred (email)");
+        },       
+    })
+
     const handleEmailValidation = () => {
         //test
+        // const {data} = emailValidationMutation.mutate(formData.email)
+        // console.log(data);
+        
         setEmailValid(true);
     }
 
@@ -28,6 +46,18 @@ const Signup = () => {
             [name]: value
         });
     }
+
+    const registerMutation = useMutation({
+        mutationFn: registerUser,
+        onSuccess: (data: AxiosResponse, variables, context) => {
+            //data retrieved
+            console.log("User registered!");
+        },
+        onError: (error: AxiosError<Error, any>) => {
+            //error login
+            setError(error.response?.data.message || "An error occurred (register)");
+        },   
+    })
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
