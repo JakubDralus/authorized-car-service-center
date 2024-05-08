@@ -121,7 +121,7 @@
     color: #505050;
     margin-top: 10px;
     margin-bottom: 10px;
-    
+    word-wrap: break-word;
 }
 
 @media (max-width: 767px) {

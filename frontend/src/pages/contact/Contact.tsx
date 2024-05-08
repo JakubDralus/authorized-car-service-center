@@ -24,7 +24,7 @@ const Contact = () => {
                                 <div className="info-box-col"> 
                                   <div className="info-box-col-content">
                                     <div className="info-box">
-                                      <div className="info-box--left-right-wrap">
+                                      <div className="info-box-left-right-wrap">
                                         <div className="info-box-content">
                                             <div className="info-box-content-icon">
 
@@ -57,7 +57,7 @@ const Contact = () => {
                                 <div className="info-box-col"> 
                                   <div className="info-box-col-content">
                                     <div className="info-box">
-                                      <div className="info-box--left-right-wrap">
+                                      <div className="info-box-left-right-wrap">
                                         <div className="info-box-content">
                                             <div className="info-box-content-icon">
 
@@ -90,7 +90,7 @@ const Contact = () => {
                                 <div className="info-box-col"> 
                                   <div className="info-box-col-content">
                                     <div className="info-box">
-                                      <div className="info-box--left-right-wrap">
+                                      <div className="info-box-left-right-wrap">
                                         <div className="info-box-content">
                                             <div className="info-box-content-icon">
 
@@ -106,7 +106,7 @@ const Contact = () => {
                                             
                                             <div className="info-box-content-text">
                                                 <div className="info-box-text">
-                                                    <p>krolstarejwsi69@gmail.com</p> 
+                                                    <p> krolstarejwsi69@gmail.com</p> 
                                                 </div>
                                             </div>
                                           </div>
@@ -123,7 +123,7 @@ const Contact = () => {
                                 <div className="info-box-col"> 
                                   <div className="info-box-col-content">
                                     <div className="info-box">
-                                      <div className="info-box--left-right-wrap">
+                                      <div className="info-box-left-right-wrap">
                                         <div className="info-box-content">
                                             <div className="info-box-content-icon">
 
