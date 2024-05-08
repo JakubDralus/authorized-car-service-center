@@ -27,3 +27,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.auth-button{
+  background-color: var(--buttons-color);
+  color: white;
+  margin-top: 10px;
+  width: 180px;
+  height: 43px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 18px;
+}

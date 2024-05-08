@@ -115,8 +115,8 @@
 
 .login-form form>input {
     width: 400px;
-    height: 32px;
-    font-size: 1.1rem;
+    height: 38px;
+    font-size: 1.2rem;
     border-radius: 20px;
     padding: 5px 10px;
     transition: all 0.3s ease;

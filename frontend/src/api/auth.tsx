@@ -52,5 +52,11 @@ export const loginUser = async (loginData: LoginData) => {
 //---------------register-----------------------
 
 interface RegisterData {
-
+    email: string,
+    password: string,
+    rePassword: string,
+    firstName: string,
+    lastName: string,
+    age: number,
+    phone: number
 }
