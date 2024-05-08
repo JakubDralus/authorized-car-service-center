@@ -7,9 +7,9 @@ import com.example.modules.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 
@@ -28,20 +28,20 @@ public class AuthService {
     
     // in other words - sign in
     public AuthResponseDTO authenticate(AuthRequestDTO request) {
-        authenticationManager.authenticate(
+        Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
         
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        User user = (User) authenticate.getPrincipal();
         String jwtToken = jwtService.generateToken(user);
         
         return AuthResponseDTO.builder()
                 .token(jwtToken)
-                .role(user.getRole().name())
                 .expirationDate(isoFormat.format(jwtService.extractExpiration(jwtToken)))
+                .id(user.getUserId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .id(user.getUserId())
+                .role(user.getRole().name())
                 .build();
     }
     

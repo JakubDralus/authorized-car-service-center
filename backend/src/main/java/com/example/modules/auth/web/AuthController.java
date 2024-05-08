@@ -1,5 +1,6 @@
 package com.example.modules.auth.web;
 
+import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import com.example.modules.auth.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,11 @@ public class AuthController {
     private final AuthService authService;
     
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthResponseDTO> authenticate(@RequestBody AuthRequestDTO authRequestDto) {
-        return ResponseEntity.ok(authService.authenticate(authRequestDto));
+    public ApiResponse<AuthResponseDTO> authenticate(@RequestBody AuthRequestDTO authRequestDto) {
+        return ApiResponse.<AuthResponseDTO>builder()
+                .message("Token created successfully.")
+                .data(authService.authenticate(authRequestDto))
+                .build();
     }
     
 //    @PostMapping("/register/user")
