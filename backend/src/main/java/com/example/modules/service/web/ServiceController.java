@@ -3,7 +3,10 @@ package com.example.modules.service.web;
 import com.example.modules.service.ServiceService;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @RestController
@@ -50,5 +53,24 @@ public class ServiceController {
         return ApiResponse.<ServiceDTO>builder()
                 .message("Service deleted.")
                 .build();
+    }
+    
+    @PostMapping(
+            value = "/{serviceId}/photo",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ApiResponse<ServiceDTO> uploadPhoto(@PathVariable Long serviceId, @RequestParam("file") MultipartFile file) {
+        serviceService.uploadPhotoToS3(serviceId, file);
+        return ApiResponse.<ServiceDTO>builder()
+                .message("Added service photo.")
+                .build();
+    }
+    
+    @GetMapping(
+            value = "{serviceId}/photo",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    public byte[] getServicePhoto(@PathVariable Long serviceId) {
+        return serviceService.getPhoto(serviceId);
     }
 }
