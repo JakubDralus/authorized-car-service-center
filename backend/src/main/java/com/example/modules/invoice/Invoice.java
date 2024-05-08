@@ -4,6 +4,7 @@ import com.example.modules.accountant.Accountant;
 import com.example.modules.ticket.Ticket;
 import jakarta.persistence.*;
 import lombok.*;
+
 @Getter
 @Setter
 @Entity

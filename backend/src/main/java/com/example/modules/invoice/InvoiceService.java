@@ -24,8 +24,8 @@ public class InvoiceService implements CrudService<InvoiceDTO> {
 
     @Override
     public InvoiceDTO get(Long id) {
-        Invoice invoice = invoiceRepository.findById(id).orElseThrow(null);
-        if( invoice == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No match for id: " + id);
+        Invoice invoice = invoiceRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No match for id: " + id));
         return invoiceMapper.toDto(invoice);
     }
 
@@ -40,7 +40,8 @@ public class InvoiceService implements CrudService<InvoiceDTO> {
 
     @Override
     public InvoiceDTO update(InvoiceDTO invoiceDTO) {
-        Invoice invoice = invoiceRepository.getReferenceById(invoiceDTO.getInvoiceId());
+        Invoice invoice = invoiceRepository.findById(invoiceDTO.getInvoiceId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No match for id: " + invoiceDTO.getInvoiceId()));
         invoiceMapper.toEntity(invoiceDTO,invoice);
         invoice = invoiceRepository.save(invoice);
         return invoiceMapper.toDto(invoice);
