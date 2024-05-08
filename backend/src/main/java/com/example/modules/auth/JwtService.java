@@ -4,7 +4,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 1) // day
+//                .setExpiration(new Date(System.currentTimeMillis() + 1000L)) // second
                 .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 7)) // week
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
@@ -66,10 +65,12 @@ public class JwtService {
                     .getBody();
         }
         catch (ExpiredJwtException e) {
-            throw new ExpiredJwtException(Jwts.header(), Jwts.claims(), "token expired");
+//            throw new ExpiredJwtException(Jwts.header(), Jwts.claims(), "token expired");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "token expired", e);
         }
         catch (JwtException e) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "JWT token error", e);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "JWT token error", e);
+            // https://stackoverflow.com/questions/76386768/how-do-i-catch-exceptions-in-jwtauthfilter-and-handle-with-global-error-handler
         }
     }
     
