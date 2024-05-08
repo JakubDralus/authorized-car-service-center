@@ -10,10 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Key;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class JwtService {
@@ -37,8 +40,8 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000L)) // second
-                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 7)) // week
+//                .setExpiration((Date.from(Instant.now().plus(1, SECONDS)))) // second
+                .setExpiration(Date.from(Instant.now().plus(14, DAYS)))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -70,7 +73,6 @@ public class JwtService {
         }
         catch (JwtException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "JWT token error", e);
-            // https://stackoverflow.com/questions/76386768/how-do-i-catch-exceptions-in-jwtauthfilter-and-handle-with-global-error-handler
         }
     }
     
