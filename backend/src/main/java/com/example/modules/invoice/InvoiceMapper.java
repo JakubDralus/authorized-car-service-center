@@ -20,6 +20,7 @@ public class InvoiceMapper implements IMapper<Invoice, InvoiceDTO> {
 
     private final AccountantRepository accountantRepository;
     private final AccountantMapper accountantMapper;
+
     @Override
     public InvoiceDTO toDto(Invoice invoice) {
         return InvoiceDTO.builder()
