@@ -35,7 +35,6 @@ public class InvoiceService implements CrudService<InvoiceDTO> {
         invoiceMapper.toEntity(invoiceDTO,invoice);
         invoice = invoiceRepository.save(invoice);
         return invoiceMapper.toDto(invoice);
-
     }
 
     @Override
@@ -51,6 +50,5 @@ public class InvoiceService implements CrudService<InvoiceDTO> {
     public void delete(Long id) {
         if(invoiceRepository.existsById(id)) invoiceRepository.deleteById(id);
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find the invoice.");
-
     }
 }
