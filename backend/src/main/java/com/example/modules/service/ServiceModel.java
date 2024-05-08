@@ -16,14 +16,16 @@ public class ServiceModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long serviceId;
-
+    
     private Integer estimatedRepairTime;
-
     private String name;
-
     private String type;
-
     private Double cost;
+    private Boolean isAvailable;
+    private Boolean isFeatured;
+    
+    @Column(unique = true)
+    private String photoUrl;
     
 //    @ManyToMany
 //    private List<Ticket> tickets;
