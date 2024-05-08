@@ -17,4 +17,7 @@ public class ServiceDTO {
     private String name;
     private String type;
     private Double cost;
+    private Boolean isAvailable;
+    private Boolean isFeatured;
+    private String photoUrl;
 }
