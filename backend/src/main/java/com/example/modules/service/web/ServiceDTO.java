@@ -19,5 +19,6 @@ public class ServiceDTO {
     private Double cost;
     private Boolean isAvailable;
     private Boolean isFeatured;
-    private String photoUrl;
+    private String photoBigKey;
+    private String photoSmallKey;
 }

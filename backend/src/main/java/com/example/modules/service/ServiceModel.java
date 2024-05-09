@@ -25,7 +25,10 @@ public class ServiceModel {
     private Boolean isFeatured;
     
     @Column(unique = true)
-    private String photoUrl;
+    private String photoBigKey;
+    
+    @Column(unique = true)
+    private String photoSmallKey;
     
 //    @ManyToMany
 //    private List<Ticket> tickets;
