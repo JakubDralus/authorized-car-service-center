@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/services")
@@ -59,8 +60,8 @@ public class ServiceController {
             value = "/{serviceId}/photo",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ApiResponse<ServiceDTO> uploadPhoto(@PathVariable Long serviceId, @RequestParam("file") MultipartFile file) {
-        serviceService.uploadPhotoToS3(serviceId, file);
+    public ApiResponse<ServiceDTO> uploadPhoto(@PathVariable Long serviceId, @RequestParam("files") MultipartFile ...files) {
+        serviceService.uploadPhotoToS3(serviceId, files);
         return ApiResponse.<ServiceDTO>builder()
                 .message("Added service photo.")
                 .build();
@@ -68,9 +69,10 @@ public class ServiceController {
     
     @GetMapping(
             value = "{serviceId}/photo",
-            produces = MediaType.IMAGE_JPEG_VALUE
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public byte[] getServicePhoto(@PathVariable Long serviceId) {
-        return serviceService.getPhoto(serviceId);
+    public Map<String, byte[]> getServicePhoto(@PathVariable Long serviceId) {
+        List<byte[]> photos = serviceService.getPhoto(serviceId);
+        return Map.of("big", photos.get(0), "small", photos.get(1));
     }
 }

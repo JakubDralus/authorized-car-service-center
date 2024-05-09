@@ -61,7 +61,8 @@ public class ServiceService implements CrudService<ServiceDTO> {
     public void delete(Long id) {
         ServiceModel service = serviceRepository.findById(id).orElse(null);
         if (service != null) {
-            s3Service.deleteObject(s3Buckets.getServices(), service.getPhotoUrl()); // get photo and delete it on s3
+            s3Service.deleteObject(s3Buckets.getServices(), service.getPhotoBigKey()); // get photo and delete it on s3
+            s3Service.deleteObject(s3Buckets.getServices(), service.getPhotoSmallKey()); // get photo and delete it on s3
             serviceRepository.deleteById(id);
         }
         else {
@@ -69,44 +70,60 @@ public class ServiceService implements CrudService<ServiceDTO> {
         }
     }
     
-    public void uploadPhotoToS3(Long serviceId, MultipartFile file) {
-        String servicePhotoId = UUID.randomUUID().toString();
-        String photoUrl = "service-photos-%s-%s".formatted(serviceId, servicePhotoId);
+    public void uploadPhotoToS3(Long serviceId, MultipartFile ...files) {
+        String servicePhotoId1 = UUID.randomUUID().toString();
+        String servicePhotoId2 = UUID.randomUUID().toString();
+        String photoBigUrl = "service-photos-%s/big-%s".formatted(serviceId, servicePhotoId1);
+        String photoSmallUrl = "service-photos-%s/small-%s".formatted(serviceId, servicePhotoId2);
+        assert files.length == 2 : "expected 2 photos";
         try {
             s3Service.putObject(
                     s3Buckets.getServices(),
-                    photoUrl,
-                    file.getBytes(),
-                    file.getContentType());
+                    photoBigUrl,
+                    files[0].getBytes(),
+                    files[0].getContentType());
+            s3Service.putObject(
+                    s3Buckets.getServices(),
+                    photoSmallUrl,
+                    files[1].getBytes(),
+                    files[1].getContentType());
         }
         catch (IOException e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "failed to upload profile image", e);
         }
         
-        // if there is photo already try to delete the previous one
+        // if there is photo already try to delete the previous ones
         try {
             ServiceModel service = serviceRepository.findById(serviceId).orElseThrow();
-            s3Service.deleteObject(s3Buckets.getServices(), service.getPhotoUrl());
+            s3Service.deleteObject(s3Buckets.getServices(), service.getPhotoBigKey());
+            s3Service.deleteObject(s3Buckets.getServices(), service.getPhotoSmallKey());
         }
         catch (Exception ignored){}
         
-        serviceRepository.updatePhotoUrlById(serviceId, photoUrl);
+        serviceRepository.updatePhotosById(serviceId, photoBigUrl, photoSmallUrl);
     }
     
-    public byte[] getPhoto(Long serviceId) {
+    // returns an immutable list of 2 photo keys: [big, small]
+    public List<byte[]> getPhoto(Long serviceId) {
         ServiceModel service = serviceRepository.findById(serviceId).orElseThrow(
                 () -> new NoSuchElementException("service with id [%s] not found".formatted(serviceId))
         );
         
-        if (StringUtils.isBlank(service.getPhotoUrl())) {
+        if (StringUtils.isBlank(service.getPhotoBigKey()) || StringUtils.isBlank(service.getPhotoSmallKey())) {
             throw new NoSuchElementException("photo not found for customer with id: %s".formatted(serviceId));
         }
         
-        byte[] servicePhoto = s3Service.getObject(
+        byte[] servicePhotoBg = s3Service.getObject(
                 s3Buckets.getServices(),
-                service.getPhotoUrl()
+                service.getPhotoBigKey()
         );
-        return servicePhoto;
+        
+        byte[] servicePhotoSm = s3Service.getObject(
+                s3Buckets.getServices(),
+                service.getPhotoSmallKey()
+        );
+        
+        return List.of(servicePhotoBg, servicePhotoSm);
     }
 }

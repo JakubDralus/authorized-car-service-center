@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ServiceRepository extends JpaRepository<ServiceModel, Long> {
     @Transactional
     @Modifying
-    @Query("UPDATE ServiceModel s SET s.photoUrl = :photoUrl WHERE s.serviceId = :serviceId")
-    void updatePhotoUrlById(Long serviceId, String photoUrl);
+    @Query( "UPDATE ServiceModel s " +
+            "SET s.photoBigKey = :photoBigKey, s.photoSmallKey = :photoSmallKey " +
+            "WHERE s.serviceId = :serviceId")
+    void updatePhotosById(Long serviceId,String photoBigKey, String photoSmallKey);
 }
