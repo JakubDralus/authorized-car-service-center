@@ -79,21 +79,20 @@ public class ServiceService implements CrudService<ServiceDTO> {
         if (files.length != 2) {
             throw new InvalidParameterException("expected 2 photos");
         }
+        // if there is photo already try to delete the previous ones
+    
+        ServiceModel service = serviceRepository.findById(serviceId).orElseThrow(
+                () -> new NoSuchElementException("service with id [%s] not found".formatted(serviceId))
+        );
+        String photoBigKey = service.getPhotoBigKey();
+        if (photoBigKey != null) s3Service.deleteObject(s3Buckets.getServicesBucket(), photoBigKey);
+        String photoSmallKey = service.getPhotoSmallKey();
+        if (photoSmallKey != null) s3Service.deleteObject(s3Buckets.getServicesBucket(), photoSmallKey);
+        
         String servicePhotoId1 = UUID.randomUUID().toString();
         String servicePhotoId2 = UUID.randomUUID().toString();
         String photoBigUrl   = "service-photos-%s/big-%s".formatted(serviceId, servicePhotoId1);
         String photoSmallUrl = "service-photos-%s/small-%s".formatted(serviceId, servicePhotoId2);
-        
-        // if there is photo already try to delete the previous ones
-        try {
-            ServiceModel service = serviceRepository.findById(serviceId).orElseThrow();
-            String photoBigKey = service.getPhotoBigKey();
-            if (photoBigKey != null) s3Service.deleteObject(s3Buckets.getServicesBucket(), photoBigKey);
-            String photoSmallKey = service.getPhotoSmallKey();
-            if (photoSmallKey != null) s3Service.deleteObject(s3Buckets.getServicesBucket(), photoSmallKey);
-        }
-        catch (Exception ignored) {} // can't catch because it would throw
-        
         try {
             s3Service.putObject(
                     s3Buckets.getServicesBucket(),
