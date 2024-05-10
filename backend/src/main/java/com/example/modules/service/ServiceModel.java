@@ -23,11 +23,7 @@ public class ServiceModel {
     private Double cost;
     private Boolean isAvailable;
     private Boolean isFeatured;
-    
-    @Column(unique = true)
     private String photoBigKey;
-    
-    @Column(unique = true)
     private String photoSmallKey;
     
 //    @ManyToMany
