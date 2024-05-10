@@ -32,7 +32,7 @@ aws:
   region: eu-central-1
   s3:
     buckets:
-      services: aso-services-143207520
+      servicesBucket: aso-services-143207520
 
 #logging:
 #  level:
