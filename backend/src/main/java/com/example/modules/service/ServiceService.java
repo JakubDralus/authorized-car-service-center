@@ -38,8 +38,8 @@ public class ServiceService implements CrudService<ServiceDTO> {
 
     @Override
     public ServiceDTO get(Long id){
-        ServiceModel service = serviceRepository.findById(id).orElse(null);
-        if (service == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No match for id: " + id);
+        ServiceModel service = serviceRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No service with id: " + id));
         return serviceMapper.toDto(service);
     }
 
@@ -55,7 +55,8 @@ public class ServiceService implements CrudService<ServiceDTO> {
     @Override
     @Transactional
     public ServiceDTO update(ServiceDTO serviceDTO) {
-        ServiceModel service = serviceRepository.findById(serviceDTO.getServiceId()).orElseThrow();
+        ServiceModel service = serviceRepository.findById(serviceDTO.getServiceId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No service with id: " + serviceDTO.getServiceId()));
         serviceMapper.toEntity(serviceDTO, service);
         service = serviceRepository.save(service);
         return modelMapper.map(service, ServiceDTO.class);
@@ -65,17 +66,19 @@ public class ServiceService implements CrudService<ServiceDTO> {
     public void delete(Long id) {
         ServiceModel service = serviceRepository.findById(id).orElse(null);
         if (service != null) {
-            s3Service.deleteObject(s3Buckets.getServices(), service.getPhotoBigKey());
-            s3Service.deleteObject(s3Buckets.getServices(), service.getPhotoSmallKey());
+            s3Service.deleteObject(s3Buckets.getServicesBucket(), service.getPhotoBigKey());
+            s3Service.deleteObject(s3Buckets.getServicesBucket(), service.getPhotoSmallKey());
             serviceRepository.deleteById(id);
         }
         else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Specified service does not exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No service with id: " + id);
         }
     }
     
     public void uploadPhotosToS3(Long serviceId, MultipartFile ...files) {
-        assert files.length == 2 : "expected 2 photos";
+        if (files.length != 2) {
+            throw new InvalidParameterException("expected 2 photos");
+        }
         String servicePhotoId1 = UUID.randomUUID().toString();
         String servicePhotoId2 = UUID.randomUUID().toString();
         String photoBigUrl   = "service-photos-%s/big-%s".formatted(serviceId, servicePhotoId1);
@@ -84,23 +87,26 @@ public class ServiceService implements CrudService<ServiceDTO> {
         // if there is photo already try to delete the previous ones
         try {
             ServiceModel service = serviceRepository.findById(serviceId).orElseThrow();
-            s3Service.deleteObject(s3Buckets.getServices(), service.getPhotoBigKey());
-            s3Service.deleteObject(s3Buckets.getServices(), service.getPhotoSmallKey());
+            String photoBigKey = service.getPhotoBigKey();
+            if (photoBigKey != null) s3Service.deleteObject(s3Buckets.getServicesBucket(), photoBigKey);
+            String photoSmallKey = service.getPhotoSmallKey();
+            if (photoSmallKey != null) s3Service.deleteObject(s3Buckets.getServicesBucket(), photoSmallKey);
         }
-        catch (Exception ignored) {}
-        //            throw new RuntimeException("error while deleting previous photos");
+        catch (Exception ignored) {} // can't catch because it would throw
         
         try {
             s3Service.putObject(
-                    s3Buckets.getServices(),
+                    s3Buckets.getServicesBucket(),
                     photoBigUrl,
                     files[0].getBytes(),
-                    files[0].getContentType());
+                    files[0].getContentType()
+            );
             s3Service.putObject(
-                    s3Buckets.getServices(),
+                    s3Buckets.getServicesBucket(),
                     photoSmallUrl,
                     files[1].getBytes(),
-                    files[1].getContentType());
+                    files[1].getContentType()
+            );
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -130,12 +136,18 @@ public class ServiceService implements CrudService<ServiceDTO> {
         }
         
         return s3Service.getObject(
-                s3Buckets.getServices(),
+                s3Buckets.getServicesBucket(),
                 size.equals("big") ? service.getPhotoBigKey() : service.getPhotoSmallKey()
         );
     }
     
-    // returns an immutable list of 2 photo keys: [big, small]
+    /**
+     * Retrieves both of the {@link ServiceModel} photos that are stored as raw files in AWS S3 bucket.
+     * Their keys are stored in the database.
+     * @param serviceId id of the service of which photos are to be returned from
+     * @return an immutable list of 2 raw photos: [big, small]
+     */
+    // returns
     public List<byte[]> get2Photos(Long serviceId) {
         ServiceModel service = serviceRepository.findById(serviceId).orElseThrow(
                 () -> new NoSuchElementException("service with id [%s] not found".formatted(serviceId))
@@ -145,15 +157,8 @@ public class ServiceService implements CrudService<ServiceDTO> {
             throw new NoSuchElementException("photo not found for customer with id: %s".formatted(serviceId));
         }
         
-        byte[] servicePhotoBg = s3Service.getObject(
-                s3Buckets.getServices(),
-                service.getPhotoBigKey()
-        );
-        
-        byte[] servicePhotoSm = s3Service.getObject(
-                s3Buckets.getServices(),
-                service.getPhotoSmallKey()
-        );
+        byte[] servicePhotoBg = s3Service.getObject(s3Buckets.getServicesBucket(), service.getPhotoBigKey());
+        byte[] servicePhotoSm = s3Service.getObject(s3Buckets.getServicesBucket(), service.getPhotoSmallKey());
         
         return List.of(servicePhotoBg, servicePhotoSm);
     }
