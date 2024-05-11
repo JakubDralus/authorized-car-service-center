@@ -1,0 +1,14 @@
+.text-wrapper{
+    width: 80%;
+    margin: 0 0 5% 0;
+}
+
+.description-body{
+    padding: 5% 15% 5% 15%;
+    min-width: 80%;
+    width: 90%;
+}
+
+.description-text{
+    word-wrap: break-word;
+}

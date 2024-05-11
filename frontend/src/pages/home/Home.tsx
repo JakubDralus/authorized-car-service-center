@@ -2,6 +2,7 @@ import Navbar from "../../components/navbar/Navbar"
 import Footer from "../../components/footer/Footer"
 import "./Home.css"
 import { Link } from "react-router-dom"
+import HomeCard from "../../components/service_card/HomeCard"
 
 const Home = () =>{
 
@@ -26,6 +27,7 @@ const Home = () =>{
                     </div>
                 </div>
                 <div className="home-example-services">
+                    <HomeCard />
                     {/* here a few services fetched from api + redirect to its page */}
                 </div>
 

@@ -1,0 +1,24 @@
+.body-container{
+    background-color: rgb(247, 247, 247);
+}
+.image-container{
+    margin: 0 0 5% 0;
+}
+.service-image{
+    height: 80%;
+}
+.text-overlay {
+    position: absolute;
+    top: 70%;
+    left: 15%;
+}
+
+
+.schedule-service-button{
+    padding: 4%;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+.schedule-service-container{
+    margin: 0 0 5% 0;
+}
