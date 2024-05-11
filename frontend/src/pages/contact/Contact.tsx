@@ -173,7 +173,7 @@ const Contact = () => {
                         <div className="form-map-col">
                           <div className="form-map-col-module">
                             <div className="form-map-col-content">
-                              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.5038975127472!2d20.014752812340166!3d50.07685191407425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4716453af1fd622f%3A0xa62689a1c5160b1f!2zS0ZDIEtyYWvDs3cgQ3p5xbx5bnk!5e0!3m2!1spl!2spl!4v1715425964801!5m2!1spl!2spl" width="600" height="450" className="map"></iframe>   
+                              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.5038975127472!2d20.014752812340166!3d50.07685191407425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4716453af1fd622f%3A0xa62689a1c5160b1f!2zS0ZDIEtyYWvDs3cgQ3p5xbx5bnk!5e0!3m2!1spl!2spl!4v1715425964801!5m2!1spl!2spl"  className="map"></iframe>   
                             </div>
                           </div>
                         </div>
@@ -196,10 +196,30 @@ const Contact = () => {
                                   <form>
                                     <div className="form-body">
                                       <ul className="form-list-fields">
-                                        <li className="list-field"></li>
-                                        <li className="list-field"></li>
-                                        <li className="list-field"></li>
-                                        <li className="list-field"></li>
+                                        <li className="list-field">
+                                          <label className="list-label"> Your Name</label>
+                                          <div className="inpout-container">
+                                            <input type="text" className="input-field" placeholder="Enter your name"/>  
+                                          </div>
+                                        </li>
+                                        <li className="list-field">
+                                          <label className="list-label"> Your email</label>
+                                          <div className="inpout-container">
+                                            <input type="text" className="input-field" placeholder="Enter your e-mail"/>  
+                                          </div>
+                                        </li>
+                                        <li className="list-field">
+                                          <label className="list-label"> Your phone number</label>
+                                          <div className="inpout-container">
+                                            <input type="text" className="input-field" placeholder="Enter your phone number"/>  
+                                          </div>
+                                        </li>
+                                        <li className="list-field">
+                                          <label className="list-label"> Your phone number</label>
+                                          <div className="inpout-container">
+                                            <textarea className="input-field input-area" placeholder="Enter your message"></textarea>  
+                                          </div>
+                                        </li>
                                       </ul>
                                     </div>
                                     <div className="form-footer"></div>
