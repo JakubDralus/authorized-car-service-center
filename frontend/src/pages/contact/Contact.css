@@ -10,6 +10,7 @@
     background-size: cover;
     height: 550px;
     padding-bottom: 18px;
+    margin-bottom:50px ;
 }
 
 .banner-wrapper{
@@ -31,12 +32,15 @@
     
 }
 .content-wrap{
+  background-color: #f4f121;
     display: flex;
     padding-top: 50px;
     box-sizing: border-box;
     padding-right: 20px;
     padding-bottom: 20px;
     padding-left: 20px;
+    
+    background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgb(132, 24, 255) 100%)
 }
 .contact-info{
     flex:1 1 auto;
@@ -48,14 +52,22 @@
 }
 .contact-info-container{
     box-sizing: border-box;
+    justify-content: center;
 }
 .info{
-    width:25%;
-    float:left;
+  
+    width:50%;
+    float: left;
     min-height: 1px;
     box-sizing: border-box;
     
+    transition: width 0.3s ease;
 }
+.info:hover{
+  width: 40%;
+  float: left;
+}
+
 .info-col{
   padding-top: 0;
   padding-right: 0;
@@ -79,25 +91,32 @@
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
 }
-.info-box{
-    border-style: solid;
-    border-color: #505050;
-    border-radius: 0;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 1px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-
-    min-height: 260px;
-    display: flex;
-    align-items: center;
-
-    justify-content: center;
+.info-box-col-content{
+  background-color: #f7f7f7;
 }
+.info-box{
+  background-color: rgb(246, 246, 135);
+  border-style:solid;
+  border-color: #505050;
+  border-radius: 0px;
+  border-top-width: 2px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+  border-right-width: 2px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  
+
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+
+  justify-content: center;
+  
+}
+
 
 .info-box-left-right-wrap{
     display: block;
@@ -154,6 +173,35 @@
   float: left;
   min-height: 1px;
 }
+.form-col-map{
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-shrink: 1;
+  min-width: 1px;
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex: 1 1 auto;
+
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+
+  box-sizing: border-box;
+}
+.form-map-col-content{
+  margin: 30px;
+}
+.map{
+  border:none;
+}
+
 .form-col-content{
   display: flex;
   flex: 1 1 auto;
@@ -209,6 +257,9 @@
   margin-left: 0;
   overflow: visible;
 }
+
+
+
 @media (max-width: 767px) {
   body {
       font-size: 14px;
