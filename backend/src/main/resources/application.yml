@@ -23,6 +23,16 @@ spring:
   codec:
     max-in-memory-size: 10MB
 
+server:
+  port: 8081
+  error:
+    include-message: always
+
+aws:
+  region: eu-central-1
+  s3:
+    buckets:
+      servicesBucket: aso-services-143207520
 
 #logging:
 #  level:
@@ -31,7 +41,3 @@ spring:
 #        orm.jdbc.bind: trace
 ##        SQL: debug
 
-server:
-  port: 8081
-  error:
-    include-message: always
