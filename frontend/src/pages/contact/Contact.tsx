@@ -1,5 +1,9 @@
 import Navbar from "../../components/navbar/Navbar"
 import Footer from "../../components/footer/Footer"
+import { FaRegClock } from "react-icons/fa";
+import { FaPhoneVolume } from "react-icons/fa6";
+import { IoMail } from "react-icons/io5";
+import { FaLocationDot } from "react-icons/fa6";
 import React, { useState } from 'react';
 import "./Contact.css"
 
@@ -39,7 +43,15 @@ const Contact = () => {
                                       <div className="info-box-left-right-wrap">
                                         <div className="info-box-content">
                                             <div className="info-box-content-icon">
-
+                                              
+                                              <span className="icon-wrap">
+                                                <span className="icon">
+                                                  
+                                                  <div className="icon-circle"><FaRegClock className="icon-size-up"/> </div>
+                                                  
+                                                </span>           
+                                              </span>
+                                                   
                                             </div>
                                             <div className="info-box-content-title">
                                                 <h3>Opening Times </h3>
@@ -72,7 +84,13 @@ const Contact = () => {
                                       <div className="info-box-left-right-wrap">
                                         <div className="info-box-content">
                                             <div className="info-box-content-icon">
-
+                                              <span className="icon-wrap">
+                                                  <span className="icon">
+                                                    
+                                                    <div className="icon-circle"><FaPhoneVolume className="icon-size-up"/> </div>
+                                                    
+                                                  </span>           
+                                              </span>
                                             </div>
                                             <div className="info-box-content-title">
                                                 <h3>Contact Phone</h3>
@@ -105,7 +123,13 @@ const Contact = () => {
                                       <div className="info-box-left-right-wrap">
                                         <div className="info-box-content">
                                             <div className="info-box-content-icon">
-
+                                                <span className="icon-wrap">
+                                                  <span className="icon">
+                                                    
+                                                    <div className="icon-circle"><IoMail className="icon-size-up"/> </div>
+                                                    
+                                                  </span>           
+                                                </span>
                                             </div>
                                             <div className="info-box-content-title">
                                                 <h3>E-mail </h3>
@@ -138,7 +162,13 @@ const Contact = () => {
                                       <div className="info-box-left-right-wrap">
                                         <div className="info-box-content">
                                             <div className="info-box-content-icon">
-
+                                                <span className="icon-wrap">
+                                                  <span className="icon">
+                                                    
+                                                    <div className="icon-circle"><FaLocationDot className="icon-size-up"/> </div>
+                                                    
+                                                  </span>           
+                                                </span>
                                             </div>
                                             <div className="info-box-content-title">
                                                 <h3>Adress </h3>
@@ -170,7 +200,7 @@ const Contact = () => {
                   <div className="form-row-content">
                     <div className="form-col-group">
                       <div className="form-col">
-                        <div className="form-map-col">
+                        <div className="form-col-map">
                           <div className="form-map-col-module">
                             <div className="form-map-col-content">
                               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2560.5038975127472!2d20.014752812340166!3d50.07685191407425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4716453af1fd622f%3A0xa62689a1c5160b1f!2zS0ZDIEtyYWvDs3cgQ3p5xbx5bnk!5e0!3m2!1spl!2spl!4v1715425964801!5m2!1spl!2spl"  className="map"></iframe>   
@@ -221,6 +251,9 @@ const Contact = () => {
                                           </div>
                                         </li>
                                       </ul>
+                                      <div className="form-submit">
+                                        <input type="submit" className="submit-button"></input>
+                                      </div>
                                     </div>
                                     <div className="form-footer"></div>
                                   </form>
