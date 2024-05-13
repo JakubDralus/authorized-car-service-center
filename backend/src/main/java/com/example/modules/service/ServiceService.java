@@ -79,11 +79,10 @@ public class ServiceService implements CrudService<ServiceDTO> {
         if (files.length != 2) {
             throw new InvalidParameterException("expected 2 photos");
         }
-        // if there is photo already try to delete the previous ones
-    
         ServiceModel service = serviceRepository.findById(serviceId).orElseThrow(
                 () -> new NoSuchElementException("service with id [%s] not found".formatted(serviceId))
         );
+        // if there is photo already try to delete the previous ones
         String photoBigKey = service.getPhotoBigKey();
         if (photoBigKey != null) s3Service.deleteObject(s3Buckets.getServicesBucket(), photoBigKey);
         String photoSmallKey = service.getPhotoSmallKey();
