@@ -33,8 +33,14 @@ const Signup = () => {
 
     const handleEmailValidation = () => {
         //test
-        // const {data} = emailValidationMutation.mutate(formData.email)
-        // console.log(data);
+        try{
+            const data = emailValidationMutation.mutateAsync(formData.email)
+            console.log(data);
+        }
+        catch(error){
+            console.log(error);
+        }
+
         
         setEmailValid(true);
     }
