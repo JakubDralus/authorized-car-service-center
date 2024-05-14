@@ -98,7 +98,7 @@ public class AuthService {
      * @param providedEmail email from registration form
      * @return true - if email available / no account with this email in database
      */
-    private boolean isEmailAvailable(String providedEmail) {
+    public Boolean isEmailAvailable(String providedEmail) {
         User user = userRepository.findByEmail(providedEmail).orElse(null);
         return user == null;
     }

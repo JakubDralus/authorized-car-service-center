@@ -31,4 +31,12 @@ public class AuthController {
 //    public ResponseEntity<RegisterResponseDTO> registerAdmin(@RequestBody RegisterUserDto registerUserDto) {
 //        return ResponseEntity.ok(authService.registerAdmin(registerUserDto));
 //    }
+
+    @PostMapping("/check-email")
+    public ApiResponse<Boolean> checkEmail(@RequestParam String email){
+        return ApiResponse.<Boolean>builder()
+                .message("Email checked successfully.")
+                .data(authService.isEmailAvailable(email))
+                .build();
+    }
 }

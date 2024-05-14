@@ -23,6 +23,7 @@ const Signup = () => {
         mutationFn: validateEmail,
         onSuccess: (data: AxiosResponse, variables, context) => {
             //data retrieved
+            console.log(`Email response data: ${data}`)
             console.log("Email data obtained!");
         },
         onError: (error: AxiosError<Error, any>) => {
