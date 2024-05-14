@@ -15,7 +15,7 @@ public class RegisterUserDto {
     private String firstName;
     private String lastName;
     private String telephoneNumber;
-    private AddressDTO address;
     private String email;
     private String password;
+    private String rePassword;
 }

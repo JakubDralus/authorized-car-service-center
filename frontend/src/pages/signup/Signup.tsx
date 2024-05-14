@@ -2,8 +2,9 @@ import "./Signup.css";
 import "../../assets/index.css"
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { FormError, validateEmail, registerFormValidation, registerUser } from "../../api/auth";
-import { AxiosResponse, AxiosError } from "axios";
+import { validateEmail, registerUser } from "../../api/auth";
+import { AxiosError } from "axios";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
     //registration
@@ -15,35 +16,36 @@ const Signup = () => {
         rePassword: '',
         firstName: '',
         lastName: '',
-        age: '',
-        phone: ''
+        telephoneNumber: '',
     })
 
+    //
     const emailValidationMutation = useMutation({
         mutationFn: validateEmail,
-        onSuccess: (data: AxiosResponse, variables, context) => {
+        onSuccess: (data, variables, context) => {
             //data retrieved
-            console.log(`Email response data: ${data}`)
+            console.log(variables)
+            if(data.data === true)
+                setEmailValid(true);
+            else
+                setEmailValid(false);
+
+            console.log(data)
             console.log("Email data obtained!");
         },
         onError: (error: AxiosError<Error, any>) => {
             //error login
             setError(error.response?.data.message || "An error occurred (email)");
-        },       
+        },     
     })
 
     const handleEmailValidation = () => {
-        //test
         try{
-            const data = emailValidationMutation.mutateAsync(formData.email)
-            console.log(data);
+            emailValidationMutation.mutate(formData.email)
         }
         catch(error){
             console.log(error);
         }
-
-        
-        setEmailValid(true);
     }
 
     const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -56,19 +58,21 @@ const Signup = () => {
 
     const registerMutation = useMutation({
         mutationFn: registerUser,
-        onSuccess: (data: AxiosResponse, variables, context) => {
-            //data retrieved
+        onSuccess: (data, variables, context) => {
+            console.log(data)
             console.log("User registered!");
         },
         onError: (error: AxiosError<Error, any>) => {
-            //error login
             setError(error.response?.data.message || "An error occurred (register)");
         },   
     })
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("aaaaaa");
+
+        //password validation etc
+
+        registerMutation.mutate(formData);
     }
 
     return (
@@ -81,13 +85,12 @@ const Signup = () => {
                     <div className="flex flex-col justify-center items-center">
                         {emailValid ? (
                             <>
-                                <form className="flex flex-col justify-center items-center gap-5" onSubmit={handleSubmit}>
+                                <form className=" flex flex-col justify-center items-center gap-5" onSubmit={handleSubmit}>
                                     <input className="reg-input valid-input" type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange}></input>
                                     <input className="reg-input valid-input" type="password" placeholder="Retype password" name="rePassword" value={formData.rePassword} onChange={handleChange}></input>
                                     <input className="reg-input valid-input" type="text" placeholder="First Name" name="firstName" value={formData.firstName} onChange={handleChange}></input>
                                     <input className="reg-input valid-input" type="text" placeholder="Last name" name="lastName" value={formData.lastName} onChange={handleChange}></input>
-                                    <input className="reg-input valid-input" type="number" placeholder="Age" name="age" value={formData.age} onChange={handleChange}></input>
-                                    <input className="reg-input valid-input" type="phone" placeholder="Phone number" name="phone" value={formData.phone} onChange={handleChange}></input>
+                                    <input className="reg-input valid-input" type="phone" placeholder="Phone number" name="telephoneNumber" value={formData.telephoneNumber} onChange={handleChange}></input>
                                     <button className="auth-button" type="submit">Sign Up</button>
                                 </form>
                                 <div className="mt-3 cursor-pointer" onClick={() => {setEmailValid(false)}}>Back</div>
@@ -97,7 +100,11 @@ const Signup = () => {
                                 <input className="reg-input valid-input" type="email" placeholder="Email" name="email" value={formData.email} onChange={handleChange}></input>
                                 <button className="auth-button" onClick={handleEmailValidation}>Continue</button>
                             </div>
-                        )}                            
+                        )}
+                        <div className="flex items-center justify-center flex-col gap-2 mt-5">
+                            <div className="text-gray-400">Already have an account?</div>                            
+                            <Link to="/login" className="text-gray-400">Log in</Link>        
+                        </div>
                     </div>
                     {/* <div className="login-error">{error ? error : ""}</div> */}
                 </div>

@@ -1,11 +1,11 @@
 // import Navbar from "../../components/navbar/Navbar"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "./Login.css"
 import { useMutation } from "react-query"
 import { loginUser, validateLogin, ValidationData } from "../../api/auth"
-import { AxiosError, AxiosResponse } from "axios"
+import { AxiosError } from "axios"
 import { useState } from "react"
-// import Navbar from "../../components/navbar/Navbar"
+import { redirect } from "react-router-dom"
 
 const Login = () => {
     const [invalidEmail, setInvalidEmail] = useState(false);
@@ -23,21 +23,29 @@ const Login = () => {
     };
 
     //form
-    const [error, setError] = useState("");
+    const [loginInfo, setLoginInfo] = useState("");
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     })
 
+    //mutation
+    const navigate = useNavigate();
     const loginMutation = useMutation({
         mutationFn: loginUser,
-        onSuccess: (data: AxiosResponse, variables, context) => {
+        onSuccess: (data, variables, context) => {
             //succesfull login
-            console.log("Login successful!");
+            setLoginInfo(data.message);
+            localStorage.setItem("token", data.data.token);
+            console.log(localStorage.getItem("token"))
+            //redirect to home page after successfull login
+            setTimeout(() => {
+                navigate("/")
+            }, 1500)
         },
         onError: (error: AxiosError<Error, any>) => {
             //error login
-            setError(error.response?.data.message || "An error occurred");
+            setLoginInfo(error.response?.data.message || "An error occurred");
         },
     })
 
@@ -58,7 +66,7 @@ const Login = () => {
         setInvalidEmail(validationData.isEmailInvalid);
         setInvalidPassword(validationData.isPasswordInvalid);
 
-        setError(validationData.error);
+        setLoginInfo(validationData.error);
         if (validationData.error !== "") {
             return;
         }
@@ -97,7 +105,7 @@ const Login = () => {
                                     <input className={invalidPassword ? "invalid-input" : "valid-input"} type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange}></input>
                                     <button type="submit">Sign in</button>
                                 </form>
-                                <div className="login-error">{error ? error : ""}</div>
+                                <div className="login-error">{loginInfo ? loginInfo : ""}</div>
                             </div>
                         </div>
                     </div>

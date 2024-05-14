@@ -22,10 +22,13 @@ public class AuthController {
                 .build();
     }
     
-//    @PostMapping("/register/user")
-//    public ResponseEntity<RegisterResponseDTO> registerUser(@RequestBody RegisterUserDto registerUserDto) {
-//        return ResponseEntity.ok(authService.registerUser(registerUserDto));
-//    }
+    @PostMapping("/register/user")
+    public ApiResponse<RegisterResponseDTO> registerUser(@RequestBody RegisterUserDto registerUserDto) {
+        return ApiResponse.<RegisterResponseDTO>builder()
+                .message("Account created successfully!")
+                .data(authService.registerUser(registerUserDto))
+                .build();
+    }
 //
 //    @PostMapping("/register/admin")
 //    public ResponseEntity<RegisterResponseDTO> registerAdmin(@RequestBody RegisterUserDto registerUserDto) {

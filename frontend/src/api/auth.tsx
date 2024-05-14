@@ -45,7 +45,7 @@ export const validateLogin = (formData: LoginData): ValidationData => {
 }
 
 export const loginUser = async (loginData: LoginData) => {
-    const res = await axios.post<AxiosResponse>('http://localhost:8081/api/auth/login', loginData);
+    const res = await axios.post('http://localhost:8081/api/v1/auth/authenticate', loginData);
     return res.data;
 }
 
@@ -57,8 +57,7 @@ interface RegisterData {
     rePassword: string,
     firstName: string,
     lastName: string,
-    age: number,
-    phone: number
+    telephoneNumber: string,
 }
 
 export interface FormError {
@@ -73,7 +72,7 @@ interface RegisterResponse {
 
 //email validation
 export const validateEmail = async (email: string) => {
-    const res = await axios.post('http://localhost:8081/api/auth/checkEmail', email);
+    const res = await axios.post(`http://localhost:8081/api/v1/auth/check-email?email=${email}`);
     return res.data;
 }
 
@@ -85,7 +84,7 @@ export const registerFormValidation = (formData: RegisterData): FormError => {
 
 //registration
 export const registerUser = async (userData: RegisterData) => {
-    const res = await axios.post('http://localhost:8081/api/auth/register', userData);
+    const res = await axios.post('http://localhost:8081/api/v1/auth/register/user', userData);
     return res.data;
 }
 

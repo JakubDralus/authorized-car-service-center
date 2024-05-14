@@ -2,6 +2,9 @@ package com.example.modules.auth;
 
 import com.example.modules.auth.web.AuthRequestDTO;
 import com.example.modules.auth.web.AuthResponseDTO;
+import com.example.modules.auth.web.RegisterResponseDTO;
+import com.example.modules.auth.web.RegisterUserDto;
+import com.example.modules.user.Role;
 import com.example.modules.user.User;
 import com.example.modules.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,33 +48,25 @@ public class AuthService {
                 .build();
     }
     
-//    public RegisterResponseDTO registerUser(RegisterUserDto userDto) {
-//        if (!isEmailAvailable(userDto.getEmail())) {
-//            return RegisterResponseDTO.builder().message("email not available").build();
-//        }
-//
-//        Role role = roleRepository.findById(1L).orElse(null);
-//
-//        User user = User.builder()
-//                .firstName(userDto.getFirstName())
-//                .lastName(userDto.getLastName())
-//                .telephoneNumber(userDto.getTelephoneNumber())
-//                .email(userDto.getEmail())
-//                .password(passwordEncoder.encode(userDto.getPassword()))
-//                .role(role)
-//                .build();
-//        userRepository.save(user);
-//
-//        Address address = new Address();
-//        addressAssembler.toEntity(userDto.getAddress(), address);
-//        address.setUser(user);
-//        addressRepository.save(address);
-//
-//        user.getAddresses().add(address);
-//
-//        return RegisterResponseDTO.builder().message("success").build();
-//    }
-//
+    public RegisterResponseDTO registerUser(RegisterUserDto userDto) {
+        if(!userDto.getPassword().equals(userDto.getRePassword()))
+            return RegisterResponseDTO.builder().message("Passwords do not match.").build();
+
+        User user = User.builder()
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .telephoneNumber(userDto.getTelephoneNumber())
+                .email(userDto.getEmail())
+                .password(passwordEncoder.encode(userDto.getPassword()))
+                .role(Role.USER)
+                .address(null)
+                .build();
+
+        userRepository.save(user);
+
+        return RegisterResponseDTO.builder().message("User succesfully registered.").build();
+    }
+
 //    public RegisterResponseDTO registerAdmin(RegisterUserDto userDto) {
 //        if (!isEmailAvailable(userDto.getEmail())) {
 //            return RegisterResponseDTO.builder().message("email not available").build();
