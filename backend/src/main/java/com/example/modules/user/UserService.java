@@ -27,9 +27,9 @@ public class UserService implements CrudService<UserDTO> {
     
     @Override
     public UserDTO get(Long id) {
-        User user = userRepository.findById(id).orElseThrow();
-        //return modelMapper.map(user, UserDTO.class);
-               return userMapper.toDto(userRepository.findById(id).orElseThrow());
+        return userMapper.toDto(userRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not present with id " + id)
+        ));
     }
     
     public UserReadDTO getSmallDTO(Long id) {
