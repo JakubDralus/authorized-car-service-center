@@ -1,11 +1,8 @@
 // import Navbar from "../../components/navbar/Navbar"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import "./Login.css"
-import { useMutation } from "react-query"
-import { loginUser, validateLogin, ValidationData } from "../../api/auth"
-import { AxiosError } from "axios"
+import { useLoginUser, validateLogin, ValidationData } from "./loginFunctions"
 import { useState } from "react"
-import { redirect } from "react-router-dom"
 
 const Login = () => {
     const [invalidEmail, setInvalidEmail] = useState(false);
@@ -30,24 +27,7 @@ const Login = () => {
     })
 
     //mutation
-    const navigate = useNavigate();
-    const loginMutation = useMutation({
-        mutationFn: loginUser,
-        onSuccess: (data, variables, context) => {
-            //succesfull login
-            setLoginInfo(data.message);
-            localStorage.setItem("token", data.data.token);
-            console.log(localStorage.getItem("token"))
-            //redirect to home page after successfull login
-            setTimeout(() => {
-                navigate("/")
-            }, 1500)
-        },
-        onError: (error: AxiosError<Error, any>) => {
-            //error login
-            setLoginInfo(error.response?.data.message || "An error occurred");
-        },
-    })
+    const loginMutation = useLoginUser(setLoginInfo);
 
     const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget;
