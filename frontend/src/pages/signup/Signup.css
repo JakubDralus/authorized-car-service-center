@@ -10,7 +10,7 @@
         background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgb(132, 24, 255) 100%);
     }
     .reg-input{
-        @apply w-100 h-10 text-lg rounded-4xl px-5;
+        @apply w-100 h-10 text-lg rounded-4xl px-5 max-[680px]:w-80;
     }
 }
 

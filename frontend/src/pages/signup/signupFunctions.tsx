@@ -38,7 +38,6 @@ export const validateEmail = async (email: string) => {
 }
 
 
-
 // --------register---------
 
 export interface RegisterData {
@@ -48,22 +47,6 @@ export interface RegisterData {
     firstName: string,
     lastName: string,
     telephoneNumber: string,
-}
-
-export interface FormError {
-    // passwordError: string,
-    // rePasswordError: string,
-} 
-
-// needs testing
-interface RegisterResponse {
-    emailValid: boolean
-}
-
-//password validation
-export const registerFormValidation = (formData: RegisterData): FormError => {
-
-    return {};
 }
 
 //custom hook
