@@ -8,17 +8,6 @@ import React, { useState } from 'react';
 import "./Contact.css"
 
 const Contact = () => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
-  const infoClassName = `info${isHovered ? '.hovered' : ''}`;
     return (
     <> 
         <Navbar/>

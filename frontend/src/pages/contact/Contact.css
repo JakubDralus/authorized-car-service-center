@@ -32,40 +32,42 @@
     
 }
 .content-wrap{
-  background-color: #f4f121;
-    display: flex;
-    padding-top: 50px;
-    box-sizing: border-box;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    
-    background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgb(132, 24, 255) 100%)
+  display: flex;
+  padding-top: 50px;
+  box-sizing: border-box;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  flex-wrap: wrap;
+  background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgb(132, 24, 255) 100%);
+  box-sizing: border-box;
+  justify-content: center;
 }
 .contact-info{
-    flex:1 1 auto;
-    max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
-    min-width: 0;
-    box-sizing: border-box;
+  
+  justify-content: center;
+  
 }
 .contact-info-container{
     box-sizing: border-box;
     justify-content: center;
 }
-.info{
+.contact-info-wrap{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1100px;
+  margin: 0 auto;
   
-    width:45%;
-    float: left;
-    min-height: 1px;
-    box-sizing: border-box;
-    
-    transition: width 0.3s ease;
+}
+.info{
+  flex: 0 1 calc(50% - 20px); /* Ustaw szerokość na 50% minus marginesy */
+  margin: 10px; /* Dodaj marginesy między elementami */
+  box-sizing: border-box;
+  text-align: center;
 }
 .info:hover{
-  width: 50%;
-  float: left;
+ 
 }
 
 .info-col{
@@ -95,7 +97,7 @@
   background-color: #f7f7f7;
 }
 .info-box{
-  background-color: rgb(246, 246, 135);
+  background-color: white;
   border-style:solid;
   border-color: #505050;
   border-radius: 0px;
@@ -323,34 +325,7 @@
   padding: 16px 0 10px;
   width: 90%;
 }
-.submit-button{
-  background-color: #428bca;
-  border-style: solid;
-  border-color: #357ebd;
-  border-radius: 0px;
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 700;
-  text-align: center;
-  text-transform: uppercase;
-  cursor: pointer;
-  display: inline-block;
-  width: 30%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 0;
-  margin-right: 0;
-  box-sizing: border-box;
 
-}
 .info-box-content-icon{
   margin-top: 5px;
   margin-bottom: 10px;
@@ -359,7 +334,7 @@
 .icon-circle {
   width: 100px; /* Ustaw rozmiar okręgu */
   height: 100px; /* Ustaw rozmiar okręgu */
-  background-color: #f1ec57; /* Ustaw kolor okręgu */
+  background-color: rgb(247, 242, 242); /* Ustaw kolor okręgu */
   border-radius: 50%; /* Ustaw okrągłe krawędzie */
   display: flex;
   justify-content: center;
@@ -372,7 +347,12 @@
  font-size: 1.8rem;
 }
 
-
+@media (max-width:1200px) {
+  .contact-info-wrap{
+    flex-direction: column;
+  }
+  
+}
 @media (max-width: 767px) {
   body {
       font-size: 14px;
