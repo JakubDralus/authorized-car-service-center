@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useMutation } from "react-query";
+import { UseFormSetError, UseFormReturn } from "react-hook-form";
 
 
 //---------------SIGN UP-----------------------
@@ -7,23 +8,21 @@ import { useMutation } from "react-query";
 // --------email validation---------
 
 // custom hook
-export const useValidateEmail = (setEmailValid: React.Dispatch<React.SetStateAction<boolean>>, setRegInfo: React.Dispatch<React.SetStateAction<string>>) => {
+export const useValidateEmail = (setEmailValid: React.Dispatch<React.SetStateAction<boolean>>, setRegInfo: React.Dispatch<React.SetStateAction<string>>, setError: UseFormSetError<{email: string;}>) => {
     return useMutation({
         mutationFn: validateEmail,
         onSuccess: (data, variables, context) => {
             //data retrieved
-            console.log(variables)
             if(data.data === true){
                 setEmailValid(true);
-                setRegInfo("")
             } 
             else{
                 setEmailValid(false);
-                setRegInfo("Provided email is taken.")
+                setError('email', {
+                    type: 'manual',
+                    message: 'Provided email is taken.'
+                })
             }
-
-            console.log(data)
-            console.log("Email data obtained!");
         },
         onError: (error: AxiosError<Error, any>) => {
             //error login
@@ -42,7 +41,7 @@ export const validateEmail = async (email: string) => {
 
 // --------register---------
 
-interface RegisterData {
+export interface RegisterData {
     email: string,
     password: string,
     rePassword: string,
@@ -68,14 +67,15 @@ export const registerFormValidation = (formData: RegisterData): FormError => {
 }
 
 //custom hook
-export const useRegisterUser = (setRegInfo: React.Dispatch<React.SetStateAction<string>>) => {
+export const useRegisterUser = (setRegInfo: React.Dispatch<React.SetStateAction<string>>, registerForm: UseFormReturn<RegisterData>) => {
     return useMutation({
         mutationFn: registerUser,
         onSuccess: (data, variables, context) => {
-            setRegInfo(data.message)
+            setRegInfo(data.message);
+            registerForm.reset();
         },
         onError: (error: AxiosError<Error, any>) => {
-            setRegInfo(error.response?.data.message || "An error occurred (register)");
+            setRegInfo(error.response?.data.message || "An error occurred during registering");
         },   
     })
 }
