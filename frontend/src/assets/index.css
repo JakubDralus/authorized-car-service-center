@@ -40,3 +40,7 @@ code {
   transition: all 0.2s ease-in-out;
   font-size: 18px;
 }
+
+.sidebar-link-select {
+  background-color: rgba(70, 152, 252, 0.147);
+}
