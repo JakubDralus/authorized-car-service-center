@@ -6,7 +6,7 @@ const Navbar = () => {
 
     return (
         <div className="navbar">
-            <div className="wrapper-normal flex">
+            <div className="wrapper-normal flex-nav">
                 <div className="left-navbar">
                     {/* here sidebar */}
                     <p>&#9776;Menu</p>
