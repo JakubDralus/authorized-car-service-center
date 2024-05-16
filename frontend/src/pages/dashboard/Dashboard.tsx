@@ -1,7 +1,7 @@
-import DashboardNavbar from "./DashboardNavbar";
+import DashboardNavbar from "../../components/dashboard_components/DashboardNavbar";
 import UserTable from "./Usertable";
-import Stats from "./Stats";
-import Sidebar from "./Sidebar";
+import Stats from "../../components/dashboard_components/Stats";
+import Sidebar from "../../components/dashboard_components/DashboardSidebar";
 import { Route, Routes } from "react-router-dom";
 
 interface User {
