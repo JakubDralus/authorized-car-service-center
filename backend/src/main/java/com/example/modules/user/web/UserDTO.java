@@ -1,13 +1,11 @@
 package com.example.modules.user.web;
 
 import com.example.modules.address.web.AddressDTO;
-import com.example.modules.review.web.ReviewDTO;
 import com.example.modules.user.Role;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Getter
 @Setter

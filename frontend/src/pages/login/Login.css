@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .flex-column-center {
     display: flex;
     flex-direction: column;
@@ -31,6 +35,8 @@
 
 .login-items-container {
     height: 100%;
+    display: flex;
+    gap:1.5rem;
 }
 
 .login-left h1 {
@@ -44,7 +50,7 @@
 }
 
 .login-left .gap {
-    gap: 30px;
+    gap: 1.3rem;
 }
 
 .login-socials {
@@ -85,11 +91,6 @@
     gap: 30px;
 }
 
-.login-form form {
-
-    gap: 10px;
-}
-
 .login-form form>button,
 .login-right-items button {
     background-color: var(--buttons-color);
@@ -113,7 +114,7 @@
     background-color: var(--buttons-color-hover);
 }
 
-.login-form form>input {
+.login-form form input {
     width: 400px;
     height: 38px;
     font-size: 1.2rem;

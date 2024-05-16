@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AccountantMapper implements IMapper<Accountant, AccountantDTO> {
     private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
     @Override
     public AccountantDTO toDto(Accountant accountant) {
@@ -29,9 +30,7 @@ public class AccountantMapper implements IMapper<Accountant, AccountantDTO> {
     }
 
     private void setUser(AccountantDTO accountantDTO, Accountant accountant) {
-        User user = accountant.getUser();
-        if(user == null) user = new User();
-        userMapper.toEntity(accountantDTO.getUser(),user);
+        User user = userRepository.findById(accountantDTO.getUser().getUserId()).orElseThrow();
         accountant.setUser(user);
     }
 }

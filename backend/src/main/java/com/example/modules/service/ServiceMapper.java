@@ -17,6 +17,8 @@ public class ServiceMapper implements IMapper<ServiceModel, ServiceDTO> {
                 .name(service.getName())
                 .type(service.getType())
                 .cost(service.getCost())
+                .isAvailable(service.getIsAvailable())
+                .isFeatured(service.getIsFeatured())
                 .build();
     }
 
@@ -26,5 +28,7 @@ public class ServiceMapper implements IMapper<ServiceModel, ServiceDTO> {
         service.setEstimatedRepairTime(serviceDTO.getEstimatedRepairTime());
         service.setCost(serviceDTO.getCost());
         service.setType(serviceDTO.getType());
+        service.setIsAvailable(serviceDTO.getIsAvailable());
+        service.setIsFeatured(serviceDTO.getIsFeatured());
     }
 }
