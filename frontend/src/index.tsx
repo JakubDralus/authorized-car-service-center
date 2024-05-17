@@ -4,6 +4,7 @@ import './assets/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { QueryClient, QueryClientProvider } from 'react-query';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const queryClient: QueryClient = new QueryClient();
 
