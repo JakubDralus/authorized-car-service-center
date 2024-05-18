@@ -30,10 +30,10 @@ const Stats = () => {
 
       <div className="grid gap-4 lg:gap-6 lg:grid-cols-2 xl:grid-cols-3 pb-3">
         {cardData.map((card, index) => (
-          <div key={index} className="relative px-8 pt-8 pb-10 rounded-2xl bg-white shadow-md dark:bg-gray-800">
+          <div key={index} className="relative px-8 pt-8 pb-10 border  rounded-2xl bg-white dark:bg-gray-800">
             <div className="space-y-2">
 
-              <div className="flex  justify-between">
+              <div className="flex justify-between">
                 <div className="col flex items-center space-x-2 rtl:space-x-reverse text-lg 
                   text-gray-500 dark:text-gray-400">
                   <span>{card.title}</span>
