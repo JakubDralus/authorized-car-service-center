@@ -51,6 +51,8 @@ const Dashboard = () => {
         return <div>Reviews Component</div>;
       case 'ticket-updates':
         return <div>Ticket Updates Component</div>;
+      case 'Assign Tasks':
+        return <p>assign tasks</p>
       default:
         return <>
           <Stats />
@@ -66,7 +68,7 @@ const Dashboard = () => {
       <div className="flex flex-col sm:flex-row bg-gray-100 h-auto min-h-screen overflow-auto">
         <Sidebar role={userRole} activeComponent={selectedComponent} onSelectComponent={setSelectedComponent} />
         <div className="flex flex-col flex-1 p-5">
-          <div className="mt-8">
+          <div className="mt-2">
             {renderComponent()}
           </div>
         </div>

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, isSameMonth, isSameDay } from 'date-fns';
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const nextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
@@ -65,20 +64,16 @@ const Calendar = () => {
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         formattedDate = format(day, dateFormat);
-        const cloneDay = day;
 
         days.push(
           <div
-            className={`border p-2 flex-1 h-12 text-center text-sm flex  justify-center 
+            className={`border p-2 flex-1 h-12 text-center text-md flex  justify-center 
             ${
-              !isSameMonth(day, monthStart)
-                ? "text-gray-300"
-                : isSameDay(day, selectedDate)
-                ? "bg-blue-500 text-white"
+              !isSameMonth(day, monthStart) ? "text-gray-300" 
+                : isSameDay(day, new Date()) ? "bg-blue-500 text-white"
                 : "text-gray-700"
             }`}
             key={day.toString()}
-            onClick={() => setSelectedDate(cloneDay)}
           >
             <span className="inline-block align-middle">{formattedDate}</span>
           </div>
@@ -98,16 +93,17 @@ const Calendar = () => {
 
   const UpcomingEvents = () => {
     const events = [
-      { date: 'Wed, Jan 12', description: "Nothing on today's schedule" },
-      { date: 'Thu, Jan 13', description: 'View house with real estate agent', time: '2:30 PM - 4:30 PM' },
-      { date: 'Fri, Jan 14', description: 'Meeting with bank manager', time: 'All day' },
-      { date: 'Mon, Jan 17', description: 'Sign paperwork at lawyers', time: '10:00 AM - 10:15 AM' },
+      { date: 'Wed, Jun 12', description: "Nothing on today's schedule" },
+      { date: 'Thu, Jun 13', description: 'View house with real estate agent', time: '2:30 PM - 4:30 PM' },
+      { date: 'Fri, Jun 14', description: 'Meeting with bank manager', time: 'All day' },
+      { date: 'Mon, Jun 17', description: 'Sign paperwork at lawyers', time: '10:00 AM - 10:15 AM' },
     ];
 
     return (
       <div className="">
-        <h2 className="text-lg font-medium text-gray-700 mb-4">Upcoming events</h2>
         <div className="bg-white rounded-lg shadow-lg p-4">
+        <h2 className="text-lg font-medium text-gray-700">Upcoming events</h2>
+        <hr className='mb-4 mt-2'/>
           {events.map((event, index) => (
             <div key={index} className="mb-4">
               <div className="text-sm text-gray-500">{event.date}</div>
@@ -120,11 +116,10 @@ const Calendar = () => {
     );
   };
 
-
   return (
     <>
-      <div className='lg:flex mt-8 '>
-        <div className="p-4 bg-white rounded-lg shadow-md w-full lg:w-2/5 mr-5 mb-5 lg:mb-0">
+      <div className='xl:flex mt-8 '>
+        <div className="p-4 bg-white rounded-lg shadow-md w-full xl:w-2/5 mr-5 mb-5 lg:mb-0">
           {renderHeader()}
           {renderDays()}
           {renderCells()}

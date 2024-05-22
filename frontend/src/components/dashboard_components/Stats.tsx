@@ -26,7 +26,7 @@ const cardData = [
 const Stats = () => {
   return (
     <>
-      <h1 className="text-2xl mb-3 mt-3 font-medium">Last 30 days</h1>
+      <h1 className="text-2xl mb-3 font-medium">Last 30 days</h1>
 
       <div className="grid gap-4 lg:gap-6 lg:grid-cols-2 xl:grid-cols-3 pb-3">
         {cardData.map((card, index) => (
