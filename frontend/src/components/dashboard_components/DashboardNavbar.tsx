@@ -6,16 +6,16 @@ import { Link } from 'react-router-dom'
 
 const navigation = [
   { name: 'Dashboard', to: '/dashboard', current: true },
-  { name: 'Team', to: '/', current: false },
-  { name: 'Projects', to: '/', current: false },
-  { name: 'Calendar', to: '/', current: false },
+  { name: 'Home', to: '/', current: false },
+  { name: 'Assign tasks', to: '', current: false },
+  // { name: 'Calendar', to: '', current: false },
 ];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function DashboardNavbar() {
+export default function DashboardNavbar({ onSelectComponent }: { onSelectComponent: (component: string) => void }) {
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -47,6 +47,7 @@ export default function DashboardNavbar() {
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <Link
+                        onClick={() => onSelectComponent(item.name)}
                         key={item.name}
                         to={item.to}
                         className={classNames(
@@ -56,7 +57,7 @@ export default function DashboardNavbar() {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </Link>
+                      </Link> 
                     ))}
                   </div>
                 </div>

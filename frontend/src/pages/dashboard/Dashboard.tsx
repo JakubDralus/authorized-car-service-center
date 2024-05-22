@@ -2,8 +2,9 @@ import DashboardNavbar from "../../components/dashboard_components/DashboardNavb
 import UserTable from "./Usertable";
 import Stats from "../../components/dashboard_components/Stats";
 import Sidebar from "../../components/dashboard_components/DashboardSidebar";
-import { Route, Routes } from "react-router-dom";
 import Stats2 from "../../components/dashboard_components/Stats2";
+import { useState } from "react";
+import Calendar from "../../components/dashboard_components/Calendar";
 
 interface User {
   id: number;
@@ -20,25 +21,53 @@ const Dashboard = () => {
     { id: 3, name: "Tom Brown", email: "tom@example.com", role: "User" },
   ];
 
-  const userRole: string = "admin"; // todo: get this from logged user
+  // const userRole: string = "admin"; // todo: get this from logged user
+  const userRole: string = "manager"; // todo: get this from logged user
   
-  return (
-    <>
-      <DashboardNavbar />
-  
-      <div className="flex flex-col sm:flex-row bg-gray-100 h-auto min-h-screen overflow-auto">
-    
-        <Sidebar role={userRole} />
+  const [selectedComponent, setSelectedComponent] = useState(''); // State to track the selected component
 
-        <div className="flex flex-col flex-1 p-5">
-
+  // Function to render the selected component
+  const renderComponent = () => {
+    switch (selectedComponent) {
+      case 'users':
+        return <UserTable users={users} />;
+      case 'mechanics':
+        return <div>Mechanics Component</div>;
+      case 'accountants':
+        return <div>Accountants Component</div>;
+      case 'managers':
+        return <div>Managers Component</div>;
+      case 'services':
+        return <div>Services Component</div>;
+      case 'tickets':
+        return <div>Tickets Component</div>;
+      case 'invoices':
+        return <div>Invoices Component</div>;
+      case 'assignments':
+        return <div>Assignments Component</div>;
+      case 'cars':
+        return <div>Cars Component</div>;
+      case 'reviews':
+        return <div>Reviews Component</div>;
+      case 'ticket-updates':
+        return <div>Ticket Updates Component</div>;
+      default:
+        return <>
           <Stats />
           <Stats2 />
-          
-          <div className="p-4">
-            <Routes>
-              <Route path="/users" element={<UserTable users={users} />} />
-            </Routes>
+          <Calendar/>
+        </>;
+    }
+  };
+
+  return (
+    <>
+      <DashboardNavbar onSelectComponent={setSelectedComponent}/>
+      <div className="flex flex-col sm:flex-row bg-gray-100 h-auto min-h-screen overflow-auto">
+        <Sidebar role={userRole} activeComponent={selectedComponent} onSelectComponent={setSelectedComponent} />
+        <div className="flex flex-col flex-1 p-5">
+          <div className="mt-8">
+            {renderComponent()}
           </div>
         </div>
       </div>
