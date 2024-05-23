@@ -4,6 +4,7 @@ import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import Dashboard from './pages/dashboard/Dashboard';
 import Contact from './pages/contact/Contact';
+import { TicketForm } from './pages/ticket_form/TicketForm';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='/signup' errorElement={<div>404 not found</div>} element={<Signup/>}/>
         <Route path='/contact' errorElement={<div>404 not found</div>} element={<Contact/>}/>
         <Route path='/dashboard/*' errorElement={<div>404 not found</div>} element={<Dashboard/>}/>
+        <Route path='/ticket-form' errorElement={<div>404 not found</div>} element={<TicketForm/>}/>
       </Routes>
     </BrowserRouter>
   );

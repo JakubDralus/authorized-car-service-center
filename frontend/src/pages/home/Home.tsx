@@ -35,7 +35,7 @@ const Home = () =>{
                     <div className="home-schedule-info">
                         <h1>Book a service appointment</h1>
                         <span>Let the specialists take care of your car.</span>
-                        <Link className="home-button" to="/">Create a ticket</Link>
+                        <Link className="home-button" to="/ticket-form">Create a ticket</Link>
                     </div>
                 </div>
             </div>
