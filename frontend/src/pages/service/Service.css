@@ -1,0 +1,31 @@
+.body-container{
+    background-color: rgb(247, 247, 247);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.image-container{
+    width: 100%;
+    margin-bottom: 5%;
+    overflow: hidden;
+}
+.service-image{
+    height: 70vh;
+    width: 100%;
+    object-fit: cover;
+}
+.text-overlay {
+    position: relative;
+    top: 20%;
+    left: 15%;
+    transform: translate(-5%, -250%); /* Dopasowanie pozycji tekstu do obrazu */
+    font-size: 2em; /* lub inna wartość em/ rem */
+}
+.schedule-service-button{
+    padding: 4%;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+.schedule-service-container{
+    margin: 0 0 5% 0;
+}

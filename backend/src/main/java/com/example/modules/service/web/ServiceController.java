@@ -91,4 +91,20 @@ public class ServiceController {
         List<byte[]> photos = serviceService.get2Photos(serviceId);
         return Map.of("big", photos.get(0), "small", photos.get(1));
     }
+
+    @GetMapping("available-photos")
+    public List<ServiceSmallPhotoDTO> getAllAvailableWithSmallPhoto() {
+        return serviceService.getAllAvailableWithSmallPhoto();
+    }
+
+    @GetMapping("{serviceId}/service-big-photo")
+    public ServiceBigPhotoDTO getAllAvailableWithSmallPhoto(@PathVariable Long serviceId) {
+        return serviceService.getWithBigPhoto(serviceId);
+    }
+
+    @GetMapping("featured-photos")
+    public List<ServiceSmallPhotoDTO> getAllFeaturedWithSmallPhoto() {
+        return serviceService.getAllFeaturedWithSmallPhoto();
+    }
+
 }
