@@ -1,12 +1,12 @@
 
 export interface Manager {
-  id: string;
+  managerId: string;
   salary: number;
   user: User;
 }
 
 export interface Mechanic {
-  id: number;
+  mechanicId: number;
   specialization: string;
   salary: number;
   user: User;
@@ -70,7 +70,8 @@ export interface Task {
   description: string;
   startTime?: Date;
   endTime?: Date;
-  ticket?: TicketRead ;
+  duration?: number;
+  ticket?: TicketRead;
   manager?: Manager;
   mechanic?: Mechanic | null; 
 };
@@ -103,4 +104,12 @@ export interface Service {
   isFeatured: boolean;
   photoBigKey?: string;
   photoSmallKey?: string;
+}
+
+export interface ApiResponse<T> {
+  timeStamp: Date;
+  status: number;
+  success: boolean;
+  message?: string;
+  data: T;
 }

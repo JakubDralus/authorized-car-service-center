@@ -14,8 +14,12 @@ public class MechanicController {
     private final MechanicService mechanicService;
 
     @GetMapping
-    public List<MechanicDTO> getAll(){
-        return mechanicService.getAll();
+    public ApiResponse<List<MechanicDTO>> getAll(){
+        List<MechanicDTO> all = mechanicService.getAll();
+        return ApiResponse.<List<MechanicDTO>>builder()
+                .message("%d mechanics fetched.".formatted(all.size()))
+                .data(all)
+                .build();
     }
 
     @GetMapping("/{mechanicId}")

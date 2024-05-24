@@ -3,7 +3,7 @@ import { TaskColumnType } from './AssignTasks';  // Adjust the import path based
 import TaskComponent from './TaskComponent';
 
 const TaskColumn = ({ column }: {column: TaskColumnType}) => (
-  <div key={column.id} className="w-64  ">
+  <div key={column.id} className=" w-72  ">
     <h2 className="text-lg font-semibold mb-2">{column.title}</h2>
     <Droppable droppableId={column.id}>
       {(provided, snapshot) => (

@@ -19,6 +19,15 @@ public class TicketController {
         return ticketService.getAll();
     }
     
+    @GetMapping("/requested")
+    public ApiResponse<List<TicketReadDTO>> getRequestedTickets() {
+        List<TicketReadDTO> allRequested = ticketService.getAllRequested();
+        return ApiResponse.<List<TicketReadDTO>>builder()
+                .message("Fetched %d tickets with a Status of REQUESTED.".formatted(allRequested.size()))
+                .data(allRequested)
+                .build();
+    }
+    
     @GetMapping("/{ticketId}")
     public ApiResponse<TicketDTO> get(@PathVariable Long ticketId) {
         TicketDTO ticketDTO = ticketService.get(ticketId);
