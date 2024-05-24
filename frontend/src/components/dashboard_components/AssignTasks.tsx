@@ -14,22 +14,6 @@ export type TaskColumnType = {
   tasks: Task[];
 }
 
-// Predefined arrays for columns and tasks
-// const mechanicsTasks: TaskColumnType[] = [
-//   {
-//     id: "column1",
-//     title: "Mechanic 1",
-//     tasks: [
-      
-//     ]
-//   },
-//   {
-//     id: "column2",
-//     title: "mechanic 2",
-//     tasks: []
-//   }
-// ];
-
 const fetchTickets = async (): Promise<ApiResponse<TicketRead[]>> => {
   const { data } = await axios.get<ApiResponse<TicketRead[]>>( "http://localhost:8081/api/v1/tickets/requested");
   console.log('ticket fetch');
@@ -40,6 +24,34 @@ const fetchMechanics = async (): Promise<ApiResponse<Mechanic[]>> => {
   const { data } = await axios.get<ApiResponse<Mechanic[]>>( "http://localhost:8081/api/v1/mechanics");
   console.log('mechanics fetch');
   return data;
+};
+
+// Create an assignment/task for a mechanic
+const createAssignment = async (task: Task) => {
+  const payload = {
+    description: task.description,
+    startTime: task.startTime?.toISOString(),
+    endTime: task.endTime?.toISOString(),
+    ticket: {
+      ticketId: task.ticket?.ticketId
+    },
+    mechanic: {
+      mechanicId: task.mechanic?.mechanicId
+    },
+    manager: {
+      managerId: task.manager?.managerId ?? 1 // TODO: get manager id from logged manager
+    }
+  };
+  
+  console.log(payload);
+  
+  try {
+    const response = await axios.post("http://localhost:8081/api/v1/assignments", payload);
+    console.log(response.data);
+  } 
+  catch (error) {
+    console.error('Error creating assignment:', error);
+  }
 };
 
 const AssignTasks = () => {
@@ -74,7 +86,7 @@ const AssignTasks = () => {
         id: `mechanic-column-${mechanic.mechanicId}`,
         title: mechanic.user.firstName + ' ' + mechanic.user.lastName,
         mechanic: mechanic,
-        tasks: []
+        tasks: [] //TODO: fetch assignments for each mechanic 
       }));
 
       setColumns([availableTasks, ...mechanicColumns]);
@@ -82,34 +94,6 @@ const AssignTasks = () => {
       // console.log(responseMechanicsData.data);
     }
   }, [responseTicketData, responseMechanicsData]);
-
-  // const { data: responseTicketData, isLoading, error } = useQuery<ApiResponse<TicketRead[]>>("tickets", fetchTickets);
-  // const { data: responseMechanicsData } = useQuery<ApiResponse<Mechanic[]>>("mechanics", fetchMechanics);
-  // const [columns, setColumns] = useState<TaskColumnType[]>([]);
-
-  // useEffect(() => {
-  //   if (responseTicketData && responseTicketData.data) {
-  //     const availableTasks: TaskColumnType = {
-  //       id: "column0",
-  //       title: "Available tasks",
-  //       tasks: responseTicketData.data.reduce<Task[]>((acc, ticket) => {
-  //         const tasksFromServices: Task[] = ticket.services.map((service: Service) => ({
-  //           id: `ticket-${ticket.ticketId}-service-${service.serviceId}`,
-  //           description: service.name,
-  //           startTime: undefined,
-  //           endTime: undefined,
-  //           duration: service.estimatedRepairTime,
-  //           ticket: ticket,
-  //           manager: undefined,
-  //           mechanic: undefined
-  //         }));
-  //         return acc.concat(tasksFromServices);
-  //       }, [])
-  //     };
-  //     setColumns([availableTasks, ...mechanicsTasks]);
-  //     console.log(availableTasks);
-  //   }
-  // }, [responseTicketData]);
 
 
   const onDragEnd = (result: DropResult) => {
@@ -145,11 +129,12 @@ const AssignTasks = () => {
       else {
         const now = new Date();
         movedTask.startTime = now;
-        if (movedTask.duration) movedTask.endTime = new Date(now.getDate() + movedTask.duration); //days (for now)
+        if (movedTask.duration) movedTask.endTime = new Date(now.getTime() + movedTask.duration * 24 * 60 * 60 * 1000); //days (for now)
         else movedTask.endTime = undefined;
         movedTask.mechanic = columns[destIndex].mechanic;
         console.log('mechanic ' + movedTask.mechanic?.user.email);
-        //todo send POST to create assignment with this mechanic
+        // Send POST request to create assignment with this mechanic
+        createAssignment(movedTask);
       }
 
       destTasks.splice(destination.index, 0, movedTask);
@@ -160,12 +145,9 @@ const AssignTasks = () => {
       setColumns(newColumns);
     }
 
-    // const columnIndex = columns.findIndex(col => col.id === destination.droppableId);
-    // console.log(columnIndex);
-    const sourceIndex = columns.findIndex(col => col.id === source.droppableId);
     const destIndex = columns.findIndex(col => col.id === destination.droppableId);
     console.log(columns[destIndex].id); // id of mechanic
-    console.log(columns)
+    // console.log(columns)
   };
 
   return (
