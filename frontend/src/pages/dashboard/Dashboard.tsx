@@ -69,7 +69,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <DashboardNavbar activeComponent={selectedComponent} onSelectComponent={setSelectedComponent} />
+      <DashboardNavbar onSelectComponent={setSelectedComponent} />
       <div className="flex flex-col sm:flex-row bg-gray-100 h-auto min-h-screen overflow-auto">
         <Sidebar role={userRole} activeComponent={selectedComponent} onSelectComponent={setSelectedComponent} />
         <div className="flex flex-col flex-1 p-5">

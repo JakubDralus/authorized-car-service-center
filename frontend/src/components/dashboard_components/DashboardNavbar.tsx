@@ -1,33 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
-import { log } from 'console'
 
-// const navigation = [
-//   { name: 'Dashboard', to: '/dashboard'  },
-//   { name: 'Home', to: '/' },
-//   { name: 'Assign tasks', to: '' },
-// ];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function DashboardNavbar({ onSelectComponent, activeComponent}: 
-  { activeComponent: string; onSelectComponent: (component: string) => void }) {
-
-  const [current, setCurrent] = useState('Dashboard');
-
-  // useEffect(() => {
-  //   return () => {
-  //     console.log('s ' + activeComponent);
-  //   }
-  // })
-  // let activeDashboard: boolean = activeComponent !== 'Invoices' && activeComponent !== 'Assign tasks';
-  // console.log(activeComponent);
-  // console.log('active: ' + activeDashboard);
+export default function DashboardNavbar({ onSelectComponent}: { onSelectComponent: (component: string) => void }) {
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -189,7 +171,7 @@ export default function DashboardNavbar({ onSelectComponent, activeComponent}:
                   'text-gray-300 hover:bg-gray-700 hover:text-white',
                   'block rounded-md px-3 py-2 text-base font-medium no-underline'
                 )}
-                aria-current={'Dashboard' === current ? 'page' : undefined}
+                // aria-current={'Dashboard' === current ? 'page' : undefined}
               >
                 Dasboard
               </DisclosureButton>
@@ -201,7 +183,7 @@ export default function DashboardNavbar({ onSelectComponent, activeComponent}:
                   'text-gray-300 hover:bg-gray-700 hover:text-white',
                   'block rounded-md px-3 py-2 text-base font-medium no-underline'
                 )}
-                aria-current={'assign' === current ? 'page' : undefined}
+                // aria-current={'assign' === current ? 'page' : undefined}
               >
                 Assign tasks
               </DisclosureButton>
