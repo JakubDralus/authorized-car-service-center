@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./TicketForm.module.css";
+import "./TicketForm.css";
 import Navbar from "../../components/navbar/Navbar";
 import { ServicesForm } from "../../components/ticket_form_components/ServicesForm";
 import { ScheduleForm } from "../../components/ticket_form_components/ScheduleForm";
@@ -14,6 +14,22 @@ export const TicketForm = () => {
     const [clientData, setClientData] = useState(null);
     const [carData, setCarData] = useState(null);
 
+    //test
+    const services = [
+        {
+            id: 1,
+            name: 'Tire Change'
+        },
+        {
+            id: 2,
+            name: 'Oil change'
+        },
+        {
+            id: 3,
+            name: 'Check engine'
+        }
+    ]
+
     const nextStep = () => {
         setStep(prevStep => prevStep + 1);
     };
@@ -26,27 +42,49 @@ export const TicketForm = () => {
         <>
             <Navbar />
             <div className="w-full h-full">
-                <div className="mx-auto my-0">
-                    <div className="info-about-provided-data">
-
-                    </div>
-                    <div className="all-the-forms">
-                        <h1>Multi-step Form</h1>
-                        {step === 1 && (
-                            <ServicesForm nextStep={nextStep} />
-                        )}
-                        {step === 2 && (
-                            <ScheduleForm nextStep={nextStep} prevStep={prevStep}/>
-                        )}
-                        {step === 3 && (
-                            <ClientDataForm nextStep={nextStep} prevStep={prevStep}/>
-                        )}
-                        {step === 4 && (
-                            <CarForm nextStep={nextStep} prevStep={prevStep}/>
-                        )}
-                        {step === 5 && (
-                            <ConfirmationForm prevStep={prevStep}/>
-                        )}
+                <div className="mx-auto my-0 ticket-form-wrapper">
+                    <div className="flex flex-col items-center justify-center">
+                        <div className="w-full flex flex-col gap-5">
+                            <h1 className="text-4xl text-center py-7">Creating ticket</h1>
+                            <div className="flex justify-between items-center w-full gap-1">
+                                <div className="form-info-box">
+                                    <h3 className="text-lg">Selected services</h3>
+                                </div>
+                                <div className="form-info-box">
+                                    <h3 className="text-lg">Scheduled date</h3>
+                                </div>
+                                <div className="form-info-box">
+                                    <h3 className="text-lg">Car</h3>
+                                </div>
+                                <div className="form-info-box">
+                                    <h3 className="text-lg">Personal details</h3>
+                                </div>
+                            </div>
+                            <div className="w-full flex items-center justify-around bg-gray-100 text-xl p-4">
+                                <div className={`${step >= 1 ? 'text-red-500' : ''}`}>Services</div>
+                                <div className={`${step >= 2 ? 'text-red-500' : ''}`}>Schedule</div>
+                                <div className={`${step >= 3 ? 'text-red-500' : ''}`}>Car details</div>
+                                <div className={`${step >= 4 ? 'text-red-500' : ''}`}>Client details</div>
+                                <div className={`${step >= 5 ? 'text-red-500' : ''}`}>Confirm</div>
+                            </div>
+                        </div>
+                        <div className="w-full h-full">
+                            {step === 1 && (
+                                <ServicesForm nextStep={nextStep} services={services} />
+                            )}
+                            {step === 2 && (
+                                <ScheduleForm nextStep={nextStep} prevStep={prevStep} />
+                            )}
+                            {step === 3 && (
+                                <CarForm nextStep={nextStep} prevStep={prevStep} />
+                            )}
+                            {step === 4 && (
+                                <ClientDataForm nextStep={nextStep} prevStep={prevStep} />
+                            )}
+                            {step === 5 && (
+                                <ConfirmationForm prevStep={prevStep} />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

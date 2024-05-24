@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .form-info-box {
+        @apply w-80 h-56 bg-gray-100 flex items-center justify-start flex-col;
+    }
+}
+
+.ticket-form-wrapper{
+    max-width: 1260px;
+}
+
+.ticket-form-button{
+    background-color: var(--buttons-color);
+    color: white;
+    margin-top: 10px;
+    width: 160px;
+    height: 43px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 18px;
+}
