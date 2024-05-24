@@ -9,7 +9,7 @@ import TaskColumn from "./TaskColumn";
 export type TaskColumnType = {
   id: string;
   title: string;
-  mechanic?: Mechanic;
+  // mechanic?: Mechanic;
   tasks: Task[];
 }
 
@@ -17,8 +17,8 @@ const availableTasks: TaskColumnType = {
   id: "column0",
   title: "Available tasks",
   tasks: [
-    { id: "task0", content: "Task 0" }, 
-    { id: "task1", content: "Task 1" }
+    { id: "task0", description: "Task 0" }, 
+    { id: "task1", description: "Task 1" }
   ]
 }
 
@@ -28,15 +28,15 @@ const mechanicsTasks: TaskColumnType[] = [
     id: "column1",
     title: "Mechanic 1",
     tasks: [
-      { id: "task2", content: "Task 2" }, 
-      { id: "task3", content: "Task 3" }
+      { id: "task2", description: "Task 2" }, 
+      { id: "task3", description: "Task 3" }
     ]
   },
   {
     id: "column2",
     title: "mechanic 2",
     tasks: [
-      { id: "task4", content: "Task 4" }
+      { id: "task4", description: "Task 4" }
     ]
   }
 ];

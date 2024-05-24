@@ -1,6 +1,7 @@
 package com.example.modules.car;
 
 import com.example.modules.car.web.CarDTO;
+import com.example.modules.car.web.CarReadDTO;
 import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CarMapper implements IMapper<Car, CarDTO> {
+    
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
@@ -25,6 +27,15 @@ public class CarMapper implements IMapper<Car, CarDTO> {
                 .color(car.getColor())
                 .mileage(car.getMileage())
                 .owner(userMapper.toDto(car.getOwner()))
+                .build();
+    }
+    
+    public CarReadDTO toReadDto(Car car) {
+        return CarReadDTO.builder()
+                .carId(car.getCarId())
+                .model(car.getModel())
+                .manufacturedYear(car.getManufacturedYear())
+                .licensePlate(car.getLicensePlate())
                 .build();
     }
 

@@ -12,8 +12,10 @@ import com.example.modules.ticket.web.TicketReadDTO;
 import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.UserRepository;
+import com.example.modules.user.web.UserReadDTO;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -30,6 +32,8 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
     
     private final ServiceRepository serviceRepository;
     private final ServiceMapper serviceMapper;
+    
+    private final ModelMapper modelMapper;
     
     @Override
     public TicketDTO toDto(Ticket ticket) {
@@ -53,8 +57,11 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
                 .fullCost(ticket.getFullCost())
                 .createdAt(ticket.getCreatedAt())
                 .lastUpdatedAt(ticket.getLastUpdatedAt())
-                .customerId(ticket.getCustomer().getUserId())
-                .carId(ticket.getCar().getCarId())
+//                .customerId(ticket.getCustomer().getUserId())
+//                .carId(ticket.getCar().getCarId())
+                .user(modelMapper.map(ticket.getCustomer(), UserReadDTO.class))
+                .car(carMapper.toReadDto(ticket.getCar()))
+                .services(ticket.getServices().stream().map(serviceMapper::toDto).toList())
                 .build();
     }
     
