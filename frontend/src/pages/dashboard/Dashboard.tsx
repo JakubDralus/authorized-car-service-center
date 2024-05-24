@@ -5,6 +5,7 @@ import Sidebar from "../../components/dashboard_components/DashboardSidebar";
 import Stats2 from "../../components/dashboard_components/Stats2";
 import { useState } from "react";
 import Calendar from "../../components/dashboard_components/Calendar";
+import AssignTasks from "../../components/dashboard_components/AssignTasks";
 
 interface User {
   id: number;
@@ -21,8 +22,8 @@ const Dashboard = () => {
     { id: 3, name: "Tom Brown", email: "tom@example.com", role: "User" },
   ];
 
-  // const userRole: string = "admin"; // todo: get this from logged user
-  const userRole: string = "manager"; // todo: get this from logged user
+  const userRole: string = "admin"; // todo: get this from logged user
+  // const userRole: string = "manager"; // todo: get this from logged user
   
   const [selectedComponent, setSelectedComponent] = useState(''); // State to track the selected component
 
@@ -51,8 +52,12 @@ const Dashboard = () => {
         return <div>Reviews Component</div>;
       case 'ticket-updates':
         return <div>Ticket Updates Component</div>;
-      case 'Assign Tasks':
-        return <p>assign tasks</p>
+
+      case 'Assign tasks':
+        return <AssignTasks />;
+      case 'Invoices':
+        return <p>invoices</p>
+        
       default:
         return <>
           <Stats />

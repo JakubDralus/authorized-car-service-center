@@ -67,7 +67,7 @@ const Calendar = () => {
 
         days.push(
           <div
-            className={`border p-2 flex-1 h-12 text-center text-md flex  justify-center 
+            className={`border p-2 flex-1 h-12 text-center text-md flex justify-center 
             ${
               !isSameMonth(day, monthStart) ? "text-gray-300" 
                 : isSameDay(day, new Date()) ? "bg-blue-500 text-white"
@@ -81,7 +81,7 @@ const Calendar = () => {
         day = addDays(day, 1);
       }
       rows.push(
-        <div className="flex " key={day.toString()}>
+        <div className="flex" key={day.toString()}>
           {days}
         </div>
       );
@@ -101,7 +101,7 @@ const Calendar = () => {
 
     return (
       <div className="">
-        <div className="bg-white rounded-lg shadow-lg p-4">
+        <div className="bg-white rounded-lg shadow-md p-4">
         <h2 className="text-lg font-medium text-gray-700">Upcoming events</h2>
         <hr className='mb-4 mt-2'/>
           {events.map((event, index) => (
@@ -118,13 +118,13 @@ const Calendar = () => {
 
   return (
     <>
-      <div className='xl:flex mt-8 '>
+      <div className="xl:flex mt-8">
         <div className="p-4 bg-white rounded-lg shadow-md w-full xl:w-2/5 mr-5 mb-5 lg:mb-0">
           {renderHeader()}
           {renderDays()}
           {renderCells()}
         </div>
-        <div className="flex-1 ">
+        <div className="flex-1">
           {UpcomingEvents()}
         </div>
       </div>
