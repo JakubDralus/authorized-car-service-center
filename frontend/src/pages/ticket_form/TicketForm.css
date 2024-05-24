@@ -9,7 +9,7 @@
 }
 
 .ticket-form-wrapper{
-    max-width: 1260px;
+    max-width: min(1360px, 100vw);
 }
 
 .ticket-form-button{
@@ -23,4 +23,8 @@
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     font-size: 18px;
+}
+
+.ticket-form-card-width{
+    width: calc(1260px / 4 - 15px);
 }
