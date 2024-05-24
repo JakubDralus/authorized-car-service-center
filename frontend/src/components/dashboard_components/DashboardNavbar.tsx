@@ -1,20 +1,33 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import { log } from 'console'
 
-const navigation = [
-  { name: 'Dashboard', to: '/dashboard', current: true },
-  { name: 'Home', to: '/', current: false },
-  { name: 'Assign tasks', to: '', current: false },
-];
+// const navigation = [
+//   { name: 'Dashboard', to: '/dashboard'  },
+//   { name: 'Home', to: '/' },
+//   { name: 'Assign tasks', to: '' },
+// ];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function DashboardNavbar({ onSelectComponent }: { onSelectComponent: (component: string) => void }) {
+export default function DashboardNavbar({ onSelectComponent, activeComponent}: 
+  { activeComponent: string; onSelectComponent: (component: string) => void }) {
+
+  const [current, setCurrent] = useState('Dashboard');
+
+  // useEffect(() => {
+  //   return () => {
+  //     console.log('s ' + activeComponent);
+  //   }
+  // })
+  // let activeDashboard: boolean = activeComponent !== 'Invoices' && activeComponent !== 'Assign tasks';
+  // console.log(activeComponent);
+  // console.log('active: ' + activeDashboard);
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -48,20 +61,48 @@ export default function DashboardNavbar({ onSelectComponent }: { onSelectCompone
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <Link
-                        onClick={() => onSelectComponent(item.name)}
-                        key={item.name}
-                        to={item.to}
-                        className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium no-underline'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </Link> 
-                    ))}
+                    <Link
+                      onClick={() => {onSelectComponent('Dashboard')}}
+                      to={''}
+                      className={classNames(
+                        'text-gray-300 hover:bg-gray-700 hover:text-white',
+                        'rounded-md px-3 py-2 text-sm font-medium no-underline',
+                        // activeDashboard  ? ' bg-black' : ''
+                      )}
+                    >
+                      Dasboard
+                    </Link>
+                    <Link
+                      onClick={() => {onSelectComponent('Assign tasks')}}
+                      to={''}
+                      className={classNames(
+                        'text-gray-300 hover:bg-gray-700 hover:text-white',
+                        'rounded-md px-3 py-2 text-sm font-medium no-underline'
+                      )}
+                      // aria-current={'Assign tasks' === current ? 'page' : undefined}
+                    >
+                      Assign tasks
+                    </Link>
+                    <Link
+                      onClick={() => {onSelectComponent('Invoices')}}
+                      to={''}
+                      className={classNames(
+                        'text-gray-300 hover:bg-gray-700 hover:text-white',
+                        'rounded-md px-3 py-2 text-sm font-medium no-underline'
+                      )}
+                      // aria-current={'Invoices' === current ? 'page' : undefined}
+                    >
+                      Invoices
+                    </Link>
+                    <Link
+                      to={'/'}
+                      className={classNames(
+                        'text-gray-300 hover:bg-gray-700 hover:text-white',
+                        'rounded-md px-3 py-2 text-sm font-medium no-underline'
+                      )}
+                    >
+                      Home
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -138,20 +179,42 @@ export default function DashboardNavbar({ onSelectComponent }: { onSelectCompone
 
           <DisclosurePanel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <DisclosureButton
-                  key={item.name}
-                  as={Link} // Use Link component
-                  to={item.to} // Use "to" instead of "href"
-                  className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium no-underline'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.name}
-                </DisclosureButton>
-              ))}
+              <DisclosureButton
+                onClick={() => {onSelectComponent(''); 
+                // setCurrent('Dashboard')
+              }}
+                as={Link}
+                to={''}
+                className={classNames(
+                  'text-gray-300 hover:bg-gray-700 hover:text-white',
+                  'block rounded-md px-3 py-2 text-base font-medium no-underline'
+                )}
+                aria-current={'Dashboard' === current ? 'page' : undefined}
+              >
+                Dasboard
+              </DisclosureButton>
+              <DisclosureButton
+                onClick={() => {onSelectComponent('Assign tasks')}}
+                as={Link}
+                to={''}
+                className={classNames(
+                  'text-gray-300 hover:bg-gray-700 hover:text-white',
+                  'block rounded-md px-3 py-2 text-base font-medium no-underline'
+                )}
+                aria-current={'assign' === current ? 'page' : undefined}
+              >
+                Assign tasks
+              </DisclosureButton>
+              <DisclosureButton
+                as={Link}
+                to={'/'}
+                className={classNames(
+                  'text-gray-300 hover:bg-gray-700 hover:text-white',
+                  'block rounded-md px-3 py-2 text-base font-medium no-underline'
+                )}
+              >
+                Home
+              </DisclosureButton>
             </div>
           </DisclosurePanel>
         </>

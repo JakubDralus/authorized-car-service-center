@@ -1,8 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useEffect } from "react";
 import SidebarLink from "./SidebarLink";
 import { IoCarSportOutline } from "react-icons/io5";
 
-const Sidebar = ({ role, activeComponent, onSelectComponent }: { role: string; activeComponent: string; onSelectComponent: (component: string) => void }) => {
+const Sidebar = ({ role, activeComponent, onSelectComponent }: 
+  { role: string; activeComponent: string; onSelectComponent: (component: string) => void }) => {
+
+  // useEffect(() => {
+  //   return () => {
+  //     console.log(activeComponent);
+  //   }
+  // })
 
   return (
     <>
