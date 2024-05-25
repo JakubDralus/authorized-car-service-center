@@ -1,24 +1,29 @@
-import React from 'react'
 import { Task } from './model'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
 const TaskComponent = ({task}: {task: Task}) => {
 
   return (
-    <>
-      {task.id} <br></br>
-      {task.description} 
-      <div>
-        {task.startTime?.toLocaleString()}
+    <div>
+      <span className='font-bold'>
+        id: {task.id} <br></br>
+      </span>
+      <hr className='mb-2 mt-1'/>
+      <div className='max-h-6 overflow-ellipsis overflow-hidden'>
+        {task.description} 
       </div>
       <div>
-        {task.endTime?.toLocaleString()}
+        {"start: " + task.startTime?.toLocaleString()}
+      </div>
+      <div>
+        {"end: " + task.endTime?.toLocaleString()}
       </div>
       <div>
         ticket: {task.ticket?.ticketId}
       </div>
       <div>
-        {task.mechanic && `mech: ${task.mechanic?.user.lastName}`}
+        {task.mechanic && `mech: ${task.mechanic?.user.firstName} ${task.mechanic?.user.lastName} ${task.mechanic.mechanicId}`} <br></br>
+        {task.manager && `menago: ${task.manager?.user.firstName} ${task.manager?.user.lastName} `} <br></br>
+        {task.ticket && `status: ${task.ticket.status}`}
       </div>
       {/* <div className="sm:flex sm:items-start">
         <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -35,7 +40,7 @@ const TaskComponent = ({task}: {task: Task}) => {
           </p>
         </div>
       </div> */}
-    </>
+    </div>
   )
 }
 

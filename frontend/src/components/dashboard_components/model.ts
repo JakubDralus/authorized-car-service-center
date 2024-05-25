@@ -33,7 +33,8 @@ interface User {
 
 export interface UserRead {
   userId: number;
-  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
 }
 
@@ -61,10 +62,10 @@ export interface TicketRead {
   lastUpdatedAt: string; // Assuming LocalDateTime will be in ISO format
   user: UserRead;
   car: CarRead;
-  services: Service[];
+  services: ServiceRead[];
 }
 
-// AssignmentDTO
+// AssignmentDTO - send to backend
 export interface Task {
   id: string;
   description: string;
@@ -72,9 +73,22 @@ export interface Task {
   endTime?: Date;
   duration?: number;
   ticket?: TicketRead;
-  manager?: Manager;
-  mechanic?: Mechanic | null; 
+  manager?: ManagerRead;
+  mechanic?: MechanicRead | null ;
+  service?: ServiceRead;
 };
+
+// AssignmentReadDTO interface - from backend
+export interface AssignmentRead {
+  assignmentId: string;
+  description: string;
+  startTime: Date;
+  endTime: Date;
+  ticket: TicketRead;
+  manager: ManagerRead;
+  mechanic: MechanicRead;
+  service: ServiceRead;
+}
 
 export interface Car {
   carId: number;
@@ -112,4 +126,27 @@ export interface ApiResponse<T> {
   success: boolean;
   message?: string;
   data: T;
+}
+
+// ManagerRead interface
+export interface ManagerRead {
+  managerId: string;
+  salary: number;
+  user: UserRead;
+}
+
+// MechanicRead interface
+export interface MechanicRead {
+  mechanicId: string;
+  specialization: string;
+  salary: number;
+  user: UserRead;
+}
+
+// ServiceRead interface
+export interface ServiceRead {
+  serviceId: string;
+  estimatedRepairTime: number;
+  name: string;
+  cost: number;
 }

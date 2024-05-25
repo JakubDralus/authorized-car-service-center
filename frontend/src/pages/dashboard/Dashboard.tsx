@@ -16,6 +16,9 @@ interface User { // todo: change to type from ./model
 }
 
 const Dashboard = () => {
+
+  const location = useLocation();
+
   // Sample user data (to be deleted)
   const users: User[] = [
     { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
@@ -27,14 +30,13 @@ const Dashboard = () => {
   // const userRole: string = "manager"; // todo: get this from logged user
   
   const [selectedComponent, setSelectedComponent] = useState(''); // State to track the selected component
-  const location = useLocation();
 
   return (
     <>
       <DashboardNavbar onSelectComponent={setSelectedComponent} />
-      <div className="flex flex-col sm:flex-row bg-gray-100 h-auto min-h-screen overflow-auto">
+      <div className="flex flex-col sm:flex-row bg-gray-100 h-auto overflow-auto">
         <Sidebar role={userRole} activeComponent={selectedComponent} onSelectComponent={setSelectedComponent} />
-        <div className="flex flex-col flex-1 p-5">
+        <div className="flex flex-col flex-1 p-5 ">
           <div className="mt-2">
 
             <Routes>

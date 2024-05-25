@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useLocation } from "react-router-dom";
 import SidebarLink from "./SidebarLink";
 import { IoCarSportOutline } from "react-icons/io5";
 
@@ -9,9 +8,8 @@ const Sidebar = ({ role, activeComponent, onSelectComponent }:
   return (
     <>
       <div className="sm:flex sm:flex-col sm:w-64 bg-gray-700 pb-2">
-        <div className="sm:flex sm:flex-col sm:flex-1 ">
+        <div className="sm:flex sm:flex-col sm:flex-1 w-64">
           <nav className="sm:flex-1 sm:py-2 bg-gray-700 px-2 pb-3">
-
             <div className="font-normal text-lg text-gray-300 mb-5 ml-3 mt-5">People</div>
             
             {role === 'admin' ? (

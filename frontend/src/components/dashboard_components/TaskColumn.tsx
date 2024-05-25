@@ -2,13 +2,14 @@ import { Droppable, Draggable } from "@hello-pangea/dnd";
 import { TaskColumnType } from '../../pages/dashboard/AssignTasks';  // Adjust the import path based on your project structure
 import TaskComponent from './TaskComponent';
 
-const TaskColumn = ({ column }: {column: TaskColumnType}) => (
-  <div key={column.id} className=" w-72  ">
-    <h2 className="text-lg font-semibold mb-2">{column.title}</h2>
+const TaskColumn = ({ column }: { column: TaskColumnType }) => (
+  <div key={column.id} className='w-72'>
+    <h2 className={`${column.id === 'column0' ? 'text-blue-500' : ''} text-lg font-semibold mb-2`}>{column.title}</h2>
     <Droppable droppableId={column.id}>
       {(provided, snapshot) => (
         <div
-          className={`bg-gray-200 p-2 h-screen rounded ${snapshot.isDraggingOver ? "bg-gray-300" : ""}`}
+          className={`bg-gray-200 p-2 flex-1 h-screen overflow-auto rounded ${snapshot.isDraggingOver ? "bg-gray-300" : ""} 
+          ${column.id === 'column0' ? 'bg-gray-300' : ''}`}
           ref={provided.innerRef}
           {...provided.droppableProps}
         >

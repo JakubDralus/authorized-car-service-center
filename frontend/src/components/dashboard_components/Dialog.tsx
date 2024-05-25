@@ -1,6 +1,5 @@
-import { Fragment, useState } from 'react'
-import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { useState } from 'react'
+import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 
 export default function Example() {
 

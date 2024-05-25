@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import Dialog from "../../components/dashboard_components/Dialog";
-import { ApiResponse, Mechanic, Service, Task, TicketRead } from "../../components/dashboard_components/model";
+import { ApiResponse, AssignmentRead, Mechanic, ServiceRead, Task, TicketRead } from "../../components/dashboard_components/model";
 import TaskColumn from "../../components/dashboard_components/TaskColumn";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -11,7 +11,7 @@ export type TaskColumnType = {
   id: string;
   title: string;
   mechanic?: Mechanic;
-  tasks: Task[];
+  tasks: any[]; // Task[]
 }
 
 // Create an assignment/task for a mechanic
@@ -27,18 +27,64 @@ const createAssignment = async (task: Task) => {
       mechanicId: task.mechanic?.mechanicId
     },
     manager: {
-      managerId: task.manager?.managerId ?? 1 // TODO: get manager id from logged manager
+      managerId: task.manager?.managerId ?? 1 //get manager id from logged manager
+    },
+    service: {
+      serviceId: task.service?.serviceId
     }
   };
-  
-  console.log(payload);
+  // console.log(payload);
   
   try {
     const response = await axios.post("http://localhost:8081/api/v1/assignments", payload);
     console.log(response.data);
+    return response;
   } 
   catch (error) {
     console.error('Error creating assignment:', error);
+  }
+};
+
+// Function to update an existing assignment
+const updateAssignment = async (task: Task) => {
+  const payload = {
+    description: task.description,
+    startTime: task.startTime?.toISOString(),
+    endTime: task.endTime?.toISOString(),
+    ticket: {
+      ticketId: task.ticket?.ticketId
+    },
+    mechanic: {
+      mechanicId: task.mechanic?.mechanicId
+    },
+    manager: {
+      managerId: task.manager?.managerId ?? 1 //get manager id from logged manager
+    },
+    service: {
+      serviceId: task.service?.serviceId
+    }
+  };
+  // console.log(payload);
+
+  try {
+    await axios.put(`http://localhost:8081/api/v1/assignments/${task.id}`, payload);
+    // console.log('Assignment updated:', response.data);
+    console.log('Assignment updated');
+  } catch (error) {
+    console.error('Error updating assignment:', error);
+    throw error;
+  }
+};
+
+// Function to update ticket status
+const updateTicketStatus = async (ticketId: number, status: string) => {
+  try {
+    const response: ApiResponse<any> = await axios.put(`http://localhost:8081/api/v1/tickets/${ticketId}`, { status });
+    console.log(`Ticket ${ticketId} status updated to ${status}`);
+    console.log(response);
+  } 
+  catch (error) {
+    console.error(`Error updating ticket ${ticketId} status:`, error);
   }
 };
 
@@ -54,48 +100,83 @@ const fetchMechanics = async (): Promise<ApiResponse<Mechanic[]>> => {
   return data;
 };
 
-const AssignTasks = () => {
+const fetchAssignments = async (): Promise<ApiResponse<AssignmentRead[]>> => {
+  const { data } = await axios.get<ApiResponse<AssignmentRead[]>>(`http://localhost:8081/api/v1/assignments`);
+  console.log('assignments fetch');
+  return data;
+};
 
+const AssignTasks = () => {
+  
   const { data: responseTicketData, isLoading: isLoadingTickets, error: ticketError, refetch: refetchTickets } 
     = useQuery<ApiResponse<TicketRead[]>>("tickets", fetchTickets);
 
   const { data: responseMechanicsData, isLoading: isLoadingMechanics, error: mechanicsError, refetch: refetchMechanics } 
     = useQuery<ApiResponse<Mechanic[]>>("mechanics", fetchMechanics);
 
+  const { data: responseAssignmentsData, refetch: refetchAssignments,  isLoading: isLoadingAssignments, error: assignmentsError } 
+    = useQuery<ApiResponse<AssignmentRead[]>>("assignments", fetchAssignments);
+
   const [columns, setColumns] = useState<TaskColumnType[]>([]);
-  // const [availableTasks, setAvailableTasks] = useState<TaskColumnType>();
 
   useEffect(() => {
-    if (responseTicketData && responseMechanicsData) {
-      const availableTasks = {
+    if (responseMechanicsData && responseMechanicsData.data) {
+      const mechanicsTasksMap: { [key: string]: Task[] } = {};
+  
+      // Initialize the map with empty arrays for each mechanic
+      responseMechanicsData.data.forEach(mechanic => {
+        mechanicsTasksMap[mechanic.mechanicId] = [];
+      });
+  
+      // Populate the map with assignments
+      if (responseAssignmentsData && responseAssignmentsData.data) {
+        responseAssignmentsData.data.forEach((assignment) => {
+          const mechanicId = assignment.mechanic.mechanicId;
+          mechanicsTasksMap[mechanicId].push({
+            id: `${assignment.assignmentId}`,
+            description: assignment.description,
+            startTime: new Date(assignment.startTime),
+            endTime: new Date(assignment.endTime),
+            ticket: assignment.ticket,
+            manager: assignment.manager,
+            mechanic: assignment.mechanic,
+            service: assignment.service
+          });
+        });
+      }
+  
+      // Create columns based on the populated map
+      const newColumns: TaskColumnType[] = responseMechanicsData.data.map(mechanic => ({
+        id: `column-${mechanic.mechanicId}`,
+        title: mechanic.user.firstName + " " + mechanic.user.lastName,
+        mechanic: mechanic,
+        tasks: mechanicsTasksMap[mechanic.mechanicId]
+      }));
+  
+      // Add the available tasks column if there are tickets
+      const availableTasksColumn: TaskColumnType = {
         id: "column0",
         title: "Available tasks",
-        tasks: responseTicketData.data.reduce<Task[]>((acc, ticket) => {
-          // for every service in a ticket make a task obj
-          const tasksFromServices: Task[] = ticket.services.map((service: Service) => ({
+        tasks: responseTicketData && responseTicketData.data ? responseTicketData.data.reduce<Task[]>((acc: Task[], ticket: TicketRead) => {
+          const tasksFromServices: Task[] = ticket.services.map((service: ServiceRead) => ({
             id: `ticket-${ticket.ticketId}-service-${service.serviceId}`,
             description: service.name,
+            startTime: undefined,
+            endTime: undefined,
             duration: service.estimatedRepairTime,
-            ticket: ticket
+            ticket: ticket,
+            manager: undefined,
+            mechanic: undefined,
+            service: service
           }));
           return acc.concat(tasksFromServices);
-        }, [])
-      }
-
-      // Create mechanic columns from fetched mechanics
-      const mechanicColumns: TaskColumnType[] = responseMechanicsData.data.map(mechanic => ({
-        id: `mechanic-column-${mechanic.mechanicId}`,
-        title: mechanic.user.firstName + ' ' + mechanic.user.lastName,
-        mechanic: mechanic,
-        tasks: [] //TODO: fetch assignments for each mechanic 
-      }));
-
-      setColumns([availableTasks, ...mechanicColumns]);
-      // console.log(availableTasks);
-      // console.log(responseMechanicsData.data);
+        }, []) : []
+      };
+  
+      // Update the state with new columns
+      setColumns([availableTasksColumn, ...newColumns]);
     }
-  }, [responseTicketData, responseMechanicsData]);
-
+  }, [responseMechanicsData, responseAssignmentsData, responseTicketData]);
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -113,54 +194,102 @@ const AssignTasks = () => {
       setColumns(newColumns);
     } 
     else {
+      // Code for handling tasks moving between columns
       const sourceIndex = columns.findIndex(col => col.id === source.droppableId);
       const destIndex = columns.findIndex(col => col.id === destination.droppableId);
-
+      // console.log('src index: ' + sourceIndex);
+      // console.log('dest index: ' + destIndex);
+      
       const sourceTasks = Array.from(columns[sourceIndex].tasks);
       const destTasks = Array.from(columns[destIndex].tasks);
-
+  
       const [movedTask] = sourceTasks.splice(source.index, 1);
-
-      // assigning a task to mechanic
-      if (destination.droppableId === "column0") { // if dropped to default column
+  
+      if (destination.droppableId === "column0") {
+        // If dropped to default column, remove mechanic assignment
         movedTask.startTime = undefined;
         movedTask.endTime = undefined;
         movedTask.mechanic = undefined;
-      }
+      } 
       else {
+        // If dropped to mechanic column, assign mechanic and update task
         const now = new Date();
         movedTask.startTime = now;
-        if (movedTask.duration) movedTask.endTime = new Date(now.getTime() + movedTask.duration * 24 * 60 * 60 * 1000); //days (for now)
-        else movedTask.endTime = undefined;
+        if (movedTask.duration) movedTask.endTime = new Date(now.getTime() + movedTask.duration * 24 * 60 * 60 * 1000);
         movedTask.mechanic = columns[destIndex].mechanic;
-        console.log('mechanic ' + movedTask.mechanic?.user.email);
-        // Send POST request to create assignment with this mechanic
-        createAssignment(movedTask);
+        // console.log(movedTask);
+
+        destTasks.splice(destination.index, 0, movedTask);
+
+        // Check if the task was previously assigned to a different mechanic
+        const previouslyAssigned: boolean = columns[sourceIndex].mechanic?.mechanicId !== undefined ;
+        // console.log(previouslyAssigned);
+        
+        if (previouslyAssigned) {
+          // Update existing assignment
+          try {
+            console.log('updating task');
+            updateAssignment(movedTask);
+          } 
+          catch (error) {
+            console.error('Error updating assignment:', error);
+            sourceTasks.splice(source.index, 0, movedTask);
+          }
+        }
+
+        // Update the columns
+        let newColumns = [...columns];
+        newColumns[sourceIndex].tasks = sourceTasks;
+        newColumns[destIndex].tasks = destTasks;
+        setColumns(newColumns);
+
+        if (previouslyAssigned) return; // as the rest of logic is for first assignment
+        
+        // Check if all tasks from the ticket are assigned to any mechanic
+        const ticketId = movedTask.ticket?.ticketId;
+        const allTasksAssigned = ticketId && responseTicketData?.data?.find(ticket => ticket.ticketId === ticketId)?.services.every(service => {
+          return newColumns.some(column => column.tasks.some(task => task.ticket?.ticketId === ticketId && task.service?.serviceId === service.serviceId && task.mechanic));
+        });
+
+        if (allTasksAssigned) {
+          // If all tasks are assigned, send POST requests to create assignments for each task
+          responseTicketData?.data
+            ?.find(ticket => ticket.ticketId === ticketId)
+            ?.services.forEach(service => {
+              const task = newColumns.flatMap(column => column.tasks).find(task => task.ticket?.ticketId === ticketId && task.service?.serviceId === service.serviceId);
+              if (task) {
+                createAssignment(task).then(() => {
+                  refetchAssignments().then(() => {
+                    refetchTickets().then(() => {
+                      // Update the columns
+                      newColumns = [...columns];
+                      newColumns[sourceIndex].tasks = sourceTasks;
+                      newColumns[destIndex].tasks = destTasks;
+                      setColumns(newColumns);
+                    })
+                  })
+                })
+              }
+            });
+        
+          // Also, send PUT request to update ticket status to "PENDING"
+          updateTicketStatus(ticketId, "PENDING") 
+        }
       }
-
-      destTasks.splice(destination.index, 0, movedTask);
-
-      const newColumns = [...columns];
-      newColumns[sourceIndex].tasks = sourceTasks;
-      newColumns[destIndex].tasks = destTasks;
-      setColumns(newColumns);
     }
-
-    const destIndex = columns.findIndex(col => col.id === destination.droppableId);
-    console.log(columns[destIndex].id); // id of mechanic
-    // console.log(columns)
   };
 
   const handleRefresh = () => {
     refetchTickets();
     refetchMechanics();
+    refetchAssignments();
   };
 
-  if (isLoadingTickets || isLoadingMechanics) {
+  if (isLoadingTickets || isLoadingMechanics || isLoadingAssignments) {
     return <div>Loading...</div>;
   }
 
-  if (ticketError || mechanicsError) {
+  if (ticketError || mechanicsError || assignmentsError) {
     return <div>Error loading data</div>;
   }
 
@@ -180,9 +309,8 @@ const AssignTasks = () => {
         </button>
       </div>
 
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 ">
         <DragDropContext onDragEnd={onDragEnd}>
-          {/* available tasks column */}
           {columns.length > 0 && <TaskColumn column={columns[0]} />}
           
           {columns.slice(1).map(column => (
