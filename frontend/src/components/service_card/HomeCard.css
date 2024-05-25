@@ -1,0 +1,13 @@
+
+
+.card-body{
+    justify-content: center;
+    flex-direction: column;
+    width: 350px;
+}
+.information-container{
+    height: 200px;
+}
+.photo-container{
+    height: 200px;
+}

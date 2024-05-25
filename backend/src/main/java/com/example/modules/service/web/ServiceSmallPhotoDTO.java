@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class ServiceDTO {
+public class ServiceSmallPhotoDTO {
     private Long serviceId;
     private Integer estimatedRepairTime;
     private String name;
@@ -20,6 +20,5 @@ public class ServiceDTO {
     private Double cost;
     private Boolean isAvailable;
     private Boolean isFeatured;
-    private String photoBigKey;
-    private String photoSmallKey;
+    private byte[] smallPhoto;
 }
