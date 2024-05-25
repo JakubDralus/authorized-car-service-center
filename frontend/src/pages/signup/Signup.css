@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .signup-left {
+        @apply bg-red-300 text-3xl;
+    }
+    .right-bgcolor{
+        background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgb(132, 24, 255) 100%);
+    }
+    .reg-input{
+        @apply w-100 h-10 text-lg rounded-4xl px-5 max-[680px]:w-80;
+    }
+}
+
+/* line */
+.reg-line {
+    position: relative;
+    text-align: center;
+    color: #868686;
+}
+
+.reg-line::before,
+.reg-line::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    /* width: calc(50% - 40px); */
+    border-top: 1px solid #c0c0c0;
+    width: 80px;
+    height: 1px;
+}
+
+.reg-line::before {
+    margin-right: 5px;
+}
+
+.reg-line::after {
+    margin-left: 5px;
+}

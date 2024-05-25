@@ -5,6 +5,8 @@ import Signup from './pages/signup/Signup';
 import Service from './pages/service/Service';
 import Services from './pages/services/Services';
 import CustomScroll from './components/scroll/CustomScroll';
+import Dashboard from './pages/dashboard/Dashboard';
+import Contact from './pages/contact/Contact';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path='/signup' errorElement={<div>404 not found</div>} element={<Signup/>}/>
         <Route path='/service/:id' errorElement={<div>404 not found</div>} element={<Service/>}/>
         <Route path='/services' errorElement={<div>404 not found</div>} element={<Services/>}/>
+        <Route path='/contact' errorElement={<div>404 not found</div>} element={<Contact/>}/>
+        <Route path='/dashboard/*' errorElement={<div>404 not found</div>} element={<Dashboard/>}/>
       </Routes>
     </BrowserRouter>
   );
