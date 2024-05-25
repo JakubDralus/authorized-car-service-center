@@ -1,8 +1,7 @@
 package com.example.modules.ticket.web;
 
-import com.example.modules.car.web.CarDTO;
 import com.example.modules.car.web.CarReadDTO;
-import com.example.modules.service.web.ServiceDTO;
+import com.example.modules.service.web.ServiceReadDTO;
 import com.example.modules.ticket.Ticket;
 import com.example.modules.user.web.UserReadDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -30,5 +29,5 @@ public class TicketReadDTO {
 //    private Long carId;
     private UserReadDTO user;
     private CarReadDTO car;
-    private List<ServiceDTO> services; // one task for each service
+    private List<ServiceReadDTO> services; // one task for each service
 }

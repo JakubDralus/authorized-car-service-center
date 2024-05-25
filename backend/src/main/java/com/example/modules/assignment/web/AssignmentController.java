@@ -41,8 +41,9 @@ public class AssignmentController {
                 .build();
     }
     
-    @PutMapping
-    public ApiResponse<AssignmentDTO> update(@RequestBody AssignmentDTO assignmentDTO) {
+    @PutMapping("/{assignmentId}")
+    public ApiResponse<AssignmentDTO> update(@RequestBody AssignmentDTO assignmentDTO, @PathVariable Long assignmentId) {
+        assignmentDTO.setAssignmentId(assignmentId);
         AssignmentDTO updated = assignmentService.update(assignmentDTO);
         return ApiResponse.<AssignmentDTO>builder()
                 .message("Assignment changed.")

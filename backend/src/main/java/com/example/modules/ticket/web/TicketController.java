@@ -46,8 +46,9 @@ public class TicketController {
                 .build();
     }
     
-    @PutMapping
-    public ApiResponse<TicketDTO> update(@RequestBody TicketDTO ticketDTO) {
+    @PutMapping("/{ticketId}")
+    public ApiResponse<TicketDTO> update(@RequestBody TicketDTO ticketDTO, @PathVariable Long ticketId) {
+        ticketDTO.setTicketId(ticketId); // todo refactor this
         TicketDTO updated = ticketService.update(ticketDTO);
         return ApiResponse.<TicketDTO>builder()
                 .message("Ticket updated.")
@@ -62,18 +63,4 @@ public class TicketController {
                 .message("Ticket deleted.")
                 .build();
     }
-    
-//    private final UserRepository userRepository;
-//    private final ModelMapper modelMapper;
-//
-//    @PostConstruct
-//    public void setup() {
-//        TicketDTO ticketDTO = TicketDTO.responseBodyer()
-//                .description("please help my car is broken, stupid shit cant even turn on")
-//                .status(Ticket.Status.REQUESTED)
-//                .fullCost(14324)
-//                .customer(modelMapper.map(userRepository.findById(6L).get(), UserDTO.class))
-//                .responseBody();
-//        ticketService.create(ticketDTO);
-//    }
 }
