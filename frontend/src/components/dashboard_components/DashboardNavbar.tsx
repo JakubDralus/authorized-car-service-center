@@ -2,7 +2,7 @@
 import { Fragment, useState } from 'react'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 
 function classNames(...classes: string[]) {
@@ -10,6 +10,8 @@ function classNames(...classes: string[]) {
 }
 
 export default function DashboardNavbar({ onSelectComponent}: { onSelectComponent: (component: string) => void }) {
+
+  const location = useLocation().pathname;
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -44,9 +46,8 @@ export default function DashboardNavbar({ onSelectComponent}: { onSelectComponen
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     <Link
-                      onClick={() => {onSelectComponent('Dashboard')}}
                       to={''}
-                      className={classNames(
+                      className={classNames( location === '/dashboard' ? 'bg-gray-900 text-white':
                         'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium no-underline',
                         // activeDashboard  ? ' bg-black' : ''
@@ -55,9 +56,8 @@ export default function DashboardNavbar({ onSelectComponent}: { onSelectComponen
                       Dasboard
                     </Link>
                     <Link
-                      onClick={() => {onSelectComponent('Assign tasks')}}
-                      to={''}
-                      className={classNames(
+                      to={'assign-tasks'}
+                      className={classNames(location === '/dashboard/assign-tasks' ? 'bg-gray-900 text-white':
                         'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium no-underline'
                       )}
@@ -66,9 +66,8 @@ export default function DashboardNavbar({ onSelectComponent}: { onSelectComponen
                       Assign tasks
                     </Link>
                     <Link
-                      onClick={() => {onSelectComponent('Invoices')}}
-                      to={''}
-                      className={classNames(
+                      to={'invoices'}
+                      className={classNames(location === '/dashboard/invoices' ? 'bg-gray-900 text-white':
                         'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium no-underline'
                       )}

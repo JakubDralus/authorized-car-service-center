@@ -6,8 +6,9 @@ import Stats2 from "../../components/dashboard_components/Stats2";
 import { useState } from "react";
 import Calendar from "../../components/dashboard_components/Calendar";
 import AssignTasks from "../../components/dashboard_components/AssignTasks";
+import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 
-interface User {
+interface User { // todo: change to type from ./model
   id: number;
   name: string;
   email: string;
@@ -26,46 +27,7 @@ const Dashboard = () => {
   // const userRole: string = "manager"; // todo: get this from logged user
   
   const [selectedComponent, setSelectedComponent] = useState(''); // State to track the selected component
-
-  // Function to render the selected component
-  const renderComponent = () => {
-    switch (selectedComponent) {
-      case 'users':
-        return <UserTable users={users} />;
-      case 'mechanics':
-        return <div>Mechanics Component</div>;
-      case 'accountants':
-        return <div>Accountants Component</div>;
-      case 'managers':
-        return <div>Managers Component</div>;
-      case 'services':
-        return <div>Services Component</div>;
-      case 'tickets':
-        return <div>Tickets Component</div>;
-      case 'invoices':
-        return <div>Invoices Component</div>;
-      case 'assignments':
-        return <div>Assignments Component</div>;
-      case 'cars':
-        return <div>Cars Component</div>;
-      case 'reviews':
-        return <div>Reviews Component</div>;
-      case 'ticket-updates':
-        return <div>Ticket Updates Component</div>;
-
-      case 'Assign tasks':
-        return <AssignTasks />;
-      case 'Invoices':
-        return <p>invoices</p>
-        
-      default:
-        return <>
-          <Stats />
-          <Stats2 />
-          <Calendar/>
-        </>;
-    }
-  };
+  const location = useLocation();
 
   return (
     <>
@@ -74,7 +36,25 @@ const Dashboard = () => {
         <Sidebar role={userRole} activeComponent={selectedComponent} onSelectComponent={setSelectedComponent} />
         <div className="flex flex-col flex-1 p-5">
           <div className="mt-2">
-            {renderComponent()}
+
+            <Routes>
+              <Route path="assign-tasks" element={<AssignTasks />} />
+              {/* invoices, ... */}
+              
+              <Route path="/users" element={<UserTable users={users}/>} />
+              {/* rest of the paths ... */}
+
+            </Routes>
+
+            {
+              location.pathname === '/dashboard' ? 
+              <>
+                <Stats />
+                <Stats2 />
+                <Calendar/>
+              </> 
+              : <Outlet/>
+            }
           </div>
         </div>
       </div>
