@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./TicketForm.css";
 import Navbar from "../../components/navbar/Navbar";
 import { ServicesForm } from "../../components/ticket_form_components/ServicesForm";
@@ -8,25 +8,113 @@ import { CarForm } from "../../components/ticket_form_components/CarForm";
 import { ConfirmationForm } from "../../components/ticket_form_components/ConfirmationForm";
 import { createContext } from "react";
 
-interface Service{
+//for context
+interface Service {
     id: number,
     name: string
 }
+
+interface Schedule {
+
+}
+
+interface Car {
+    model: string,
+    manufacturedYear: number,
+    licensePlate: string,
+    vin: string,
+    color: string,
+    mileage: number
+}
+
+interface Customer {
+    userId: number,
+    firstName: string,
+    lastName: string,
+    telephoneNumber: string,
+    email: string,
+}
+
+interface TicketData {
+    description: string,
+    services: Service[],
+    car: Car,
+    customer: Customer
+}
+
+
+
 
 interface ServiceContextType {
     selectedServices: Service[];
     setSelectedServices: React.Dispatch<React.SetStateAction<Service[]>>;
 }
 
-export const SelectedServiceContext = createContext<ServiceContextType | undefined>(undefined);
+interface CarContextType {
+    carData: Car,
+    setCarData: React.Dispatch<React.SetStateAction<Car>>;
+}
 
+interface CustomerContextType {
+    customerData: Customer,
+    setCustomerData: React.Dispatch<React.SetStateAction<Customer>>;
+}
+
+interface TicketDataContextType {
+    ticketData: TicketData;
+    setTicketData: React.Dispatch<React.SetStateAction<TicketData>>;
+}
+
+
+//contexts
+export const SelectedServiceContext = createContext<ServiceContextType | undefined>(undefined);
+export const CarDataContext = createContext<CarContextType | undefined>(undefined);
+export const CustomerDataContext = createContext<CustomerContextType | undefined>(undefined);
+export const TicketDataContext = createContext<TicketDataContextType | undefined>(undefined);
 
 export const TicketForm = () => {
     const [step, setStep] = useState<number>(1);
+
     const [selectedServices, setSelectedServices] = useState<Service[]>([]);
     const [serviceDate, setServiceDate] = useState(null);
-    const [clientData, setClientData] = useState(null);
-    const [carData, setCarData] = useState(null);
+    const [carData, setCarData] = useState<Car>({
+        model: '',
+        manufacturedYear: -1,
+        licensePlate: '',
+        vin: '',
+        color: '',
+        mileage: -1,
+    });
+    const [customerData, setCustomerData] = useState<Customer>({
+        userId: -1,
+        firstName: '',
+        lastName: '',
+        telephoneNumber: '',
+        email: '',
+    });
+
+    const [ticketData, setTicketData] = useState<TicketData>({
+        description: '',
+        services: [{
+            id: -1,
+            name: ''
+        }],
+        car: {
+            model: '',
+            manufacturedYear: -1,
+            licensePlate: '',
+            vin: '',
+            color: '',
+            mileage: -1
+        },
+        customer: {
+            userId: -1,
+            firstName: '',
+            lastName: '',
+            telephoneNumber: '',
+            email: '',
+        }
+    });
 
     //test
     const services = [
@@ -60,6 +148,10 @@ export const TicketForm = () => {
         setStep(prevStep => prevStep - 1);
     };
 
+    useEffect(() => {
+        console.log("Updated ticketData:", ticketData);
+    }, [ticketData]);
+
     return (
         <>
             <Navbar />
@@ -72,9 +164,9 @@ export const TicketForm = () => {
                                 <div className="form-info-box">
                                     <h3 className="text-lg">Selected services</h3>
                                     {selectedServices ? (
-                                        <div>
+                                        <div className="w-full">
                                             {selectedServices.map((service, index) => {
-                                                return(
+                                                return (
                                                     <div key={index}>{service.name}</div>
                                                 )
                                             })}
@@ -98,27 +190,33 @@ export const TicketForm = () => {
                                 <div className={`${step >= 2 ? 'text-red-500' : ''}`}>Schedule</div>
                                 <div className={`${step >= 3 ? 'text-red-500' : ''}`}>Car details</div>
                                 <div className={`${step >= 4 ? 'text-red-500' : ''}`}>Client details</div>
-                                <div className={`${step >= 5 ? 'text-red-500' : ''}`}>Confirm</div>
+                                <div className={`${step >= 5 ? 'text-red-500' : ''}`}>Summary</div>
                             </div>
                         </div>
-                        <div className="w-full h-full">
-                            {step === 1 && (
-                                <SelectedServiceContext.Provider value={{ selectedServices, setSelectedServices }}>
-                                    <ServicesForm nextStep={nextStep} services={services} />
-                                </SelectedServiceContext.Provider>
-                            )}
-                            {step === 2 && (
-                                <ScheduleForm nextStep={nextStep} prevStep={prevStep} />
-                            )}
-                            {step === 3 && (
-                                <CarForm nextStep={nextStep} prevStep={prevStep} />
-                            )}
-                            {step === 4 && (
-                                <ClientDataForm nextStep={nextStep} prevStep={prevStep} />
-                            )}
-                            {step === 5 && (
-                                <ConfirmationForm prevStep={prevStep} />
-                            )}
+                        <div className="w-full h-full bg-gray-50 p-7">
+                            <TicketDataContext.Provider value={{ ticketData, setTicketData }}>
+                                {step === 1 && (
+                                    <SelectedServiceContext.Provider value={{ selectedServices, setSelectedServices }}>
+                                        <ServicesForm nextStep={nextStep} services={services} />
+                                    </SelectedServiceContext.Provider>
+                                )}
+                                {step === 2 && (
+                                    <ScheduleForm nextStep={nextStep} prevStep={prevStep} />
+                                )}
+                                {step === 3 && (
+                                    <CarDataContext.Provider value={{ carData, setCarData }}>
+                                        <CarForm nextStep={nextStep} prevStep={prevStep} />
+                                    </CarDataContext.Provider>
+                                )}
+                                {step === 4 && (
+                                    <CustomerDataContext.Provider value={{ customerData, setCustomerData }}>
+                                        <ClientDataForm nextStep={nextStep} prevStep={prevStep} />
+                                    </CustomerDataContext.Provider>
+                                )}
+                                {step === 5 && (
+                                    <ConfirmationForm prevStep={prevStep} />
+                                )}
+                            </TicketDataContext.Provider>
                         </div>
                     </div>
                 </div>

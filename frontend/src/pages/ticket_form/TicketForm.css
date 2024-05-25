@@ -4,7 +4,7 @@
 
 @layer components {
     .form-info-box {
-        @apply w-80 h-56 bg-gray-100 flex items-center justify-start flex-col;
+        @apply w-96 h-56 bg-gray-100 flex items-center justify-start flex-col p-7 gap-4;
     }
 }
 
@@ -25,6 +25,13 @@
     font-size: 18px;
 }
 
-.ticket-form-card-width{
-    width: calc(1260px / 4 - 15px);
+.ticket-form-card{
+    width: calc(1360px / 4 - 15px - 14px);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* service card */
+.ticket-form-card.selected{
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }

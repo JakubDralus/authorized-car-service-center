@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SelectedServiceContext } from "../../../pages/ticket_form/TicketForm";
 
 interface ServiceCardProps {
@@ -7,6 +7,21 @@ interface ServiceCardProps {
 
 export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
     const serviceContext = useContext(SelectedServiceContext);
+
+    const [isSelected, setIsSelected] = useState<boolean>(false);
+
+    //check if service is already selected
+    useEffect(() => {
+        const serviceIndex = serviceContext?.selectedServices.findIndex(
+            (existingService) => existingService.id === service.id
+        );
+        if (serviceIndex !== -1) {
+            setIsSelected(true);
+        } 
+        else {
+            setIsSelected(false);
+        }
+    }, [service.id, serviceContext?.selectedServices]);
 
     const addService = () => {
         const serviceIndex = serviceContext?.selectedServices.findIndex(
@@ -19,17 +34,19 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
                     (_, index) => index !== serviceIndex
                 )
             );
+            setIsSelected(false);
         } 
         else {
             serviceContext?.setSelectedServices((prevSelectedServices) => [
                 ...prevSelectedServices,
                 service
             ]);
+            setIsSelected(true);
         }
     }
 
     return (
-        <div className="ticket-form-card-width h-64 bg-red-200">
+        <div className={`ticket-form-card h-64 bg-red-200 ${isSelected ? 'selected' : ''}`}>
             <div className="p-3 h-full flex flex-col justify-between items-start">
                 <div>{service.name}</div>
                 <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas molestie dolor ac venenatis euismod.</div>
