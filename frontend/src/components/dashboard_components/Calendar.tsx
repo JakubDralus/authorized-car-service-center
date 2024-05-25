@@ -119,7 +119,7 @@ const Calendar = () => {
   return (
     <>
       <div className="xl:flex mt-8">
-        <div className="p-4 bg-white rounded-lg shadow-md w-full xl:w-2/5 mr-5 mb-5 lg:mb-0">
+        <div className="p-4 bg-white rounded-lg shadow-md w-full xl:w-2/5 mr-5 mb-5 xl:mb-0">
           {renderHeader()}
           {renderDays()}
           {renderCells()}

@@ -13,7 +13,7 @@ function App() {
         <Route path='/login' errorElement={<div>404 not found</div>} element={<Login/>}/>
         <Route path='/signup' errorElement={<div>404 not found</div>} element={<Signup/>}/>
         <Route path='/contact' errorElement={<div>404 not found</div>} element={<Contact/>}/>
-        <Route path='/dashboard/*' errorElement={<div>404 not found</div>} element={<Dashboard/>}/  >
+        <Route path='/dashboard/*' errorElement={<div>404 not found</div>} element={<Dashboard/>}/>
       </Routes>
     </BrowserRouter>
   );

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
-import Dialog from "./Dialog";
-import { ApiResponse, Mechanic, Service, Task, TicketRead } from "./model";
-import TaskColumn from "./TaskColumn";
+import Dialog from "../../components/dashboard_components/Dialog";
+import { ApiResponse, Mechanic, Service, Task, TicketRead } from "../../components/dashboard_components/model";
+import TaskColumn from "../../components/dashboard_components/TaskColumn";
 import axios from "axios";
 import { useQuery } from "react-query";
 
@@ -13,18 +13,6 @@ export type TaskColumnType = {
   mechanic?: Mechanic;
   tasks: Task[];
 }
-
-const fetchTickets = async (): Promise<ApiResponse<TicketRead[]>> => {
-  const { data } = await axios.get<ApiResponse<TicketRead[]>>( "http://localhost:8081/api/v1/tickets/requested");
-  console.log('ticket fetch');
-  return data;
-};
-
-const fetchMechanics = async (): Promise<ApiResponse<Mechanic[]>> => {
-  const { data } = await axios.get<ApiResponse<Mechanic[]>>( "http://localhost:8081/api/v1/mechanics");
-  console.log('mechanics fetch');
-  return data;
-};
 
 // Create an assignment/task for a mechanic
 const createAssignment = async (task: Task) => {
@@ -54,19 +42,32 @@ const createAssignment = async (task: Task) => {
   }
 };
 
+const fetchTickets = async (): Promise<ApiResponse<TicketRead[]>> => {
+  const { data } = await axios.get<ApiResponse<TicketRead[]>>( "http://localhost:8081/api/v1/tickets/requested");
+  console.log('ticket fetch');
+  return data;
+};
+
+const fetchMechanics = async (): Promise<ApiResponse<Mechanic[]>> => {
+  const { data } = await axios.get<ApiResponse<Mechanic[]>>( "http://localhost:8081/api/v1/mechanics");
+  console.log('mechanics fetch');
+  return data;
+};
+
 const AssignTasks = () => {
 
-  const { data: responseTicketData, isLoading: isLoadingTickets, error: ticketError } 
+  const { data: responseTicketData, isLoading: isLoadingTickets, error: ticketError, refetch: refetchTickets } 
     = useQuery<ApiResponse<TicketRead[]>>("tickets", fetchTickets);
 
-  const { data: responseMechanicsData, isLoading: isLoadingMechanics, error: mechanicsError } 
+  const { data: responseMechanicsData, isLoading: isLoadingMechanics, error: mechanicsError, refetch: refetchMechanics } 
     = useQuery<ApiResponse<Mechanic[]>>("mechanics", fetchMechanics);
 
   const [columns, setColumns] = useState<TaskColumnType[]>([]);
+  // const [availableTasks, setAvailableTasks] = useState<TaskColumnType>();
 
   useEffect(() => {
     if (responseTicketData && responseMechanicsData) {
-      const availableTasks: TaskColumnType = {
+      const availableTasks = {
         id: "column0",
         title: "Available tasks",
         tasks: responseTicketData.data.reduce<Task[]>((acc, ticket) => {
@@ -79,7 +80,7 @@ const AssignTasks = () => {
           }));
           return acc.concat(tasksFromServices);
         }, [])
-      };
+      }
 
       // Create mechanic columns from fetched mechanics
       const mechanicColumns: TaskColumnType[] = responseMechanicsData.data.map(mechanic => ({
@@ -150,16 +151,41 @@ const AssignTasks = () => {
     // console.log(columns)
   };
 
+  const handleRefresh = () => {
+    refetchTickets();
+    refetchMechanics();
+  };
+
+  if (isLoadingTickets || isLoadingMechanics) {
+    return <div>Loading...</div>;
+  }
+
+  if (ticketError || mechanicsError) {
+    return <div>Error loading data</div>;
+  }
+
   return (
     <>
       <div className="flex">
         <h1 className="text-3xl mb-8 mr-8">Assign tasks to mechanics</h1>
         <Dialog />
+        <button
+          onClick={handleRefresh}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-fit flex ml-3"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+          </svg>
+          refresh
+        </button>
       </div>
 
       <div className="flex space-x-4">
         <DragDropContext onDragEnd={onDragEnd}>
-          {columns.map(column => (
+          {/* available tasks column */}
+          {columns.length > 0 && <TaskColumn column={columns[0]} />}
+          
+          {columns.slice(1).map(column => (
             <TaskColumn key={column.id} column={column} />
           ))}
         </DragDropContext>

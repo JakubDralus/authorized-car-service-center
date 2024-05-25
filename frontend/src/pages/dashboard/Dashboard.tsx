@@ -1,11 +1,11 @@
 import DashboardNavbar from "../../components/dashboard_components/DashboardNavbar";
-import UserTable from "./Usertable";
+import UserTable from "../../components/dashboard_components/Usertable";
 import Stats from "../../components/dashboard_components/Stats";
 import Sidebar from "../../components/dashboard_components/DashboardSidebar";
 import Stats2 from "../../components/dashboard_components/Stats2";
 import { useState } from "react";
 import Calendar from "../../components/dashboard_components/Calendar";
-import AssignTasks from "../../components/dashboard_components/AssignTasks";
+import AssignTasks from "./AssignTasks";
 import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 
 interface User { // todo: change to type from ./model

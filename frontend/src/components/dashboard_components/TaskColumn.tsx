@@ -1,5 +1,5 @@
 import { Droppable, Draggable } from "@hello-pangea/dnd";
-import { TaskColumnType } from './AssignTasks';  // Adjust the import path based on your project structure
+import { TaskColumnType } from '../../pages/dashboard/AssignTasks';  // Adjust the import path based on your project structure
 import TaskComponent from './TaskComponent';
 
 const TaskColumn = ({ column }: {column: TaskColumnType}) => (
