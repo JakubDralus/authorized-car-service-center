@@ -1,15 +1,14 @@
 package com.example.modules.assignment.web;
 
-import com.example.modules.manager.web.ManagerDTO;
-import com.example.modules.mechanic.web.MechanicDTO;
-import com.example.modules.service.web.ServiceDTO;
-import com.example.modules.ticket.web.TicketDTO;
+import com.example.modules.manager.web.ManagerReadDTO;
+import com.example.modules.mechanic.web.MechanicReadDTO;
+import com.example.modules.service.web.ServiceReadDTO;
+import com.example.modules.ticket.web.TicketReadDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,13 +16,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class AssignmentDTO {
+public class AssignmentReadDTO {
     private Long assignmentId;
     private String description;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private TicketDTO ticket;
-    private ManagerDTO manager;
-    private MechanicDTO mechanic;
-    private ServiceDTO service;
+    private TicketReadDTO ticket;
+    private ManagerReadDTO manager;
+    private MechanicReadDTO mechanic;
+    private ServiceReadDTO service;
 }

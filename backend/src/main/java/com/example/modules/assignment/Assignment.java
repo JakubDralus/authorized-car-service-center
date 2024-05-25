@@ -2,6 +2,7 @@ package com.example.modules.assignment;
 
 import com.example.modules.manager.Manager;
 import com.example.modules.mechanic.Mechanic;
+import com.example.modules.service.ServiceModel;
 import com.example.modules.ticket.Ticket;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,4 +39,9 @@ public class Assignment {
     @ManyToOne
     @JoinColumn(name="mechanic_id")
     private Mechanic mechanic;
+    
+    // the service that the mechanic is working on
+    @ManyToOne
+    @JoinColumn(name="working_service_id")
+    private ServiceModel service;
 }

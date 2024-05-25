@@ -1,6 +1,7 @@
 package com.example.modules.assignment;
 
 import com.example.modules.assignment.web.AssignmentDTO;
+import com.example.modules.assignment.web.AssignmentReadDTO;
 import com.example.shared.CrudService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,10 +19,10 @@ public class AssignmentService implements CrudService<AssignmentDTO> {
     private final AssignmentMapper assignmentMapper;
     private final ModelMapper modelMapper;
     
-    public List<AssignmentDTO> getAll() {
+    public List<AssignmentReadDTO> getAll() {
         return assignmentRepository.findAll()
                 .stream()
-                .map(assignment -> modelMapper.map(assignment, AssignmentDTO.class))
+                .map(assignment -> modelMapper.map(assignment, AssignmentReadDTO.class))
                 .toList();
     }
     

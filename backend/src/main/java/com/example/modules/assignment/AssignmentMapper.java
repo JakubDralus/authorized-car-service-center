@@ -7,12 +7,17 @@ import com.example.modules.manager.ManagerRepository;
 import com.example.modules.mechanic.Mechanic;
 import com.example.modules.mechanic.MechanicMapper;
 import com.example.modules.mechanic.MechanicRepository;
+import com.example.modules.service.ServiceMapper;
+import com.example.modules.service.ServiceModel;
+import com.example.modules.service.ServiceRepository;
 import com.example.modules.ticket.Ticket;
 import com.example.modules.ticket.TicketMapper;
 import com.example.modules.ticket.TicketRepository;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 @Component
 @RequiredArgsConstructor
@@ -21,10 +26,12 @@ public class AssignmentMapper implements IMapper<Assignment, AssignmentDTO> {
     private final TicketMapper ticketMapper;
     private final ManagerMapper managerMapper;
     private final MechanicMapper mechanicMapper;
+    private final ServiceMapper serviceMapper;
     
     private final TicketRepository ticketRepository;
     private final ManagerRepository managerRepository;
     private final MechanicRepository mechanicRepository;
+    private final ServiceRepository serviceRepository;
     
     @Override
     public AssignmentDTO toDto(Assignment assignment) {
@@ -36,6 +43,7 @@ public class AssignmentMapper implements IMapper<Assignment, AssignmentDTO> {
                 .ticket(ticketMapper.toDto(assignment.getTicket()))
                 .manager(managerMapper.toDto(assignment.getManager()))
                 .mechanic(mechanicMapper.toDto(assignment.getMechanic()))
+                .service(serviceMapper.toDto(assignment.getService()))
                 .build();
     }
     
@@ -48,6 +56,7 @@ public class AssignmentMapper implements IMapper<Assignment, AssignmentDTO> {
         setTicket(assignmentDTO, assignment);
         setManager(assignmentDTO, assignment);
         setMechanic(assignmentDTO, assignment);
+        setService(assignmentDTO, assignment);
     }
     
     private void setTicket(AssignmentDTO assignmentDTO, Assignment assignment) {
@@ -63,5 +72,13 @@ public class AssignmentMapper implements IMapper<Assignment, AssignmentDTO> {
     private void setMechanic(AssignmentDTO assignmentDTO, Assignment assignment) {
         Mechanic mechanic = mechanicRepository.findById(assignmentDTO.getMechanic().getMechanicId()).orElseThrow();
         assignment.setMechanic(mechanic);
+    }
+    
+    private void setService(AssignmentDTO assignmentDTO, Assignment assignment) {
+        Long id = assignmentDTO.getService().getServiceId();
+        ServiceModel service = serviceRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Service not present with id " + id)
+        );
+        assignment.setService(service);
     }
 }

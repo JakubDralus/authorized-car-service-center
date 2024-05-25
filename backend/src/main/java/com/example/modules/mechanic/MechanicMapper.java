@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class MechanicMapper implements IMapper<Mechanic, MechanicDTO> {
 
     private final UserMapper userMapper;
+    
     @Override
     public MechanicDTO toDto(Mechanic mechanic){
         return MechanicDTO.builder()
