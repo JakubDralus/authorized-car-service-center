@@ -5,50 +5,50 @@ import ServiceInformation from "../../components/service_information/ServiceInfo
 import {Link} from "react-router-dom";
 import ServiceCarousel from "../../components/service_carousel/ServiceCarousel";
 import { useQuery } from 'react-query';
-import { fetchAvailableServices, findServiceDataById, ServiceCarouselProps } from './serviceData';
-
+import { fetchFeaturedServices, findServiceDataById, ServiceCarouselProps, ServiceData } from './serviceData';
+import { useLocation } from "react-router-dom";
 
 const Services = () =>{
-    const serviceText = {title: "titletitl etitle", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et scelerisque sem. Integer bibendum elit sapien, nec maximus nisl tempus ut. Vivamus a orci turpis. Mauris auctor condimentum sodales. Vivamus nisl mauris, aliquam sed ligula quis, tincidunt pharetra eros. Phasellus nec arcu ornare, egestas odio non, rutrum metus. Maecenas eleifend rhoncus turpis viverra vulputate. Nam in convallis tellus. Cras nec vestibulum nunc. Integer porttitor leo felis, vel placerat nisi lacinia id. Donec fermentum ipsum eget eros mattis, et tempus diam consectetur. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut eget sagittis est, in imperdiet ipsum. Sed sodales congue ultricies. Vestibulum dolor enim, feugiat id tempor in, dictum eget nibh. Suspendisse condimentum lacus vel nunc laoreet mollis. "};
-    const asoText = {title: "title", description: "ąąąąąąąąąąąąąąąąąąąąąąą"}
-    const serviceId = 1;
+    const serviceId = useLocation()
+    const { service_id } = serviceId.state
+    const asoText = {title: "Our service is a guarantee of quality", description: "No one knows your car like we do, which is why we can solve any problem you have. We are flexible and professional. You'll always leave us satisfied and confident in your vehicle. We understand that every day brings its challenges, so we guarantee reliability on every mile and no unpleasant surprises on the road. We take care of your car! Our service offers quick and convenient solutions tailored to your needs. Save time and stay calm. Servicing your car can truly be a pleasant experience!"}
 
-    const {data: availableServices, error: availableServicesError, isLoading: availableServicesIsLoading } = useQuery(['availableServices'], fetchAvailableServices);
-    const dataToSend: ServiceCarouselProps | null = availableServices ? { serviceData: availableServices, currentServiceId: serviceId } : null;
+    const {data: availableServices, error: availableServicesError, isLoading: availableServicesIsLoading } = useQuery(['featuredServices'], fetchFeaturedServices);
+    
+    if (availableServicesIsLoading) {
+        return <div className="spinner"></div>
+      }
 
-    console.log(dataToSend)
-
-
+    const filtredService = availableServices.filter((service: ServiceData) => service.serviceId == service_id)
+    const currentService = filtredService[0]
 
     return(
         <>
             <Navbar />
-            <div className="body-container flex flex-col">
-                <div className="w-full image-container">
-                    <img className="service-image"  src={require('../../components/service_card/opona.jpg')} />
-                    <div className="flex flex-col text-overlay">
-                        <p className="text-white font-bold">TITLE TITLE TITLE</p>
+            <div className="flex flex-col justify-center">
+                <div className="body-container flex flex-col">
+                    <div className="image-container">
+                        <img className="service-image"  src={`data:image/jpeg;base64,${currentService.smallPhoto}`} />
+                        <div className="service-image-overlay"></div>
+                        <div className="text-overlay flex justify-center">
+                            <p className="text-white font-bold">{currentService.name}</p>
+                        </div>
                     </div>
+
+                    <ServiceInformation title={currentService.name} description={currentService.description} />
+                    <ServiceInformation title={asoText.title} description={asoText.description} />
+
+                    <div className="schedule-service-container justify-center items-center flex flex-col gap-20">
+                        <p className="text-3xl">Schedule a service appointment</p>
+
+                        <Link to="/" className="schedule-service-button">Book an appointment</Link>
+                    </div>
+
+                    <ServiceCarousel serviceData={availableServices} currentServiceId={service_id} />
+ 
+                    
                 </div>
-
-                <ServiceInformation title={serviceText.title} description={serviceText.description} />
-                <ServiceInformation title={asoText.title} description={asoText.description} />
-
-                <div className="schedule-service-container justify-center items-center flex flex-col gap-20">
-                    <p className="text-3xl">Schedule a service appointment</p>
-
-                    <Link to="/" className="schedule-service-button">Book an appointment</Link>
-                </div>
-
-             
-             {availableServices ? (
-                <ServiceCarousel serviceData={availableServices} currentServiceId={serviceId} />
-             ) :
-             <p>Loading...</p>
-             }
-                
             </div>
-            
             <Footer />
         </>
     )

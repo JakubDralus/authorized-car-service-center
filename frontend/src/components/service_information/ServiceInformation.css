@@ -1,11 +1,11 @@
 .text-wrapper{
-    width: 80%;
-    margin: 0 0 5% 0;
+    width: 85rem;
+    margin: 0 0 5rem 0;
 }
 
 .description-body{
     padding: 5% 15% 5% 15%;
-    min-width: 80%;
+    min-width: 85rem;
     width: 90%;
 }
 

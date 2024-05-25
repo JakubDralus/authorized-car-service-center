@@ -1,8 +1,3 @@
-ALTER TABLE service
-    ADD COLUMN description TEXT,
-    ALTER COLUMN photo_big_key TYPE TEXT,
-    ALTER COLUMN photo_small_key TYPE TEXT;
-
 INSERT INTO service (estimated_repair_time, name, type, cost, photo_big_key, photo_small_key, description, is_available, is_featured)
 VALUES (10, 'Battery replacement', 'Engine', 1500, 'service-photos-1/big-c0841ac5-08e9-46ac-a289-2d70b2f9f89a', 'service-photos-1/small-46bec8d5-ecad-43c1-a6e4-2a0a3df0fd26', 'Our Battery Replacement service ensures that your vehicle has a reliable power source. We offer quick and efficient battery swaps, minimizing downtime and inconvenience. Our team will help you choose the right battery for your car, ensuring optimal performance. Drive with confidence knowing your vehicle has a dependable battery.', TRUE, TRUE);
 

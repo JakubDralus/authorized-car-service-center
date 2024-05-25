@@ -14,13 +14,13 @@ export interface ServiceData {
 
 export interface ServiceCarouselProps {
   serviceData: ServiceData[];
-  currentServiceId: number;
+  currentServiceId?: number;
 }
 
 
-export const fetchAvailableServices = async () => {
+export const fetchFeaturedServices = async () => {
     try {
-      const response = await axios.get('http://localhost:8081/api/v1/services/available-photos');
+      const response = await axios.get('http://localhost:8081/api/v1/services/featured-photos');
       console.log(response.data)
       return response.data;
     } catch (error) {
