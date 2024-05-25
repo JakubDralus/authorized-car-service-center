@@ -8,6 +8,30 @@ import { CarForm } from "../../components/ticket_form_components/CarForm";
 import { ConfirmationForm } from "../../components/ticket_form_components/ConfirmationForm";
 import { createContext } from "react";
 
+//mock service
+const services = [
+    {
+        id: 1,
+        name: 'Tire Change'
+    },
+    {
+        id: 2,
+        name: 'Oil change'
+    },
+    {
+        id: 3,
+        name: 'Check engine'
+    },
+    {
+        id: 4,
+        name: 'Check engine2'
+    },
+    {
+        id: 5,
+        name: 'Check engine3'
+    }
+]
+
 //for context
 interface Service {
     id: number,
@@ -41,8 +65,6 @@ interface TicketData {
     car: Car,
     customer: Customer
 }
-
-
 
 
 interface ServiceContextType {
@@ -116,29 +138,7 @@ export const TicketForm = () => {
         }
     });
 
-    //test
-    const services = [
-        {
-            id: 1,
-            name: 'Tire Change'
-        },
-        {
-            id: 2,
-            name: 'Oil change'
-        },
-        {
-            id: 3,
-            name: 'Check engine'
-        },
-        {
-            id: 4,
-            name: 'Check engine2'
-        },
-        {
-            id: 5,
-            name: 'Check engine3'
-        }
-    ]
+
 
     const nextStep = () => {
         setStep(prevStep => prevStep + 1);
@@ -149,8 +149,8 @@ export const TicketForm = () => {
     };
 
     useEffect(() => {
-        console.log("Updated ticketData:", ticketData);
-    }, [ticketData]);
+        console.log("Updated ticketData's services:", ticketData.services);
+    }, [ticketData.services]);
 
     return (
         <>
@@ -180,9 +180,25 @@ export const TicketForm = () => {
                                 </div>
                                 <div className="form-info-box">
                                     <h3 className="text-lg">Car</h3>
+                                    {/* todo */}
+                                    {carData.model !== '' ? (
+                                        <div className="w-full">
+                                            {carData.manufacturedYear}
+                                        </div>
+                                    ) : (
+                                        <div></div>
+                                    )}
                                 </div>
                                 <div className="form-info-box">
                                     <h3 className="text-lg">Personal details</h3>
+                                    {/* todo */}
+                                    {customerData.email !== '' ? (
+                                        <div className="w-full">
+                                            {customerData.telephoneNumber}
+                                        </div>
+                                    ) : (
+                                        <div></div>
+                                    )}
                                 </div>
                             </div>
                             <div className="w-full flex items-center justify-around bg-gray-100 text-xl p-4">

@@ -6,6 +6,12 @@
     .form-info-box {
         @apply w-96 h-56 bg-gray-100 flex items-center justify-start flex-col p-7 gap-4;
     }
+    .car-form-input{
+        @apply w-100 h-10 text-lg border-b-2 border-b-gray-400 px-5 transition-all focus:outline-0 focus:border-b-black max-[860px]:w-80;
+    }
+    .customer-form-input{
+        @apply w-100 h-10 text-lg border-b-2 border-b-gray-400 px-5 transition-all focus:outline-0 focus:border-b-black max-[860px]:w-80;
+    }
 }
 
 .ticket-form-wrapper{
@@ -15,7 +21,6 @@
 .ticket-form-button{
     background-color: var(--buttons-color);
     color: white;
-    margin-top: 10px;
     width: 160px;
     height: 43px;
     border-radius: 20px;
@@ -30,8 +35,14 @@
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
+
 /* service card */
 .ticket-form-card.selected{
     transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* car form */
+.car-form-wrapper{
+    max-width: 1000px;
 }
