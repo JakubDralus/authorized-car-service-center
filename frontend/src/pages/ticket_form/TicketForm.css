@@ -12,6 +12,9 @@
     .customer-form-input{
         @apply w-100 h-10 text-lg border-b-2 border-b-gray-400 px-5 transition-all focus:outline-0 focus:border-b-black max-[860px]:w-80;
     }
+    .address-form-input{
+        @apply w-80 h-10 text-lg border-b-2 border-b-gray-400 px-5 transition-all focus:outline-0 focus:border-b-black max-[860px]:w-72;
+    }
 }
 
 .ticket-form-wrapper{
@@ -46,3 +49,5 @@
 .car-form-wrapper{
     max-width: 1000px;
 }
+
+/* client data form */

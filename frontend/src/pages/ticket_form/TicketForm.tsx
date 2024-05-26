@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./TicketForm.css";
 import Navbar from "../../components/navbar/Navbar";
 import { ServicesForm } from "../../components/ticket_form_components/ServicesForm";
@@ -9,72 +9,7 @@ import { ConfirmationForm } from "../../components/ticket_form_components/Confir
 import { createContext } from "react";
 import { useQuery } from "react-query";
 import { fetchTicketServices } from "./ticketFormFunctions";
-
-
-//for context
-interface Service {
-    serviceId: number,
-    name: string,
-    description: string,
-    estimatedRepairTime: number,
-    cost: number
-}
-
-interface Schedule {
-
-}
-
-interface Car {
-    model: string,
-    manufacturedYear: number,
-    licensePlate: string,
-    vin: string,
-    color: string,
-    mileage: number
-}
-
-interface Customer {
-    userId: number,
-    firstName: string,
-    lastName: string,
-    telephoneNumber: string,
-    email: string,
-}
-
-interface TicketData {
-    description: string,
-    services: Service[],
-    car: Car,
-    customer: Customer
-}
-
-
-interface ServiceContextType {
-    selectedServices: Service[];
-    setSelectedServices: React.Dispatch<React.SetStateAction<Service[]>>;
-}
-
-interface CarContextType {
-    carData: Car,
-    setCarData: React.Dispatch<React.SetStateAction<Car>>;
-}
-
-interface CustomerContextType {
-    customerData: Customer,
-    setCustomerData: React.Dispatch<React.SetStateAction<Customer>>;
-}
-
-interface TicketDataContextType {
-    ticketData: TicketData;
-    setTicketData: React.Dispatch<React.SetStateAction<TicketData>>;
-}
-
-
-//contexts
-export const SelectedServiceContext = createContext<ServiceContextType | undefined>(undefined);
-export const CarDataContext = createContext<CarContextType | undefined>(undefined);
-export const CustomerDataContext = createContext<CustomerContextType | undefined>(undefined);
-export const TicketDataContext = createContext<TicketDataContextType | undefined>(undefined);
+import { Car, Service, TicketData, Customer, Schedule, TicketDataContext, CustomerDataContext, CarDataContext, SelectedServiceContext } from "./ticketFormFunctions";
 
 export const TicketForm = () => {
     const [step, setStep] = useState<number>(1);
@@ -128,19 +63,23 @@ export const TicketForm = () => {
         fetchTicketServices
     );
 
-
+    const scrollRef = useRef<HTMLDivElement>(null);
     const nextStep = () => {
         setStep(prevStep => prevStep + 1);
+        scrollRef.current?.scrollIntoView()
     };
 
     const prevStep = () => {
         setStep(prevStep => prevStep - 1);
+        scrollRef.current?.scrollIntoView()
     };
 
     useEffect(() => {
         console.log("Updated ticketData's services:", ticketData.services);
     }, [ticketData.services]);
 
+
+    
     return (
         <>
             <Navbar />
@@ -198,11 +137,11 @@ export const TicketForm = () => {
                                 <div className={`${step >= 5 ? 'text-red-500' : ''}`}>Summary</div>
                             </div>
                         </div>
-                        <div className="w-full h-full bg-gray-50 p-7">
+                        <div className="w-full h-full bg-gray-50 p-7" ref={scrollRef}>
                             <TicketDataContext.Provider value={{ ticketData, setTicketData }}>
                                 {step === 1 && (
                                     <SelectedServiceContext.Provider value={{ selectedServices, setSelectedServices }}>
-                                        <ServicesForm nextStep={nextStep} services={data} />
+                                        {isLoading ? (<div className="spinner"></div>) : (<ServicesForm nextStep={nextStep} services={data} />)}
                                     </SelectedServiceContext.Provider>
                                 )}
                                 {step === 2 && (

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SelectedServiceContext, TicketDataContext } from "../../pages/ticket_form/TicketForm";
+import { SelectedServiceContext, TicketDataContext } from "../../pages/ticket_form/ticketFormFunctions";
 import { ServiceCard } from "./cards/ServiceCard";
 
 interface ServicesFormProps {
