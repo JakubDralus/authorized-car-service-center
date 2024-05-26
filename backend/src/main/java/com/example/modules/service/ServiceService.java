@@ -77,6 +77,7 @@ public class ServiceService implements CrudService<ServiceDTO> {
         }
     }
     
+    // photos order is: [big, small]
     public void uploadPhotosToS3(Long serviceId, MultipartFile ...files) {
         if (files.length != 2) {
             throw new InvalidParameterException("expected 2 photos");

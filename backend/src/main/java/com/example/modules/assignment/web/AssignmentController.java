@@ -15,11 +15,11 @@ public class AssignmentController {
     private final AssignmentService assignmentService;
     
     @GetMapping
-    public ApiResponse<List<AssignmentDTO>> getAll() {
-        List<AssignmentDTO> assignmentDTOS = assignmentService.getAll();
-        return ApiResponse.<List<AssignmentDTO>>builder()
+    public ApiResponse<List<AssignmentReadDTO>> getAll() {
+        List<AssignmentReadDTO> assignmentReadDTOS = assignmentService.getAll();
+        return ApiResponse.<List<AssignmentReadDTO>>builder()
                 .message("Assignments fetched.")
-                .data(assignmentDTOS)
+                .data(assignmentReadDTOS)
                 .build();
     }
     
@@ -41,8 +41,9 @@ public class AssignmentController {
                 .build();
     }
     
-    @PutMapping
-    public ApiResponse<AssignmentDTO> update(@RequestBody AssignmentDTO assignmentDTO) {
+    @PutMapping("/{assignmentId}")
+    public ApiResponse<AssignmentDTO> update(@RequestBody AssignmentDTO assignmentDTO, @PathVariable Long assignmentId) {
+        assignmentDTO.setAssignmentId(assignmentId);
         AssignmentDTO updated = assignmentService.update(assignmentDTO);
         return ApiResponse.<AssignmentDTO>builder()
                 .message("Assignment changed.")
