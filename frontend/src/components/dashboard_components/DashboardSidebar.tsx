@@ -2,8 +2,7 @@
 import SidebarLink from "./SidebarLink";
 import { IoCarSportOutline } from "react-icons/io5";
 
-const Sidebar = ({ role, activeComponent, onSelectComponent }: 
-  { role: string; activeComponent: string; onSelectComponent: (component: string) => void }) => {
+const Sidebar = ({ role,}: { role: string; }) => {
 
   return (
     <>

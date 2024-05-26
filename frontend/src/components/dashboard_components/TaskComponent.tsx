@@ -1,4 +1,4 @@
-import { Task } from './model'
+import { Task } from '../../api/model'
 
 const TaskComponent = ({task}: {task: Task}) => {
 

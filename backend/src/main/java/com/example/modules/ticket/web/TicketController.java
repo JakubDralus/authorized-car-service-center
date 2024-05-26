@@ -19,7 +19,7 @@ public class TicketController {
         return ticketService.getAll();
     }
     
-    @GetMapping("/requested")
+    @GetMapping("/requested") //todo url: "/status/{:status}" so its flexible
     public ApiResponse<List<TicketReadDTO>> getRequestedTickets() {
         List<TicketReadDTO> allRequested = ticketService.getAllRequested();
         return ApiResponse.<List<TicketReadDTO>>builder()

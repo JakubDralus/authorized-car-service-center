@@ -4,6 +4,7 @@ import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import Dashboard from './pages/dashboard/Dashboard';
 import Contact from './pages/contact/Contact';
+import AssignTasks from './pages/dashboard/AssignTasks';
 
 function App() {
   return (
@@ -13,7 +14,12 @@ function App() {
         <Route path='/login' errorElement={<div>404 not found</div>} element={<Login/>}/>
         <Route path='/signup' errorElement={<div>404 not found</div>} element={<Signup/>}/>
         <Route path='/contact' errorElement={<div>404 not found</div>} element={<Contact/>}/>
-        <Route path='/dashboard/*' errorElement={<div>404 not found</div>} element={<Dashboard/>}/>
+        <Route path='/dashboard/*' errorElement={<div>404 not found</div>} element={<Dashboard/>}>
+          <Route path="assign-tasks" element={<AssignTasks />} />
+          {/* invoices, ... */}
+          <Route path="users"/>
+          {/* rest of the dashboard ... */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );

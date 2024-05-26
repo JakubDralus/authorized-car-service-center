@@ -9,15 +9,15 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function DashboardNavbar({ onSelectComponent}: { onSelectComponent: (component: string) => void }) {
+export default function DashboardNavbar() {
 
   const location = useLocation().pathname;
 
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-gray-800 ">
       {({ open }: { open: boolean }) => (
         <>
-          <div className="mx-0 px-2 sm:px-6 lg:px-8">
+          <div className="mx-0 px-2 sm:px-6 lg:px-8 ">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -35,7 +35,6 @@ export default function DashboardNavbar({ onSelectComponent}: { onSelectComponen
                 <div className="flex flex-shrink-0 items-center">
                   <Link 
                     to={'/dashboard'}
-                    onClick={() => onSelectComponent('')}
                     >
                     <img
                       className="h-8 w-auto"
@@ -161,9 +160,6 @@ export default function DashboardNavbar({ onSelectComponent}: { onSelectComponen
           <DisclosurePanel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               <DisclosureButton
-                onClick={() => {onSelectComponent(''); 
-                // setCurrent('Dashboard')
-              }}
                 as={Link}
                 to={''}
                 className={classNames(
@@ -175,7 +171,6 @@ export default function DashboardNavbar({ onSelectComponent}: { onSelectComponen
                 Dasboard
               </DisclosureButton>
               <DisclosureButton
-                onClick={() => {onSelectComponent('Assign tasks')}}
                 as={Link}
                 to={''}
                 className={classNames(

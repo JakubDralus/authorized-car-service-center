@@ -23,7 +23,7 @@ const cardData = [
   }
 ];
 
-const Stats = () => {
+const Stats3 = () => {
   return (
     <>
       <h1 className="text-2xl mb-3 font-medium">Last 30 days</h1>
@@ -62,4 +62,4 @@ const Stats = () => {
   );
 };
 
-export default Stats;
+export default Stats3;

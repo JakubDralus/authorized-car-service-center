@@ -26,7 +26,7 @@ const cardData = [
   },
 ];
 
-const Stats2 = () => {
+const Stats4 = () => {
   return (
     <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-4 mt-5 rounded-lg  ">
       {cardData.map((card, index) => (
@@ -50,4 +50,4 @@ const Stats2 = () => {
   );
 }
 
-export default Stats2;
+export default Stats4;

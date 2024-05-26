@@ -6,7 +6,15 @@ interface User {
   role: string
 }
 
-const UserTable = ({ users }: { users: User[] }) => {
+const UserTable = () => {
+
+    // Sample user data (to be deleted)
+  const users: User[] = [
+    { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
+    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "User" },
+    { id: 3, name: "Tom Brown", email: "tom@example.com", role: "User" },
+  ];
+
   return (
     <div className="flex flex-col bg-white shadow-md mt-8">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
