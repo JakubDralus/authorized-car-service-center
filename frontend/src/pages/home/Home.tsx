@@ -10,9 +10,6 @@ import { useQuery } from 'react-query';
 const Home = () =>{
     const {data, error, isLoading} = useQuery(['featuredServices'], fetchFeaturedServices);
 
-    if(isLoading){
-        return(<div className="spinner"></div>)
-    }
     return (
         <>
             <Navbar/>
@@ -33,7 +30,7 @@ const Home = () =>{
                     </div>
                 </div>
                 <div className="home-example-services">
-                    <ServiceCarousel serviceData={data} />
+                    {isLoading ? (<div className="spinner"></div>) : (<ServiceCarousel serviceData={data} />)}
                 </div>
 
                 {/* maybe something more, we'll see */}
@@ -42,7 +39,7 @@ const Home = () =>{
                     <div className="home-schedule-info">
                         <h1>Book a service appointment</h1>
                         <span>Let the specialists take care of your car.</span>
-                        <Link className="home-button" to="/">Create a ticket</Link>
+                        <Link className="home-button" to="/ticket-form">Create a ticket</Link>
                     </div>
                 </div>
             </div>

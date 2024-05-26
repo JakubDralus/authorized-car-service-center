@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .form-info-box {
+        @apply w-96 h-56 bg-gray-100 flex items-center justify-start flex-col p-7 gap-4;
+    }
+    .car-form-input{
+        @apply w-100 h-10 text-lg border-b-2 border-b-gray-400 px-5 transition-all focus:outline-0 focus:border-b-black max-[860px]:w-80;
+    }
+    .customer-form-input{
+        @apply w-100 h-10 text-lg border-b-2 border-b-gray-400 px-5 transition-all focus:outline-0 focus:border-b-black max-[860px]:w-80;
+    }
+    .address-form-input{
+        @apply w-80 h-10 text-lg border-b-2 border-b-gray-400 px-5 transition-all focus:outline-0 focus:border-b-black max-[860px]:w-72;
+    }
+}
+
+.ticket-form-decor{
+    display:block;
+    width: 70px;
+    height: 3px;
+    background-color: rgb(95, 44, 44);
+    background-image: linear-gradient(to right, rgb(207, 3, 3) 20%, transparent 100%);
+    margin-bottom: 5px;
+  }
+
+.ticket-form-wrapper{
+    max-width: min(1360px, 100vw);
+}
+
+.ticket-form-button{
+    background-color: var(--buttons-color);
+    color: white;
+    width: 160px;
+    height: 43px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 18px;
+}
+
+.ticket-form-card{
+    width: calc(1360px / 4 - 15px - 14px);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+
+/* service card */
+.ticket-form-card.selected{
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* car form */
+.car-form-wrapper{
+    max-width: 1000px;
+}
+
+/* client data form */
+
+

@@ -5,6 +5,7 @@ import com.example.modules.aws.S3Service;
 import com.example.modules.service.web.ServiceBigPhotoDTO;
 import com.example.modules.service.web.ServiceDTO;
 import com.example.modules.service.web.ServiceSmallPhotoDTO;
+import com.example.modules.service.web.ServiceTicketDTO;
 import com.example.shared.CrudService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -190,6 +191,13 @@ public class ServiceService implements CrudService<ServiceDTO> {
         return serviceRepository.findAllFeatured()
                 .stream()
                 .map(service -> serviceMapper.toSmallDto(service, getPhotoFromS3(service.getPhotoSmallKey())))
+                .toList();
+    }
+
+    public List<ServiceTicketDTO> getAllAvailableToTicket() {
+        return  serviceRepository.findAllAvailable()
+                .stream()
+                .map(serviceMapper::toTicketDto)
                 .toList();
     }
 }

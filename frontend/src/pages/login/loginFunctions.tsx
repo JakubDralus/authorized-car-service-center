@@ -1,6 +1,6 @@
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 // --------------login-------------------
 export interface LoginData {

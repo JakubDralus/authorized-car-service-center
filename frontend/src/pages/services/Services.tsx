@@ -11,13 +11,12 @@ const Services = () => {
 
     const {data, error, isLoading} = useQuery(['availableServices'], fetchFeaturedServices);
 
-    if (isLoading) {
-        return <div className="spinner"></div>
-      }
-
     return(
         <>
             <Navbar />
+            {isLoading ? (
+                <div className="spinner"></div>
+            ):(
             <div className="services-body-wrapper">
                 <div className="services-wrapper flex flex-wrap mx">
                     {data && data.map((service: ServiceData, index: number) => (
@@ -30,6 +29,8 @@ const Services = () => {
                     ))}
                 </div>
             </div>
+            )}
+
             <Footer />
         </>
     )

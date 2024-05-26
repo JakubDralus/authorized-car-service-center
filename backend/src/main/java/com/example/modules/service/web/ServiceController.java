@@ -107,4 +107,9 @@ public class ServiceController {
         return serviceService.getAllFeaturedWithSmallPhoto();
     }
 
+    @GetMapping("ticket-services")
+    public List<ServiceTicketDTO> getAllAvailableToTicket() {
+        return serviceService.getAllAvailableToTicket();
+    }
+
 }
