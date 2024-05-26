@@ -19,6 +19,7 @@ public class ServiceModel {
     
     private Integer estimatedRepairTime;
     private String name;
+    private String description;
     private String type;
     private Double cost;
     private Boolean isAvailable;

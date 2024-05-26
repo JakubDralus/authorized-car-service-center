@@ -2,7 +2,9 @@ package com.example.modules.service;
 
 import com.example.modules.aws.S3Buckets;
 import com.example.modules.aws.S3Service;
+import com.example.modules.service.web.ServiceBigPhotoDTO;
 import com.example.modules.service.web.ServiceDTO;
+import com.example.modules.service.web.ServiceSmallPhotoDTO;
 import com.example.shared.CrudService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -139,6 +141,13 @@ public class ServiceService implements CrudService<ServiceDTO> {
                 size.equals("big") ? service.getPhotoBigKey() : service.getPhotoSmallKey()
         );
     }
+
+    public byte[] getPhotoFromS3(String key) {
+        return s3Service.getObject(
+                s3Buckets.getServicesBucket(),
+                key
+        );
+    }
     
     /**
      * Retrieves both of the {@link ServiceModel} photos that are stored as raw files in AWS S3 bucket.
@@ -160,5 +169,27 @@ public class ServiceService implements CrudService<ServiceDTO> {
         byte[] servicePhotoSm = s3Service.getObject(s3Buckets.getServicesBucket(), service.getPhotoSmallKey());
         
         return List.of(servicePhotoBg, servicePhotoSm);
+    }
+
+    public ServiceBigPhotoDTO getWithBigPhoto(Long id) {
+        ServiceModel service = serviceRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No service with id: " + id));
+
+        return serviceMapper.toBigDto(service, getPhotoFromS3(service.getPhotoBigKey()));
+    }
+
+    public List<ServiceSmallPhotoDTO> getAllAvailableWithSmallPhoto() {
+        return serviceRepository.findAllAvailable()
+                .stream()
+                .map(service -> serviceMapper.toSmallDto(service, getPhotoFromS3(service.getPhotoSmallKey())))
+                .toList();
+    }
+
+
+    public List<ServiceSmallPhotoDTO> getAllFeaturedWithSmallPhoto() {
+        return serviceRepository.findAllFeatured()
+                .stream()
+                .map(service -> serviceMapper.toSmallDto(service, getPhotoFromS3(service.getPhotoSmallKey())))
+                .toList();
     }
 }
