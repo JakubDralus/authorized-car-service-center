@@ -7,6 +7,7 @@ import Services from './pages/services/Services';
 import CustomScroll from './components/scroll/CustomScroll';
 import Dashboard from './pages/dashboard/Dashboard';
 import Contact from './pages/contact/Contact';
+import AssignTasks from './pages/dashboard/AssignTasks';
 import { TicketForm } from './pages/ticket_form/TicketForm';
 
 function App() {
@@ -20,7 +21,12 @@ function App() {
         <Route path='/service/:id' errorElement={<div>404 not found</div>} element={<Service/>}/>
         <Route path='/services' errorElement={<div>404 not found</div>} element={<Services/>}/>
         <Route path='/contact' errorElement={<div>404 not found</div>} element={<Contact/>}/>
-        <Route path='/dashboard/*' errorElement={<div>404 not found</div>} element={<Dashboard/>}/>
+        <Route path='/dashboard/*' errorElement={<div>404 not found</div>} element={<Dashboard/>}>
+          <Route path="assign-tasks" element={<AssignTasks />} />
+          {/* invoices, ... */}
+          <Route path="users"/>
+          {/* rest of the dashboard ... */}
+        </Route>
         <Route path='/ticket-form' errorElement={<div>404 not found</div>} element={<TicketForm/>}/>
       </Routes>
     </BrowserRouter>

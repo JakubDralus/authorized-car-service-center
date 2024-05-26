@@ -23,7 +23,14 @@ public class TicketService implements CrudService<TicketDTO> {
     public List<TicketReadDTO> getAll() {
         return ticketRepository.findAll()
                 .stream()
-                .map(ticket -> modelMapper.map(ticket, TicketReadDTO.class))
+                .map(ticketMapper::toReadDto)
+                .toList();
+    }
+    
+    public List<TicketReadDTO> getAllRequested() {
+        return ticketRepository.findTicketsByStatus(Ticket.Status.REQUESTED)
+                .stream()
+                .map(ticketMapper::toReadDto)
                 .toList();
     }
     
