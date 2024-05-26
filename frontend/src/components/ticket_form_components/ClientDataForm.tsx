@@ -73,7 +73,7 @@ export const ClientDataForm: React.FC<ClientDataProps> = ({ prevStep, nextStep }
 
                 </form>
             </div>
-            <div className="w-full h-full flex justify-between sticky bottom-7">
+            <div className="w-full h-full flex justify-between sticky bottom-7 mt-12">
                 <button className="ticket-form-button" onClick={prevStep}>Prev</button>
                 <button className="ticket-form-button" onClick={nextStep}>Next</button>
             </div>

@@ -42,7 +42,7 @@ export const CarForm: React.FC<CarFormProps> = ({ prevStep, nextStep }) => {
                     </label>
                 </div>
             </form>
-            <div className="w-full h-full flex justify-between sticky bottom-7">
+            <div className="w-full h-full flex justify-between sticky bottom-7 mt-12">
                 <button className="ticket-form-button" onClick={prevStep}>Prev</button>
                 <button className="ticket-form-button" onClick={validateCarDetails}>Next</button>
             </div>

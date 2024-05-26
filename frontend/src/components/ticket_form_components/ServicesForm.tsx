@@ -46,7 +46,7 @@ export const ServicesForm: React.FC<ServicesFormProps> = ({ nextStep, services }
                     <div>Loading...</div>
                 )}
             </div>
-            <div className="w-full h-full flex justify-end sticky bottom-7">
+            <div className="w-full h-full flex justify-end sticky bottom-7 mt-12">
                 <button className="ticket-form-button" onClick={checkSelectedServices}>Next</button>
             </div>
         </div>

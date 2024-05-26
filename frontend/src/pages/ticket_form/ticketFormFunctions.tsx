@@ -2,7 +2,6 @@ import axios from "axios";
 import { createContext } from "react";
 
 // interfaces
-//for context
 export interface Service {
     serviceId: number,
     name: string,
@@ -24,12 +23,20 @@ export interface Car {
     mileage: number
 }
 
+export interface Address{
+    country: string,
+    city: string,
+    street: string,
+    postalCode: string
+}
+
 export interface Customer {
     userId: number,
     firstName: string,
     lastName: string,
     telephoneNumber: string,
     email: string,
+    address: Address
 }
 
 export interface TicketData {
@@ -39,7 +46,7 @@ export interface TicketData {
     customer: Customer
 }
 
-
+//for contexts
 export interface ServiceContextType {
     selectedServices: Service[];
     setSelectedServices: React.Dispatch<React.SetStateAction<Service[]>>;

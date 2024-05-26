@@ -6,15 +6,14 @@ import { ScheduleForm } from "../../components/ticket_form_components/ScheduleFo
 import { ClientDataForm } from "../../components/ticket_form_components/ClientDataForm";
 import { CarForm } from "../../components/ticket_form_components/CarForm";
 import { ConfirmationForm } from "../../components/ticket_form_components/ConfirmationForm";
-import { createContext } from "react";
 import { useQuery } from "react-query";
 import { fetchTicketServices } from "./ticketFormFunctions";
-import { Car, Service, TicketData, Customer, Schedule, TicketDataContext, CustomerDataContext, CarDataContext, SelectedServiceContext } from "./ticketFormFunctions";
+import { Car, Service, TicketData, Customer, TicketDataContext, CustomerDataContext, CarDataContext, SelectedServiceContext } from "./ticketFormFunctions";
 
 export const TicketForm = () => {
     const [step, setStep] = useState<number>(1);
     const [selectedServices, setSelectedServices] = useState<Service[]>([]);
-    const [serviceDate, setServiceDate] = useState(null);
+    // const [serviceDate, setServiceDate] = useState(null);
     const [carData, setCarData] = useState<Car>({
         model: '',
         manufacturedYear: -1,
@@ -29,6 +28,12 @@ export const TicketForm = () => {
         lastName: '',
         telephoneNumber: '',
         email: '',
+        address: {
+            country: '',
+            city: '',
+            street: '',
+            postalCode: ''
+        }
     });
 
     const [ticketData, setTicketData] = useState<TicketData>({
@@ -54,16 +59,23 @@ export const TicketForm = () => {
             lastName: '',
             telephoneNumber: '',
             email: '',
+            address:{
+                country: '',
+                city: '',
+                street: '',
+                postalCode: ''
+            }
         }
     });
 
     //service fetching
-    const {data, error, isLoading} = useQuery(
+    const {data, isLoading} = useQuery(
         ['ticketServices'],
         fetchTicketServices
     );
 
     const scrollRef = useRef<HTMLDivElement>(null);
+    
     const nextStep = () => {
         setStep(prevStep => prevStep + 1);
         scrollRef.current?.scrollIntoView()
