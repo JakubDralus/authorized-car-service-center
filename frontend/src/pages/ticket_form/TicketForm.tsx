@@ -7,35 +7,17 @@ import { ClientDataForm } from "../../components/ticket_form_components/ClientDa
 import { CarForm } from "../../components/ticket_form_components/CarForm";
 import { ConfirmationForm } from "../../components/ticket_form_components/ConfirmationForm";
 import { createContext } from "react";
+import { useQuery } from "react-query";
+import { fetchTicketServices } from "./ticketFormFunctions";
 
-//mock service
-const services = [
-    {
-        id: 1,
-        name: 'Tire Change'
-    },
-    {
-        id: 2,
-        name: 'Oil change'
-    },
-    {
-        id: 3,
-        name: 'Check engine'
-    },
-    {
-        id: 4,
-        name: 'Check engine2'
-    },
-    {
-        id: 5,
-        name: 'Check engine3'
-    }
-]
 
 //for context
 interface Service {
-    id: number,
-    name: string
+    serviceId: number,
+    name: string,
+    description: string,
+    estimatedRepairTime: number,
+    cost: number
 }
 
 interface Schedule {
@@ -96,7 +78,6 @@ export const TicketDataContext = createContext<TicketDataContextType | undefined
 
 export const TicketForm = () => {
     const [step, setStep] = useState<number>(1);
-
     const [selectedServices, setSelectedServices] = useState<Service[]>([]);
     const [serviceDate, setServiceDate] = useState(null);
     const [carData, setCarData] = useState<Car>({
@@ -118,8 +99,11 @@ export const TicketForm = () => {
     const [ticketData, setTicketData] = useState<TicketData>({
         description: '',
         services: [{
-            id: -1,
-            name: ''
+            serviceId: -1,
+            name: '',
+            description: '',
+            estimatedRepairTime: -1,
+            cost: -1
         }],
         car: {
             model: '',
@@ -138,6 +122,11 @@ export const TicketForm = () => {
         }
     });
 
+    //service fetching
+    const {data, error, isLoading} = useQuery(
+        ['ticketServices'],
+        fetchTicketServices
+    );
 
 
     const nextStep = () => {
@@ -213,7 +202,7 @@ export const TicketForm = () => {
                             <TicketDataContext.Provider value={{ ticketData, setTicketData }}>
                                 {step === 1 && (
                                     <SelectedServiceContext.Provider value={{ selectedServices, setSelectedServices }}>
-                                        <ServicesForm nextStep={nextStep} services={services} />
+                                        <ServicesForm nextStep={nextStep} services={data} />
                                     </SelectedServiceContext.Provider>
                                 )}
                                 {step === 2 && (

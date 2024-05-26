@@ -4,7 +4,13 @@ import { ServiceCard } from "./cards/ServiceCard";
 
 interface ServicesFormProps {
     nextStep: () => void,
-    services: { id: number; name: string; }[]
+    services: {         
+        serviceId: number,
+        name: string,
+        description: string,
+        estimatedRepairTime: number,
+        cost: number 
+    }[]
 }
 
 export const ServicesForm: React.FC<ServicesFormProps> = ({ nextStep, services }) => {

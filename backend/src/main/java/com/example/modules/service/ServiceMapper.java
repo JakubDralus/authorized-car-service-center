@@ -3,11 +3,15 @@ package com.example.modules.service;
 import com.example.modules.service.web.ServiceBigPhotoDTO;
 import com.example.modules.service.web.ServiceDTO;
 import com.example.modules.service.web.ServiceSmallPhotoDTO;
+import com.example.modules.service.web.ServiceTicketDTO;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -61,5 +65,15 @@ public class ServiceMapper implements IMapper<ServiceModel, ServiceDTO> {
         service.setIsAvailable(serviceDTO.getIsAvailable());
         service.setIsFeatured(serviceDTO.getIsFeatured());
         service.setDescription(serviceDTO.getDescription());
+    }
+
+    public ServiceTicketDTO toTicketDto(ServiceModel service) {
+        return ServiceTicketDTO.builder()
+                .serviceId(service.getServiceId())
+                .estimatedRepairTime(service.getEstimatedRepairTime())
+                .description(Arrays.stream(service.getDescription().split("(?<=[.!?])\\s*")).limit(2).collect(Collectors.joining(" ")))
+                .cost(service.getCost())
+                .name(service.getName())
+                .build();
     }
 }

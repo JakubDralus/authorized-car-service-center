@@ -2,7 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { SelectedServiceContext } from "../../../pages/ticket_form/TicketForm";
 
 interface ServiceCardProps {
-    service: { id: number; name: string; }
+    service: {     
+        serviceId: number,
+        name: string,
+        description: string,
+        estimatedRepairTime: number,
+        cost: number
+    }
 }
 
 export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
@@ -13,7 +19,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
     //check if service is already selected
     useEffect(() => {
         const serviceIndex = serviceContext?.selectedServices.findIndex(
-            (existingService) => existingService.id === service.id
+            (existingService) => existingService.serviceId === service.serviceId
         );
         if (serviceIndex !== -1) {
             setIsSelected(true);
@@ -21,11 +27,11 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
         else {
             setIsSelected(false);
         }
-    }, [service.id, serviceContext?.selectedServices]);
+    }, [service.serviceId, serviceContext?.selectedServices]);
 
     const addService = () => {
         const serviceIndex = serviceContext?.selectedServices.findIndex(
-            (existingService) => existingService.id === service.id
+            (existingService) => existingService.serviceId === service.serviceId
         );
 
         if (serviceIndex !== -1) {
@@ -48,9 +54,12 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
     return (
         <div className={`ticket-form-card h-64 bg-red-200 ${isSelected ? 'selected' : ''}`}>
             <div className="p-3 h-full flex flex-col justify-between items-start">
-                <div>{service.name}</div>
-                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas molestie dolor ac venenatis euismod.</div>
-                <div>1000 PLN</div>
+                <div className="text-lg">{service.name}</div>
+                <div className="text-sm">{service.description}</div>
+                <div className="w-full flex justify-between items-center">
+                    <div>Est. repair time: {service.estimatedRepairTime} days</div>
+                    <div>{service.cost} PLN</div>
+                </div>
                 <div className="w-full flex items-center justify-center">
                     <button className="w-44 h-10  bg-green-200" onClick={addService}>Select</button>
                 </div>
