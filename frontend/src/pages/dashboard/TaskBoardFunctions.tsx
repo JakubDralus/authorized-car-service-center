@@ -1,18 +1,17 @@
-import { ApiResponse, AssignmentRead, Mechanic, Task, TicketRead } from "../../api/model";
+import { ApiResponse, Assignment, AssignmentRead, Mechanic, TaskRead, TicketRead } from "../../api/model";
 import axios from "axios";
 
 // Create an assignment/task for a mechanic
-export const createAssignment = async (task: Task) => {
+export const createAssignment = async (task: TaskRead) => {
   const payload = {
     description: task.description,
-    startTime: task.startTime?.toISOString(),
-    endTime: task.endTime?.toISOString(),
+    startTime: task?.startTime,
+    endTime: task?.endTime,
     ticket: { ticketId: task.ticket?.ticketId },
     mechanic: { mechanicId: task.mechanic?.mechanicId },
     manager: { managerId: task.manager?.managerId ?? 1 }, //get manager id from logged manager
     service: { serviceId: task.service?.serviceId }
   };
-  console.log(payload);
   
   try {
     const response = await axios.post("http://localhost:8081/api/v1/assignments", payload);
@@ -25,16 +24,17 @@ export const createAssignment = async (task: Task) => {
 };
 
 // Function to update an existing assignment
-export const updateAssignment = async (task: Task) => {
+export const updateAssignment = async (task: TaskRead) => {
   const payload = {
     description: task.description,
-    startTime: task.startTime?.toISOString(),
-    endTime: task.endTime?.toISOString(),
+    startTime: task?.startTime,
+    endTime: task?.endTime,
     ticket: { ticketId: task.ticket?.ticketId },
     mechanic: { mechanicId: task.mechanic?.mechanicId },
     manager: { managerId: task.manager?.managerId ?? 1 }, //get manager id from logged manager
     service: { serviceId: task.service?.serviceId }
   };
+  // console.log("payload:");
   // console.log(payload);
 
   try {
@@ -60,7 +60,7 @@ export const updateTicketStatus = async (ticketId: number, status: string) => {
 };
 
 export const fetchTickets = async (): Promise<ApiResponse<TicketRead[]>> => {
-  const { data } = await axios.get<ApiResponse<TicketRead[]>>( "http://localhost:8081/api/v1/tickets/requested");
+  const { data } = await axios.get<ApiResponse<TicketRead[]>>( "http://localhost:8081/api/v1/tickets/status/requested");
   console.log('ticket fetch');
   return data;
 };
@@ -74,5 +74,12 @@ export const fetchMechanics = async (): Promise<ApiResponse<Mechanic[]>> => {
 export const fetchAssignments = async (): Promise<ApiResponse<AssignmentRead[]>> => {
   const { data } = await axios.get<ApiResponse<AssignmentRead[]>>(`http://localhost:8081/api/v1/assignments`);
   console.log('assignments fetch');
+  return data;
+};
+
+export const fetchAssignment = async (id: string): Promise<ApiResponse<Assignment>> => {
+  const { data } = await axios.get<ApiResponse<Assignment>>(`http://localhost:8081/api/v1/assignments/${id}`);
+  console.log(`assignment ${id} fetch`);
+  console.log(data);
   return data;
 };
