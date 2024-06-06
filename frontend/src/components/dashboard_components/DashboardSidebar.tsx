@@ -61,7 +61,7 @@ const Sidebar = ({ role }: { role: string; }) => {
               to={'cars'}
               label="Cars"
               svg={<IoCarSportOutline size={24} className=""/>}
-            />
+            /> 
 
             <div className="font-normal text-lg text-gray-300 mb-5 ml-3 mt-8">Feedback</div>
 

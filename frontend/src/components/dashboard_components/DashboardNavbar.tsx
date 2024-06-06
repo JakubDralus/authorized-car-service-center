@@ -65,6 +65,16 @@ export default function DashboardNavbar() {
                       Assign tasks
                     </Link>
                     <Link
+                      to={'mechanic-tasks'}
+                      className={classNames(location === '/dashboard/mechanic-tasks' ? 'bg-gray-900 text-white':
+                        'text-gray-300 hover:bg-gray-700 hover:text-white',
+                        'rounded-md px-3 py-2 text-sm font-medium no-underline'
+                      )}
+                      // aria-current={'Assign tasks' === current ? 'page' : undefined}
+                    >
+                      Mechanic Tasks
+                    </Link>
+                    <Link
                       to={'invoices'}
                       className={classNames(location === '/dashboard/invoices' ? 'bg-gray-900 text-white':
                         'text-gray-300 hover:bg-gray-700 hover:text-white',
@@ -72,6 +82,7 @@ export default function DashboardNavbar() {
                       )}
                       // aria-current={'Invoices' === current ? 'page' : undefined}
                     >
+                      
                       Invoices
                     </Link>
                     <Link
