@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
-import Dialog from "../../components/dashboard_components/Dialog";
-import { ApiResponse, AssignmentRead, Mechanic, ServiceRead, Task, TicketRead } from "../../api/model";
+import { ApiResponse, AssignmentRead, Mechanic, ServiceRead, TaskRead, TicketRead } from "../../api/model";
 import TaskColumn from "../../components/dashboard_components/TaskColumn";
 import { useQuery } from "react-query";
 import { createAssignment, fetchAssignments, fetchMechanics, fetchTickets, updateAssignment, updateTicketStatus } from "./TaskBoardFunctions";
@@ -29,7 +28,7 @@ const AssignTasks = () => {
 
   useEffect(() => {
     if (responseMechanicsData && responseMechanicsData.data) {
-      const mechanicsTasksMap: { [key: string]: Task[] } = {};
+      const mechanicsTasksMap: { [key: string]: TaskRead[] } = {};
   
       // Initialize the map with empty arrays for each mechanic
       responseMechanicsData.data.forEach(mechanic => {
@@ -38,13 +37,13 @@ const AssignTasks = () => {
   
       // Populate the map with assignments
       if (responseAssignmentsData && responseAssignmentsData.data) {
-        responseAssignmentsData.data.forEach((assignment) => {
+        responseAssignmentsData.data.forEach((assignment: AssignmentRead) => {
           const mechanicId = assignment.mechanic.mechanicId;
           mechanicsTasksMap[mechanicId].push({
             id: `${assignment.assignmentId}`,
             description: assignment.description,
-            startTime: new Date(assignment.startTime),
-            endTime: new Date(assignment.endTime),
+            startTime: assignment.startTime ? new Date(assignment.startTime) : undefined,
+            endTime: assignment.endTime ? new Date(assignment.endTime) : undefined,
             ticket: assignment.ticket,
             manager: assignment.manager,
             mechanic: assignment.mechanic,
@@ -65,8 +64,8 @@ const AssignTasks = () => {
       const availableTasksColumn: TaskColumnType = {
         id: "column0",
         title: "Available tasks",
-        tasks: responseTicketData && responseTicketData.data ? responseTicketData.data.reduce<Task[]>((acc: Task[], ticket: TicketRead) => {
-          const tasksFromServices: Task[] = ticket.services.map((service: ServiceRead) => ({
+        tasks: responseTicketData && responseTicketData.data ? responseTicketData.data.reduce<TaskRead[]>((acc: TaskRead[], ticket: TicketRead) => {
+          const tasksFromServices: TaskRead[] = ticket.services.map((service: ServiceRead) => ({
             id: `ticket-${ticket.ticketId}-service-${service.serviceId}`,
             description: service.name,
             startTime: undefined,
@@ -113,10 +112,11 @@ const AssignTasks = () => {
   
       const [movedTask] = sourceTasks.splice(source.index, 1);
   
-      // If dropped to mechanic column, assign mechanic and update task
-      const now = new Date();
-      movedTask.startTime = now;
-      if (movedTask.duration) movedTask.endTime = new Date(now.getTime() + movedTask.duration * 24 * 60 * 60 * 1000);
+      // const now = new Date();
+      // movedTask.startTime = now;
+      // if (movedTask.duration) movedTask.endTime = new Date(now.getTime() + movedTask.duration * 24 * 60 * 60 * 1000);
+
+      // If dropped to mechanic column, assign mechanic
       movedTask.mechanic = columns[destIndex].mechanic;
       // console.log(movedTask);
 
@@ -124,7 +124,6 @@ const AssignTasks = () => {
 
       // Check if the task was previously assigned to a different mechanic
       const previouslyAssigned: boolean = columns[sourceIndex].mechanic?.mechanicId !== undefined ;
-      // console.log(previouslyAssigned);
       
       if (previouslyAssigned) {
         // Update existing assignment
@@ -154,7 +153,7 @@ const AssignTasks = () => {
 
       if (allTasksAssigned) {
         // Create assignments for each task and update the tasks with the response assignment IDs
-        let createAssignmentPromises: any[] = newColumns.flatMap(column => column.tasks)
+        let createAssignmentPromises = newColumns.flatMap(column => column.tasks)
           .filter(task => task.ticket?.ticketId === ticketId)
           .map(async (task) => {
             const assignment = await createAssignment(task);
@@ -196,7 +195,6 @@ const AssignTasks = () => {
     <>
       <div className="flex">
         <h1 className="text-3xl mb-8 mr-8">Assign tasks to mechanics</h1>
-        <Dialog />
         <button
           onClick={handleRefresh}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded h-fit flex ml-3"

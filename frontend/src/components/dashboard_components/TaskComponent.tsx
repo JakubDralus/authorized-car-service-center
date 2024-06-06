@@ -1,29 +1,51 @@
-import { Task } from '../../api/model'
+import { TaskRead } from '../../api/model';
+import TaskDialog from './TaskDialog';
 
-const TaskComponent = ({task}: {task: Task}) => {
+const TaskComponent = ({task}: {task: TaskRead}) => {
+
+  // console.log(task);
 
   return (
     <div>
-      <span className='font-bold'>
-        id: {task.id} <br></br>
-      </span>
+      <div className='font-bold flex justify-between'>
+        id: {task.id} 
+        {task.mechanic && <TaskDialog taskId={task.id} />}
+      </div>
+
       <hr className='mb-2 mt-1'/>
-      <div className='max-h-6 overflow-ellipsis overflow-hidden'>
-        {task.description} 
+
+      <div className='max-h-6 overflow-ellipsis overflow-hidden whitespace-nowrap mb-2'>
+        {task.description}
       </div>
-      <div>
-        {"start: " + task.startTime?.toLocaleString()}
-      </div>
-      <div>
-        {"end: " + task.endTime?.toLocaleString()}
-      </div>
-      <div>
-        ticket: {task.ticket?.ticketId}
-      </div>
-      <div>
-        {task.mechanic && `mech: ${task.mechanic?.user.firstName} ${task.mechanic?.user.lastName} ${task.mechanic.mechanicId}`} <br></br>
-        {task.manager && `menago: ${task.manager?.user.firstName} ${task.manager?.user.lastName} `} <br></br>
-        {task.ticket && `status: ${task.ticket.status}`}
+      <div className='flex flex-col'>
+        <div>
+          <strong>start: </strong>{task.startTime ? task.startTime?.toLocaleString() : "-"}
+        </div>
+        <div>
+          <strong>end: </strong>{task.startTime ? task.endTime?.toLocaleString() : "-"}
+        </div>
+        <div>
+          <strong>ticket id: </strong>{task.ticket?.ticketId}
+        </div>
+        <div>
+          {task.mechanic && (
+            <div>
+              <strong>mechanic: </strong>{task.mechanic?.user.firstName} {task.mechanic?.user.lastName} {task.mechanic.mechanicId}
+            </div>
+          )}
+        </div>
+        <div>
+          {task.manager && (
+            <div>
+              <strong>manager: </strong>${task.manager?.user.firstName} ${task.manager?.user.lastName} 
+            </div>
+          )}
+        </div>
+        {task.ticket && (
+          <div>
+            <strong>status: </strong>{task.ticket.status}
+          </div>
+        )}
       </div>
       {/* <div className="sm:flex sm:items-start">
         <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
