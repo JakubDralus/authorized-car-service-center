@@ -1,5 +1,6 @@
 package com.example.modules.ticket.web;
 
+import com.example.modules.ticket.Ticket;
 import com.example.modules.ticket.TicketService;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,9 @@ public class TicketController {
         return ticketService.getAll();
     }
     
-    @GetMapping("/requested") //todo url: "/status/{:status}" so its flexible
-    public ApiResponse<List<TicketReadDTO>> getRequestedTickets() {
-        List<TicketReadDTO> allRequested = ticketService.getAllRequested();
+    @GetMapping("/status/{status}")
+    public ApiResponse<List<TicketReadDTO>> getAllByStatus(@PathVariable String status) {
+        List<TicketReadDTO> allRequested = ticketService.getAllByStatus(Ticket.Status.valueOf(status.toUpperCase()));
         return ApiResponse.<List<TicketReadDTO>>builder()
                 .message("Fetched %d tickets with a Status of REQUESTED.".formatted(allRequested.size()))
                 .data(allRequested)
@@ -48,7 +49,7 @@ public class TicketController {
     
     @PutMapping("/{ticketId}")
     public ApiResponse<TicketDTO> update(@RequestBody TicketDTO ticketDTO, @PathVariable Long ticketId) {
-        ticketDTO.setTicketId(ticketId); // todo refactor this
+        ticketDTO.setTicketId(ticketId);
         TicketDTO updated = ticketService.update(ticketDTO);
         return ApiResponse.<TicketDTO>builder()
                 .message("Ticket updated.")

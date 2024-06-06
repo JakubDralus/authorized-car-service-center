@@ -69,8 +69,8 @@ export interface TicketRead {
 export interface Task {
   id: string;
   description: string;
-  startTime?: Date;
-  endTime?: Date;
+  startTime?: Date | undefined;
+  endTime?: Date | undefined;
   duration?: number;
   ticket?: TicketRead;
   manager?: ManagerRead;

@@ -1,6 +1,5 @@
 package com.example.modules.invoice.web;
 
-import com.example.modules.invoice.Invoice;
 import com.example.modules.invoice.InvoiceService;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,10 @@ package com.example.modules.manager.web;
 
 import com.example.modules.user.web.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
