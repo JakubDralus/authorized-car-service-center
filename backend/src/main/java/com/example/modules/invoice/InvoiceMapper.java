@@ -4,12 +4,12 @@ import com.example.modules.accountant.Accountant;
 import com.example.modules.accountant.AccountantMapper;
 import com.example.modules.accountant.AccountantRepository;
 import com.example.modules.invoice.web.InvoiceDTO;
+import com.example.modules.ticket.Ticket;
 import com.example.modules.ticket.TicketMapper;
 import com.example.modules.ticket.TicketRepository;
-import com.example.modules.ticket.Ticket;
+import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import com.example.shared.IMapper;
 
 @Component
 @RequiredArgsConstructor

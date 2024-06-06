@@ -1,6 +1,7 @@
 package com.example.modules.assignment;
 
 import com.example.modules.assignment.web.AssignmentDTO;
+import com.example.modules.assignment.web.AssignmentReadDTO;
 import com.example.modules.manager.Manager;
 import com.example.modules.manager.ManagerMapper;
 import com.example.modules.manager.ManagerRepository;
@@ -44,6 +45,19 @@ public class AssignmentMapper implements IMapper<Assignment, AssignmentDTO> {
                 .manager(managerMapper.toDto(assignment.getManager()))
                 .mechanic(mechanicMapper.toDto(assignment.getMechanic()))
                 .service(serviceMapper.toDto(assignment.getService()))
+                .build();
+    }
+    
+    public AssignmentReadDTO toReadDto(Assignment assignment) {
+        return AssignmentReadDTO.builder()
+                .assignmentId(assignment.getAssignmentId())
+                .description(assignment.getDescription())
+                .startTime(assignment.getStartTime())
+                .endTime(assignment.getEndTime())
+                .ticket(ticketMapper.toReadDto(assignment.getTicket()))
+                .manager(managerMapper.toReadDto(assignment.getManager()))
+                .mechanic(mechanicMapper.toReadDto(assignment.getMechanic()))
+                .service(serviceMapper.toReadDto(assignment.getService()))
                 .build();
     }
     

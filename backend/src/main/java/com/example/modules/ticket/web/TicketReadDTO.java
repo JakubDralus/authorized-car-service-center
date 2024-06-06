@@ -4,7 +4,6 @@ import com.example.modules.car.web.CarReadDTO;
 import com.example.modules.service.web.ServiceReadDTO;
 import com.example.modules.ticket.Ticket;
 import com.example.modules.user.web.UserReadDTO;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +16,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+//@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class TicketReadDTO {
     private Long ticketId;
     private String description;

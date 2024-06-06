@@ -22,14 +22,15 @@ public class AssignmentService implements CrudService<AssignmentDTO> {
     public List<AssignmentReadDTO> getAll() {
         return assignmentRepository.findAll()
                 .stream()
-                .map(assignment -> modelMapper.map(assignment, AssignmentReadDTO.class))
+                .map(assignmentMapper::toReadDto)
                 .toList();
     }
     
     @Override
     public AssignmentDTO get(Long id) {
         Assignment assignment = assignmentRepository.findById(id).orElse(null);
-        if (assignment == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No match for id: " + id);
+        if (assignment == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No match for id: " + id);
         return assignmentMapper.toDto(assignment);
     }
     

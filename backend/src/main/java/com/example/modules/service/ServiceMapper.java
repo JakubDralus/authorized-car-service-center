@@ -1,21 +1,17 @@
 package com.example.modules.service;
 
-import com.example.modules.service.web.ServiceBigPhotoDTO;
-import com.example.modules.service.web.ServiceDTO;
-import com.example.modules.service.web.ServiceSmallPhotoDTO;
-import com.example.modules.service.web.ServiceTicketDTO;
+import com.example.modules.service.web.*;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class ServiceMapper implements IMapper<ServiceModel, ServiceDTO> {
+    
+    
     @Override
     public ServiceDTO toDto(ServiceModel service) {
         return ServiceDTO.builder()
@@ -27,6 +23,15 @@ public class ServiceMapper implements IMapper<ServiceModel, ServiceDTO> {
                 .isAvailable(service.getIsAvailable())
                 .isFeatured(service.getIsFeatured())
                 .description(service.getDescription())
+                .build();
+    }
+    
+    public ServiceReadDTO toReadDto(ServiceModel service) {
+        return ServiceReadDTO.builder()
+                .serviceId(service.getServiceId())
+                .estimatedRepairTime(service.getEstimatedRepairTime())
+                .name(service.getName())
+                .cost(service.getCost())
                 .build();
     }
 
@@ -43,6 +48,7 @@ public class ServiceMapper implements IMapper<ServiceModel, ServiceDTO> {
                 .smallPhoto(photo)
                 .build();
     }
+    
     public ServiceBigPhotoDTO toBigDto(ServiceModel service, byte[] photo) {
         return ServiceBigPhotoDTO.builder()
                 .serviceId(service.getServiceId())
@@ -56,6 +62,7 @@ public class ServiceMapper implements IMapper<ServiceModel, ServiceDTO> {
                 .bigPhoto(photo)
                 .build();
     }
+    
     @Override
     public void toEntity(ServiceDTO serviceDTO, ServiceModel service) {
         service.setName(serviceDTO.getName());
@@ -71,7 +78,10 @@ public class ServiceMapper implements IMapper<ServiceModel, ServiceDTO> {
         return ServiceTicketDTO.builder()
                 .serviceId(service.getServiceId())
                 .estimatedRepairTime(service.getEstimatedRepairTime())
-                .description(Arrays.stream(service.getDescription().split("(?<=[.!?])\\s*")).limit(2).collect(Collectors.joining(" ")))
+                .description(Arrays.stream(service.getDescription()
+                        .split("(?<=[.!?])\\s*"))
+                        .limit(2)
+                        .collect(Collectors.joining(" ")))
                 .cost(service.getCost())
                 .name(service.getName())
                 .build();

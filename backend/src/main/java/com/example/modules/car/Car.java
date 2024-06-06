@@ -26,5 +26,4 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
-
 }
