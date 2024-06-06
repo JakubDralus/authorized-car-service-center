@@ -46,6 +46,12 @@ export interface TicketData {
     customer: Customer
 }
 
+
+export interface ReservedHours {
+    date: string;
+    time: string;
+}
+
 //for contexts
 export interface ServiceContextType {
     selectedServices: Service[];
@@ -83,4 +89,16 @@ export const fetchTicketServices = async () => {
         console.error('Error fetching data:', error);
         throw error;
       }
+}
+
+
+export const fetchReservedHours = async (date : string) => {
+    try {
+        const response = await axios.get(`http://localhost:8081/api/v1/reserved_hours/week?date=${date}`)
+        return response.data
+    }
+    catch(error) {
+        console.error('Error fetching data:', error);
+        throw error;
+    }
 }

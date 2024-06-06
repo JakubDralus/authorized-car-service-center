@@ -55,6 +55,8 @@
     margin: 0 auto;
 }
 
+
+
 .spinner {
     border: 8px solid rgba(0, 0, 0, 0.1);
     border-left-color: #000;
@@ -62,7 +64,7 @@
     width: 64px;
     height: 64px;
     animation: spin 1s linear infinite;
-    margin: auto; /* Centering spinner */
+    margin: auto;
   }
   
   @keyframes spin {

@@ -1,0 +1,71 @@
+.flex-container {
+    display: flex;
+    align-items: center; /* Elementy będą wyśrodkowane pionowo */
+}
+.react-calendar {
+    font-family: Arial, sans-serif; /* Zmień czcionkę na czytelną */
+    background-color: #fff; /* Biały kolor tła */
+    border-radius: 5px; /* Zaokrąglenie rogów */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Cień */
+}
+
+.react-calendar .react-calendar__tile {
+    width: 50px; /* Szerokość kafelków */
+    height: 50px; /* Wysokość kafelków */
+    font-size: 14px; /* Rozmiar czcionki w kafelkach */
+    border-radius: 5px; /* Zaokrąglenie rogów kafelków */
+}
+
+.react-calendar .react-calendar__tile:hover {
+    background-color: #f0f0f0; /* Zmiana koloru tła po najechaniu myszką */
+}
+
+.react-calendar .react-calendar__tile--active {
+    background-color: #007bff; /* Kolor tła aktywnego kafelka */
+    color: #fff; /* Kolor tekstu aktywnego kafelka */
+}
+
+.react-calendar .react-calendar__tile--now {
+    background-color: #f0f0f0; /* Kolor dzisiejszego kafelka */
+}
+
+.react-calendar .react-calendar__tile--rangeStart,
+.react-calendar .react-calendar__tile--rangeEnd,
+.react-calendar .react-calendar__tile--rangeNights {
+    background-color: #007bff; /* Kolor kafelków wybieranego zakresu dat */
+    color: #fff; /* Kolor tekstu na kafelkach wybieranego zakresu dat */
+}
+
+.time-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 20rem;
+    margin-top: 0;
+}
+
+.time-button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.time-button:hover {
+    background-color: #e0e0e0;
+}
+
+.ticket-form-button {
+    padding: 10px 20px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+.ticket-form-button:hover {
+    background-color: #333;
+}
