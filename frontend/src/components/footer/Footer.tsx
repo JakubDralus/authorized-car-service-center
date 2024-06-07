@@ -74,7 +74,7 @@ const Footer = () => {
           </div>
         </nav>
         </div>
-        <hr className='mt-8 mb-8 border-none h-px bg-gray-700' />
+        <hr className='mt-8 mb-8 border-0 h-px bg-gray-700' />
 
         <div className='flex justify-between'>
           <p className="text-center text-gray-400 flex text-sm">&copy; 2020 Your Company, Inc. All rights reserved.</p>
