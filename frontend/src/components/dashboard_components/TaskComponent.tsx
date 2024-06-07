@@ -12,9 +12,9 @@ const TaskComponent = ({task}: {task: TaskRead}) => {
         {task.mechanic && <TaskDialog taskId={task.id} />}
       </div>
 
-      <hr className='mb-2 mt-1'/>
+      <hr className='mb-2 mt-2'/>
 
-      <div className='max-h-6 overflow-ellipsis overflow-hidden whitespace-nowrap mb-2'>
+      <div className='max-h-6 overflow-ellipsis overflow-hidden whitespace-nowrap mb-1'>
         {task.description}
       </div>
       <div className='flex flex-col'>
@@ -37,7 +37,7 @@ const TaskComponent = ({task}: {task: TaskRead}) => {
         <div>
           {task.manager && (
             <div>
-              <strong>manager: </strong>${task.manager?.user.firstName} ${task.manager?.user.lastName} 
+              <strong>manager: </strong>{task.manager?.user.firstName} {task.manager?.user.lastName} 
             </div>
           )}
         </div>
