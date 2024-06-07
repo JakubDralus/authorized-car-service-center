@@ -70,8 +70,14 @@ export default function TaskDialog({taskId}: {taskId: string}) {
                   {task && (
                     <div className="">
                       <p className="text-sm text-gray-600"><strong>Description:</strong> {task.description}</p>
-                      <p className="text-sm text-gray-600"><strong>Start Time:</strong> {task.startTime?.toString()}</p>
-                      <p className="text-sm text-gray-600"><strong>End Time:</strong> {task.endTime?.toString()}</p>
+                      <p className="text-sm text-gray-600">
+                        <strong>Start Time: </strong> 
+                        {task.startTime && new Date(task.startTime).toLocaleString('pl-PL')}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        <strong>End Time: </strong> 
+                        {task.endTime && new Date(task.endTime).toLocaleString('pl-PL')}
+                      </p>
                       <p className="text-sm text-gray-600"><strong>Duration:</strong> {task.duration} days</p>
                       <hr className='mb-2 mt-1'/>
                       
@@ -138,16 +144,6 @@ export default function TaskDialog({taskId}: {taskId: string}) {
                           <p><strong>Specialization:</strong> {task.mechanic.specialization}</p>
                         </div>
                       )}
-
-                      {/* <hr className='mb-2 mt-1'/>
-                      <strong>Service</strong>
-                      {task.service && (
-                        <div className="text-sm text-gray-600 space-y-1">
-                          <p><strong>Name:</strong> {task.service.name}</p>
-                          <p><strong>Estimated Repair Time:</strong> {task.service.estimatedRepairTime} hours</p>
-                          <p><strong>Cost:</strong> {task.service.cost}</p>
-                        </div>
-                      )} */}
                     </div>
                   )}
                 </div>
