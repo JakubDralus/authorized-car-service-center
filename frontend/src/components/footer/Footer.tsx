@@ -11,16 +11,16 @@ const Footer = () => {
             <h2 className="text-white">Solutions</h2>
             <ul className="mt-4 space-y-4 ">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Marketing</a>
+                <a href="/" className="text-gray-400 hover:text-white">Marketing</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Analytics</a>
+                <a href="/" className="text-gray-400 hover:text-white">Analytics</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Commerce</a>
+                <a href="/" className="text-gray-400 hover:text-white">Commerce</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Insights</a>
+                <a href="/" className="text-gray-400 hover:text-white">Insights</a>
               </li>
             </ul>
           </div>
@@ -28,16 +28,16 @@ const Footer = () => {
             <h2 className="text-white">Support</h2>
             <ul className="mt-4 space-y-4">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Pricing</a>
+                <a href="/" className="text-gray-400 hover:text-white">Pricing</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Documentation</a>
+                <a href="/" className="text-gray-400 hover:text-white">Documentation</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Guides</a>
+                <a href="/" className="text-gray-400 hover:text-white">Guides</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">API Status</a>
+                <a href="/" className="text-gray-400 hover:text-white">API Status</a>
               </li>
             </ul>
           </div>
@@ -45,16 +45,16 @@ const Footer = () => {
             <h2 className="text-white">Company</h2>
             <ul className="mt-4 space-y-4">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">About</a>
+                <a href="/" className="text-gray-400 hover:text-white">About</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Jobs</a>
+                <a href="/" className="text-gray-400 hover:text-white">Jobs</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Press</a>
+                <a href="/" className="text-gray-400 hover:text-white">Press</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Partners</a>
+                <a href="/" className="text-gray-400 hover:text-white">Partners</a>
               </li>
             </ul>
           </div>
@@ -62,13 +62,13 @@ const Footer = () => {
             <h2 className="text-white">Legal</h2>
             <ul className="mt-4 space-y-4">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Claim</a>
+                <a href="/" className="text-gray-400 hover:text-white">Claim</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Privacy</a>
+                <a href="/" className="text-gray-400 hover:text-white">Privacy</a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">Terms</a>
+                <a href="/" className="text-gray-400 hover:text-white">Terms</a>
               </li>
             </ul>
           </div>
@@ -80,19 +80,19 @@ const Footer = () => {
           <p className="text-center text-gray-400 flex text-sm">&copy; 2020 Your Company, Inc. All rights reserved.</p>
 
           <div className="flex justify-center space-x-6 mb-8 h-fit">
-            <a href="#" className="text-gray-400 hover:text-gray-500">
+            <a href="/" className="text-gray-400 hover:text-gray-500">
               <FaFacebook size={20} />
             </a>
-            <a href="#" className="text-gray-400 hover:text-gray-500">
+            <a href="/" className="text-gray-400 hover:text-gray-500">
               <FaInstagram size={20} />
             </a>
-            <a href="#" className="text-gray-400 hover:text-gray-500">
+            <a href="/" className="text-gray-400 hover:text-gray-500">
               <FaTwitter size={20} />
             </a>
-            <a href="#" className="text-gray-400 hover:text-gray-500">
+            <a href="/" className="text-gray-400 hover:text-gray-500">
               <FaGithub size={20} />
             </a>
-            <a href="#" className="text-gray-400 hover:text-gray-500">
+            <a href="/" className="text-gray-400 hover:text-gray-500">
               <FaYoutube size={20} />
             </a>
           </div>
