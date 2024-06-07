@@ -17,6 +17,7 @@ export default function TaskDialog({taskId}: {taskId: string}) {
         .then((response: ApiResponse<Assignment>) => {
           setTask(response.data);
           setServices(response.data.ticket.services);
+          // console.log(response.data);
         })
         .catch((error) => {
           console.log('Failed to fetch task details' + error);

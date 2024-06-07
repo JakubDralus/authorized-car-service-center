@@ -80,6 +80,6 @@ export const fetchAssignments = async (): Promise<ApiResponse<AssignmentRead[]>>
 export const fetchAssignment = async (id: string | number): Promise<ApiResponse<Assignment>> => {
   const { data } = await axios.get<ApiResponse<Assignment>>(`http://localhost:8081/api/v1/assignments/${id}`);
   console.log(`assignment ${id} fetch`);
-  console.log(data);
+  // console.log(data);
   return data;
 };
