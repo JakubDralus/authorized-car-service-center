@@ -16,6 +16,9 @@ const UserTable = () => {
   ];
 
   return (
+    <>
+    <h1 className="text-2xl mb-3 ml-2 font-medium">Users</h1>
+
     <div className="flex flex-col bg-white shadow-md mt-8">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -42,6 +45,7 @@ const UserTable = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

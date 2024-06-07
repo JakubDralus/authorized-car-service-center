@@ -1,5 +1,5 @@
 import "./ServiceCarousel.css"
-import React, { useState, useEffect, act } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link} from "react-router-dom";
 import {ServiceCarouselProps} from "../../pages/service/serviceData";
 
@@ -9,7 +9,7 @@ const ServiceCarousel: React.FC<ServiceCarouselProps> = ({ serviceData, currentS
 
   const [activeIndex, setActiveIndex] = useState(0);
   const intervalTime = 6500
-  console.log(currentServiceId)
+  // console.log(currentServiceId)
 
   const filteredServiceData = serviceData.filter(service => service.serviceId !== currentServiceId);
 
