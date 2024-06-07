@@ -30,7 +30,7 @@ const Home = () =>{
                     </div>
                 </div>
                 <div className="home-example-services">
-                    {isLoading ? (<div className="spinner"></div>) : (<ServiceCarousel serviceData={data} />)}
+                    {isLoading ? (<div className="pt-10"><div className="spinner "></div></div>) : (<ServiceCarousel serviceData={data} />)}
                 </div>
 
                 {/* maybe something more, we'll see */}
