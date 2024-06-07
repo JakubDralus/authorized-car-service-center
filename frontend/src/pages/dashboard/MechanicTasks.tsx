@@ -9,13 +9,13 @@ const MechanicTasks: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [assignments, setAssignments] = useState<AssignmentRead[]>([]);
 
-  const { 
+  const {
     data: responseAssignmentsData, 
     refetch: refetchAssignments,  
     isLoading: isLoadingAssignments, 
     error: assignmentsError 
   } = useQuery("assignments", fetchAssignments);
-  
+
   useEffect(() => {
     if (responseAssignmentsData) {
       setAssignments(responseAssignmentsData.data);
@@ -41,7 +41,7 @@ const MechanicTasks: React.FC = () => {
       <h1 className="text-2xl font-bold mb-4">Tasks</h1>
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {assignments.map((assignment) => (
-          <div key={assignment.assignmentId} 
+          <div key={assignment.assignmentId}
           className="p-4 border rounded-lg shadow-md bg-white transition-transform hover:shadow-lg hover:-translate-y-1 cursor-pointer"
           onClick={() =>handleOpen(assignment.assignmentId)}
           >
@@ -51,7 +51,7 @@ const MechanicTasks: React.FC = () => {
             <p><strong>Full Cost:</strong> {assignment.ticket.fullCost}</p>
             <p><strong>Created At:</strong> {new Date(assignment.ticket.createdAt).toLocaleString()}</p>
             <p><strong>Last Updated At:</strong> {new Date(assignment.ticket.lastUpdatedAt).toLocaleString()}</p>
-            
+
             <div>
               <h3 className="text-lg font-medium mt-2">Car:</h3>
               <p>{assignment.ticket.car.model}</p>
@@ -65,7 +65,7 @@ const MechanicTasks: React.FC = () => {
           </div>
         ))}
         {selectedTaskId && (<AssignmentDialog taskId={selectedTaskId} open={open} setOpen={setOpen} />)}
-        
+
       </div>
     </div>
   );

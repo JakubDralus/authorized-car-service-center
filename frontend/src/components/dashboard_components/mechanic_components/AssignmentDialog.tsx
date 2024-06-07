@@ -47,13 +47,13 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
   const handleUpdateStatus = async () => {
     if (task) {
       try {
-        
+
         // await updateAssignment(task);
 
         // // Update the status of the task directly in the state
         // const updatedTask: TaskRead = { ...task, ticket: { ...task.ticket, status: status } };
         // setTask(updatedTask);
-  
+
         // Close the dialog
         setOpen(false);
       } catch (error) {
