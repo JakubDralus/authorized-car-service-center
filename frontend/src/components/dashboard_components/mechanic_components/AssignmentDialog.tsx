@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ApiResponse, Assignment, Service } from '../../../api/model';
-import { fetchAssignment } from '../../../pages/dashboard/TaskBoardFunctions';
+import { fetchAssignment,updateAssignment } from '../../../pages/dashboard/TaskBoardFunctions';
 import Dropdown from './Dropdown';
 
 interface TaskDialogProps {
@@ -41,15 +41,26 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
 
   const handleStatusChange = (newStatus: Status) => {
     setStatus(newStatus);
+    console.log('New Status:', newStatus);
   };
 
-  // const handleUpdateStatus = () => {
-  //   if (task) {
-  //     // Add logic to update task status via API
-  //     console.log(`Updating assignment ${task.ticket.ticketId} status to ${status}`);
-      
-  //   }
-  // };
+  const handleUpdateStatus = async () => {
+    if (task) {
+      try {
+        
+        // await updateAssignment(task);
+
+        // // Update the status of the task directly in the state
+        // const updatedTask: TaskRead = { ...task, ticket: { ...task.ticket, status: status } };
+        // setTask(updatedTask);
+  
+        // Close the dialog
+        setOpen(false);
+      } catch (error) {
+        console.log('Failed to update task status: ' + error);
+      }
+    }
+  };
 
   return (
     <Transition show={open} as={Fragment}>
@@ -96,6 +107,7 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
               <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button
                   type="button"
+                  onClick={handleUpdateStatus}
                   className="mt-3 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                 >
                   Update

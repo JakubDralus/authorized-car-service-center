@@ -59,9 +59,7 @@ const MechanicTasks: React.FC = () => {
             <div>
               <h3 className="text-lg font-medium mt-2">Services:</h3>
               <ul>
-                {assignment.ticket.services.map((service, index) => (
-                  <li key={index}>{service.name}</li>
-                ))}
+                <p>{assignment.service.name}</p>
               </ul>
             </div>
           </div>
