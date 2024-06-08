@@ -10,7 +10,7 @@ function classNames(...classes: string[]) {
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const userName = 'John Doe'; // Example user name
+  // const userName = 'John Doe'; // Example user name
 
   function handleLogOut() {
     setIsLoggedIn(false);
