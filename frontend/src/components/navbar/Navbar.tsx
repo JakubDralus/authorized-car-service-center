@@ -32,11 +32,12 @@ const Navbar = () => {
         </Link>
 
         {/* search bar */}
-        <div className="absolute w-96 left-1/2 -translate-x-48">
+        <div className="absolute w-64 sm:w-96 left-1/2 -translate-x-48">
           <input
             type="text"
             placeholder="Search"
-            className="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            className="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring 
+            focus:ring-blue-200 focus:ring-opacity-50"
           />
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" 
             className="size-6 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -47,7 +48,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           {isLoggedIn ? (
             <>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <div className="inset-y-0 right-0 flex items-center pr-2 static ">
                 <button
                   type="button"
                   className="relative rounded-full p-1 text-gray-400 hover:text-black 
