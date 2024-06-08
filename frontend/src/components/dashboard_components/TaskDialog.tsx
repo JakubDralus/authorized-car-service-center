@@ -86,7 +86,7 @@ export default function TaskDialog({taskId}: {taskId: string}) {
                       {task.ticket && (
                         <div className="text-sm text-gray-600">
                           <p><strong>Description:</strong> {task.ticket.description}</p>
-                          <p><strong>Full Cost:</strong> {task.ticket.fullCost}</p>
+                          <p><strong>Full Cost:</strong> {task.ticket.fullCost}$</p>
                           <p><strong>Status:</strong> {task.ticket.status}</p>
                           <p><strong>Created At:</strong> {new Date(task.ticket.createdAt).toLocaleString('pl-PL')}</p>
                           <p><strong>Last Updated At:</strong> {new Date(task.ticket.lastUpdatedAt).toLocaleString('pl-PL')}</p>
@@ -102,7 +102,7 @@ export default function TaskDialog({taskId}: {taskId: string}) {
                           </strong>
                           <p><strong>Name:</strong> {service.name}</p>
                           <p><strong>Estimated Repair Time:</strong> {service.estimatedRepairTime} hours</p>
-                          <p><strong>Cost:</strong> {service.cost}</p>
+                          <p><strong>Cost:</strong> {service.cost}$</p>
                           <p><strong>type:</strong> {service.type}</p>
                         </div>
                       ))}

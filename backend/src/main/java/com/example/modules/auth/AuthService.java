@@ -29,7 +29,7 @@ public class AuthService {
     private final SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     
     
-    // in other words - sign in
+    // in other words - log in
     public AuthResponseDTO authenticate(AuthRequestDTO request) {
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())

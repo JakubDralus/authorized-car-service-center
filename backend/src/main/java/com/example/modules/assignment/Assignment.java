@@ -28,6 +28,9 @@ public class Assignment {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     
+    @Enumerated(EnumType.STRING)
+    private Ticket.Status status;
+    
     @ManyToOne
     @JoinColumn(name="ticket_id")
     private Ticket ticket;
