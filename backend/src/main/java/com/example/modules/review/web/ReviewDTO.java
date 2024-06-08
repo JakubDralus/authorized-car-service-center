@@ -18,6 +18,7 @@ public class ReviewDTO {
     private Long reviewId;
     private String title;
     private String description;
+    public Short rate;
     private LocalDateTime createdAt;
     private UserDTO user;
 }
