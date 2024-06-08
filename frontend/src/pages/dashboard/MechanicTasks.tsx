@@ -42,9 +42,10 @@ const MechanicTasks: React.FC = () => {
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {assignments.map((assignment) => (
           <div key={assignment.assignmentId} 
-          className="p-4 border rounded-lg shadow-md bg-white"
+          className="p-4 border rounded-lg shadow-md bg-white transition-transform hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+          onClick={() =>handleOpen(assignment.assignmentId)}
           >
-            <button onClick={() =>handleOpen(assignment.assignmentId)}>Open Task Dialog</button>
+            {/* <button onClick={() =>handleOpen(assignment.assignmentId)}>Open Task Dialog</button> */}
             <h2 className="text-xl font-semibold">{assignment.description}</h2>
             <p><strong>Status:</strong> {assignment.ticket.status}</p>
             <p><strong>Full Cost:</strong> {assignment.ticket.fullCost}</p>
