@@ -1,8 +1,7 @@
 import "./ServiceCarousel.css"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {Link} from "react-router-dom";
 import {ServiceCarouselProps} from "../../pages/service/serviceData";
-
 
 
 const ServiceCarousel: React.FC<ServiceCarouselProps> = ({ serviceData, currentServiceId  }) => {
@@ -11,7 +10,11 @@ const ServiceCarousel: React.FC<ServiceCarouselProps> = ({ serviceData, currentS
   const intervalTime = 6500
   // console.log(currentServiceId)
 
-  const filteredServiceData = serviceData.filter(service => service.serviceId !== currentServiceId);
+  // const filteredServiceData = serviceData.filter(service => service.serviceId !== currentServiceId);
+  const filteredServiceData = useMemo(
+    () => serviceData.filter(service => service.serviceId !== currentServiceId),
+    [serviceData, currentServiceId]
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,10 +27,15 @@ const ServiceCarousel: React.FC<ServiceCarouselProps> = ({ serviceData, currentS
   const handleItemClick = (index: number) => {
     setActiveIndex(index);
   }
-    return(
-      <div className="app">
-      <Link to ={`/service/${filteredServiceData[activeIndex].serviceId}`} state={{service_id: filteredServiceData[activeIndex].serviceId}} className="caroseul-section">
-        <img className="caroseul-image" src={`data:image/jpeg;base64,${filteredServiceData[activeIndex].smallPhoto}`} />
+
+  return(
+    <div className="app">
+      <Link 
+        to ={`/service/${filteredServiceData[activeIndex].serviceId}`} 
+        state={{service_id: filteredServiceData[activeIndex].serviceId}} 
+        className="caroseul-section"
+      >
+        <img className="caroseul-image" src={`data:image/jpeg;base64,${filteredServiceData[activeIndex].smallPhoto}`} alt="service"/>
         <div className="image-overlay"></div>
         <div className="image-section__text">
           <p className="text-white text-4xl font-bold">{filteredServiceData[activeIndex].name}</p>
@@ -37,7 +45,7 @@ const ServiceCarousel: React.FC<ServiceCarouselProps> = ({ serviceData, currentS
         {filteredServiceData.map((service, index) => (
           <div 
             key={index}
-            className={`nav-item ${index === activeIndex ? 'nav-item--active' : ''} text-gray-500 text-gra` }
+            className={`nav-item ${index === activeIndex ? 'nav-item--active' : ''} text-gray-500` }
             onClick={() => handleItemClick(index)}
           >
             {service.name}
@@ -45,7 +53,7 @@ const ServiceCarousel: React.FC<ServiceCarouselProps> = ({ serviceData, currentS
         ))}
       </div>
     </div>
-    )
+  )
 }
 
 export default ServiceCarousel

@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram, FaTwitter, FaGithub, FaYoutube } from 'react-i
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-400">
-      <div className='max-w-7xl mx-auto py-12 px-4 pt-32 overflow-hidden sm:px-6 lg:px-24'>
+      <div className='max-w-7xl mx-auto py-10 px-2 pt-24 overflow-hidden sm:px-6 lg:px-20'>
 
       <div className="px-10">
         <nav className="-my-2 flex justify-evenly">
@@ -74,7 +74,7 @@ const Footer = () => {
           </div>
         </nav>
         </div>
-        <hr className='mt-8 mb-8 border-0 h-px bg-gray-700' />
+        <hr className='mt-10 mb-8 border-0 h-px bg-gray-700' />
 
         <div className='flex justify-between'>
           <p className="text-center text-gray-400 flex text-sm">&copy; 2020 Your Company, Inc. All rights reserved.</p>
