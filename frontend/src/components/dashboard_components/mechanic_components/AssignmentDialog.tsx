@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { ApiResponse, Assignment, Service } from '../../../api/model';
 import { fetchAssignment } from '../../../pages/dashboard/TaskBoardFunctions';
+import Dropdown from './Dropdown';
 
 interface TaskDialogProps {
   taskId: string;
@@ -19,7 +20,7 @@ enum Status {
 
 const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) => {
   const [task, setTask] = useState<Assignment | null>(null);
-  const [status, setStatus] = useState<Status | ''>('');
+  const [status, setStatus] = useState<Status>(Status.REQUESTED);
   const [services, setServices] = useState<Service[]>([]);
 
 
@@ -56,8 +57,8 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-              <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl flex flex-col h-[75vh]">
+              <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 flex-grow">
                 {task ? (
                   <>
                     <h2 className="text-xl font-semibold">{task.ticket.description}</h2>
@@ -81,22 +82,11 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
                         ))}
                       </ul>
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-4 mb-12"> {/* Increased margin bottom */}
                       <label htmlFor="status" className="block text-sm font-medium text-gray-700">
                         Status
                       </label>
-                      <select
-                        id="status"
-                        value={status}
-                        onChange={(e) => handleStatusChange(e.target.value as Status)}
-                        className="w-full p-2 border rounded mt-1"
-                      >
-                        {Object.values(Status).map((status) => (
-                          <option key={status} value={status}>
-                            {status}
-                          </option>
-                        ))}
-                      </select>
+                      <Dropdown status={status} onChange={handleStatusChange} />
                     </div>
                   </>
                 ) : (
@@ -107,7 +97,6 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
                 <button
                   type="button"
                   className="mt-3 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                  // onClick={handleUpdateStatus}
                 >
                   Update
                 </button>
