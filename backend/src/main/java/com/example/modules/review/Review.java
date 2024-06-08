@@ -26,6 +26,7 @@ public class Review {
 
     public String title;
     public String description;
+    public Short rate;
 
     @CreationTimestamp
     @Column(name = "created_at")

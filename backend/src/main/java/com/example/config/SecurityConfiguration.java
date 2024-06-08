@@ -47,6 +47,7 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.GET, "api/v1/users").hasAnyAuthority("ADMIN")
                             .requestMatchers(HttpMethod.GET, "api/v1/users/**").hasAnyAuthority("ADMIN")
                             .requestMatchers(HttpMethod.POST, "api/v1/users/**").hasAnyAuthority("ADMIN")
+                            .requestMatchers("api/v1/reviews/**").permitAll()
                     )
                     .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authenticationProvider(authenticationProvider)
