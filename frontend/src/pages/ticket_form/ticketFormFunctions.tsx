@@ -11,7 +11,8 @@ export interface Service {
 }
 
 export interface Schedule {
-
+    date: Date | null;
+    hour: string | null | undefined;
 }
 
 export interface Car {
@@ -44,13 +45,14 @@ export interface TicketData {
     services: Service[],
     car: Car,
     customer: Customer
+    schedule: Schedule
 }
 
 
-export interface ReservedHours {
-    date: string;
-    time: string;
-}
+// export interface ReservedHours {
+//     date: string;
+//     hour: string;
+// }
 
 //for contexts
 export interface ServiceContextType {
@@ -73,12 +75,18 @@ export interface TicketDataContextType {
     setTicketData: React.Dispatch<React.SetStateAction<TicketData>>;
 }
 
+export interface ScheduleDataContextType {
+    selectedDate: Schedule;
+    setSelectedDate: React.Dispatch<React.SetStateAction<Schedule>>;
+}
+
 
 //contexts
 export const SelectedServiceContext = createContext<ServiceContextType | undefined>(undefined);
 export const CarDataContext = createContext<CarContextType | undefined>(undefined);
 export const CustomerDataContext = createContext<CustomerContextType | undefined>(undefined);
 export const TicketDataContext = createContext<TicketDataContextType | undefined>(undefined);
+export const ScheduleDataContext = createContext<ScheduleDataContextType | undefined>(undefined);
 
 
 export const fetchTicketServices = async () => {
@@ -94,7 +102,9 @@ export const fetchTicketServices = async () => {
 
 export const fetchReservedHours = async (date : string) => {
     try {
-        const response = await axios.get(`http://localhost:8081/api/v1/reserved_hours/week?date=${date}`)
+        let url = `http://localhost:8081/api/v1/reserved_hours/week?date=${date}`;
+        const response = await axios.get(url)
+        console.log(response.data)
         return response.data
     }
     catch(error) {

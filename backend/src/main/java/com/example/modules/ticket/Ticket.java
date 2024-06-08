@@ -1,6 +1,7 @@
 package com.example.modules.ticket;
 
 import com.example.modules.car.Car;
+import com.example.modules.reserved_hours.ReservedHours;
 import com.example.modules.service.ServiceModel;
 import com.example.modules.user.User;
 import jakarta.persistence.*;
@@ -33,6 +34,7 @@ public class Ticket {
     
     @CreationTimestamp
     private LocalDateTime createdAt;
+
     
     @UpdateTimestamp
     private LocalDateTime lastUpdatedAt;
@@ -46,6 +48,10 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name="car_id")
     private Car car;
+
+    @OneToOne
+    @JoinColumn(name="reserved_id")
+    private ReservedHours carReturnDate;
     
     @ManyToMany
     @JoinTable(

@@ -5,7 +5,7 @@ interface CarFormProps {
 
 export const CarForm: React.FC<CarFormProps> = ({ prevStep, nextStep }) => {
     const validateCarDetails = () => {
-        //here validate car data before setting state
+        
         nextStep()
     }
 

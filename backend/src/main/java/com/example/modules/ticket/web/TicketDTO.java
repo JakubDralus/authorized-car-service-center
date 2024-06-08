@@ -1,6 +1,8 @@
 package com.example.modules.ticket.web;
 
 import com.example.modules.car.web.CarDTO;
+import com.example.modules.reserved_hours.ReservedHours;
+import com.example.modules.reserved_hours.web.ReservedHoursDTO;
 import com.example.modules.service.web.ServiceDTO;
 import com.example.modules.ticket.Ticket;
 import com.example.modules.user.web.UserDTO;
@@ -28,4 +30,5 @@ public class TicketDTO {
     private UserDTO customer;
     private CarDTO car;
     private List<ServiceDTO> services;
+    private ReservedHoursDTO carReturnDate;
 }

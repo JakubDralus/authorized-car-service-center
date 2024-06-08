@@ -32,7 +32,7 @@ public class ReservedHoursController {
     @GetMapping("/week")
     public ApiResponse<List<ReservedHoursDTO>> getReservedHoursForNextWeek(
             @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        List<ReservedHoursDTO> reservedHours = reservedHoursService.findReservedHoursForNextWeek(date);
+        List<ReservedHoursDTO> reservedHours = reservedHoursService.findReservedHoursForDate(date);
         return ApiResponse.<List<ReservedHoursDTO>>builder()
                 .message("Reserved hours retrieved.")
                 .data(reservedHours)

@@ -28,9 +28,8 @@ public class ReservedHoursService {
         reservedHours = reservedHoursRepository.save(reservedHours);
         return reservedHoursMapper.toDto(reservedHours);
     }
-    public List<ReservedHoursDTO> findReservedHoursForNextWeek(LocalDate fromDate) {
-        LocalDate endDate = fromDate.plusDays(6);
-        List<ReservedHours> reservedHoursList = reservedHoursRepository.findReservedHoursWithinWeek(fromDate, endDate);
+    public List<ReservedHoursDTO> findReservedHoursForDate(LocalDate date) {
+        List<ReservedHours> reservedHoursList = reservedHoursRepository.findReservedHoursForDate(date);
         return reservedHoursList.stream()
                 .map(reservedHoursMapper::toDto)
                 .collect(Collectors.toList());

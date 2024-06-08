@@ -3,6 +3,10 @@ package com.example.modules.ticket;
 import com.example.modules.car.Car;
 import com.example.modules.car.CarMapper;
 import com.example.modules.car.CarRepository;
+import com.example.modules.reserved_hours.ReservedHours;
+import com.example.modules.reserved_hours.ReservedHoursMapper;
+import com.example.modules.reserved_hours.ReservedHoursRepository;
+import com.example.modules.reserved_hours.ReservedHoursService;
 import com.example.modules.service.ServiceMapper;
 import com.example.modules.service.ServiceModel;
 import com.example.modules.service.ServiceRepository;
@@ -33,7 +37,8 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
     
     private final ServiceRepository serviceRepository;
     private final ServiceMapper serviceMapper;
-    
+    private final ReservedHoursMapper reservedHoursMapper;
+    private final ReservedHoursRepository reservedHoursRepository;
     private final ModelMapper modelMapper;
     
     @Override
@@ -47,6 +52,7 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
                 .lastUpdatedAt(ticket.getLastUpdatedAt())
                 .customer(userMapper.toDto(ticket.getCustomer()))
                 .car(carMapper.toDto(ticket.getCar()))
+                .carReturnDate(reservedHoursMapper.toDto(ticket.getCarReturnDate()))
                 .services(ticket.getServices().stream().map(serviceMapper::toDto).toList())
                 .build();
     }
@@ -62,6 +68,7 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
 //                .carId(ticket.getCar().getCarId())
                 .user(modelMapper.map(ticket.getCustomer(), UserReadDTO.class))
                 .car(carMapper.toReadDto(ticket.getCar()))
+                .carReturnDate(reservedHoursMapper.toDto(ticket.getCarReturnDate()))
                 .services(ticket.getServices().stream().map(s -> modelMapper.map(s, ServiceReadDTO.class)).toList())
                 .build();
     }

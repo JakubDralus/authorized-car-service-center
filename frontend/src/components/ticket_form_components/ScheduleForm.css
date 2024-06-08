@@ -7,12 +7,16 @@
     background-color: #fff; /* Biały kolor tła */
     border-radius: 5px; /* Zaokrąglenie rogów */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Cień */
+    width: 100%;
+}
+.calendar-container{
+    max-width: 600px;
 }
 
 .react-calendar .react-calendar__tile {
-    width: 50px; /* Szerokość kafelków */
-    height: 50px; /* Wysokość kafelków */
-    font-size: 14px; /* Rozmiar czcionki w kafelkach */
+    width: 80px; /* Szerokość kafelków */
+    height: 60px; /* Wysokość kafelków */
+    font-size: 24px; /* Rozmiar czcionki w kafelkach */
     border-radius: 5px; /* Zaokrąglenie rogów kafelków */
 }
 
@@ -36,12 +40,26 @@
     color: #fff; /* Kolor tekstu na kafelkach wybieranego zakresu dat */
 }
 
-.time-list {
+.flex-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 20rem;
-    margin-top: 0;
+}
+
+
+
+.time-list {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.time-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
 
 .time-button {
@@ -68,4 +86,14 @@
 
 .ticket-form-button:hover {
     background-color: #333;
+}
+
+.time-button.reserved {
+    background-color: rgb(143, 142, 142); /* Kolor tła dla zarezerwowanych godzin */
+    cursor: not-allowed; /* Kursor wskazujący na niedostępność */
+}
+
+.time-button.selected {
+    background-color: green;
+    color: white; /* Aby tekst był czytelny */
 }

@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ReservedHoursRepository extends JpaRepository<ReservedHours, Long> {
 
-    @Query("SELECT r FROM ReservedHours r WHERE r.date BETWEEN :startDate AND :endDate")
-    List<ReservedHours> findReservedHoursWithinWeek(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query("SELECT r FROM ReservedHours r WHERE r.date = :date")
+    List<ReservedHours> findReservedHoursForDate(@Param("date") LocalDate date);
 }
