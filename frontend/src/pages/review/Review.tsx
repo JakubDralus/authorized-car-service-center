@@ -1,15 +1,22 @@
 import { Link } from 'react-router-dom';
-import { ReviewData, useCreateReview, useGetReview } from './reviewFunctions';
+import { ReviewData, ReviewStatus, useCreateReview, useGetReview, useUpdateReview } from './reviewFunctions';
 import './Review.css'
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import ReviewPopup from '../../components/popups/ReviewPopup';
 
 const Review = () => {
     const token = localStorage.getItem('token');
+    const [reviewFormInfo, setReviewFormInfo] = useState<ReviewStatus>({
+        message: "",
+        status: ""
+    });
 
-    //create form
-    const [reviewFormInfo, setReviewFormInfo] = useState<string>("");
-    const reviewForm = useForm<ReviewData>({
+    //popup
+    const [showPopup, setShowPopup] = useState<boolean>(false);
+
+    //create
+    const createReviewForm = useForm<ReviewData>({
         defaultValues: {
             title: '',
             description: '',
@@ -17,20 +24,21 @@ const Review = () => {
         }
     })
 
-    //get query
-    const getReview = useGetReview(token);
-    console.log(getReview.data)
-
-
-    //create mutation
     const createReviewMutation = useCreateReview(setReviewFormInfo, token);
-    const onSubmit = async (data: ReviewData) => {
-        console.log(data)
 
+    const onCreateSubmit = async (data: ReviewData) => {
         try {
             createReviewMutation.mutate({
                 reviewData: data,
                 token: token
+            }, {
+                onSuccess: () => {
+                    getReview.refetch();
+                    setShowPopup(true);
+                },
+                onError: () => {
+                    setShowPopup(true);
+                }
             })
         }
         catch (error) {
@@ -38,7 +46,48 @@ const Review = () => {
         }
     }
 
-    //update mutation
+
+    //update
+    const [showEditInputs, setShowEditInputs] = useState<boolean>(false)
+    const handleShowEditInputs = () => {
+        setShowEditInputs(!showEditInputs);
+    }
+
+    const updateReviewForm = useForm<ReviewData>({
+        defaultValues: {
+            title: '',
+            description: '',
+            rate: -1
+        }
+    })
+
+    const updateReviewMutation = useUpdateReview(setReviewFormInfo, token);
+
+    const onUpdateSubmit = async (data: ReviewData) => {
+        try {
+            updateReviewMutation.mutate({
+                reviewData: data,
+                token: token
+            }, {
+                onSuccess: () => {
+                    getReview.refetch();
+                    setShowPopup(true);
+                    setShowEditInputs(false);
+                },
+                onError: () => {
+                    setShowPopup(true);
+                }
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    //get
+    const getReview = useGetReview(token, updateReviewForm);
+
 
     return (
 
@@ -52,44 +101,101 @@ const Review = () => {
                             {getReview.isLoading ? (<div className='spinner'></div>) : (
                                 <>
                                     {getReview.data ? (
-                                        <div>jes data kurwa</div>
+                                        <>
+                                            {showEditInputs ? (
+                                                // update review form
+                                                <>
+                                                    <form className="px-4 flex-column-center w-full gap-10" onSubmit={updateReviewForm.handleSubmit(onUpdateSubmit)}>
+                                                        <div className='flex w-full gap-2'>
+                                                            <div className="flex flex-col items-start w-3/4">
+                                                                <label className='flex flex-col w-full'> <span className='text-xl'>Title</span>
+                                                                    <span className={`text-sm min-h-5  text-red-400 transition-all ${updateReviewForm.formState.errors.title?.message ? 'opacity-100' : 'opacity-0'}`} role="alert">{updateReviewForm.formState.errors.title?.message}</span>
+                                                                    <input className={`p-2 ${updateReviewForm.formState.errors.title ? "invalid-input" : "valid-input"}`} type="text"  {...updateReviewForm.register("title", { required: "Field required" })}></input>
+                                                                </label>
+                                                            </div>
+                                                            <div className="flex flex-col items-start w-1/4">
+                                                                <label className='flex flex-col w-full'> <span className='text-xl'>Rating</span>
+                                                                    <span className={`text-sm min-h-5  text-red-400 transition-all ${updateReviewForm.formState.errors.rate?.message ? 'opacity-100' : 'opacity-0'}`} role="alert">{updateReviewForm.formState.errors.rate?.message}</span>
+                                                                    <input className={`p-2 ${updateReviewForm.formState.errors.rate ? "invalid-input" : "valid-input"}`} type="number"  {...updateReviewForm.register("rate", { required: "Field required", min: { value: 1, message: "Rating from 1 to 5" }, max: { value: 5, message: "Rating from 1 to 5" } })}></input>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex flex-col items-start w-full h-full">
+                                                            <label className='flex flex-col w-full'> <span className='text-xl'>Description</span>
+                                                                <span className={`text-sm min-h-5  text-red-400 transition-all ${updateReviewForm.formState.errors.description?.message ? 'opacity-100' : 'opacity-0'}`} role="alert">{updateReviewForm.formState.errors.description?.message}</span>
+                                                                <textarea className={`w-full h-100 ${updateReviewForm.formState.errors.description ? "invalid-input" : "valid-input"}`} {...updateReviewForm.register("description", { required: "Field required" })}></textarea>
+                                                            </label>
+                                                        </div>
+                                                        <button className="auth-button mb-2" type="submit">Edit Review</button>
+                                                    </form>
+                                                    <button className='mb-10' onClick={handleShowEditInputs}>Go back</button>
+                                                </>
+                                            ) : (
+                                                // review description
+                                                <div className='flex flex-col justify-center items-center gap-20 w-full'>
+                                                    <div className='w-full'>
+                                                        <h2 className='my-10 text-center text-2xl'>Your review</h2>
+                                                        <div className='flex flex-col items-center justify-center gap-10'>
+                                                            <div className='flex flex-col items-center justify-center w-full'>
+                                                                <span className='text-xl'>Title</span>
+                                                                <span>{getReview.data.data.title}</span>
+                                                            </div>
+                                                            <div className='flex flex-col items-center justify-center w-full'>
+                                                                <span className='text-xl'>Rating</span>
+                                                                <span>{getReview.data.data.rate}</span>
+                                                            </div>
+                                                            <div className='flex flex-col items-center justify-center w-full'>
+                                                                <span className='text-xl'>Description</span>
+                                                                <span className='text-justify w-full h-auto break-words'>{getReview.data.data.description}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button className="auth-button mb-10" onClick={handleShowEditInputs}>Edit review</button>
+                                                </div>
+                                            )}
+                                        </>
                                     ) : (
-                                        <form className="flex-column-center w-full gap-10" onSubmit={reviewForm.handleSubmit(onSubmit)}>
-                                            <div className='flex w-full'>
+                                        // create review form
+                                        <form className="px-4 flex-column-center w-full gap-10" onSubmit={createReviewForm.handleSubmit(onCreateSubmit)}>
+                                            <div className='flex w-full gap-2'>
                                                 <div className="flex flex-col items-start w-3/4">
                                                     <label className='flex flex-col w-full'> <span className='text-xl'>Title</span>
-                                                        <span className={`text-sm min-h-5  text-red-400 transition-all ${reviewForm.formState.errors.title?.message ? 'opacity-100' : 'opacity-0'}`} role="alert">{reviewForm.formState.errors.title?.message}</span>
-                                                        <input className={`p-2 ${reviewForm.formState.errors.title ? "invalid-input" : "valid-input"}`} type="text"  {...reviewForm.register("title", { required: "Field required" })}></input>
+                                                        <span className={`text-sm min-h-5  text-red-400 transition-all ${createReviewForm.formState.errors.title?.message ? 'opacity-100' : 'opacity-0'}`} role="alert">{createReviewForm.formState.errors.title?.message}</span>
+                                                        <input className={`p-2 ${createReviewForm.formState.errors.title ? "invalid-input" : "valid-input"}`} type="text"  {...createReviewForm.register("title", { required: "Field required" })}></input>
                                                     </label>
                                                 </div>
                                                 <div className="flex flex-col items-start w-1/4">
                                                     <label className='flex flex-col w-full'> <span className='text-xl'>Rating</span>
-                                                        <span className={`text-sm min-h-5  text-red-400 transition-all ${reviewForm.formState.errors.rate?.message ? 'opacity-100' : 'opacity-0'}`} role="alert">{reviewForm.formState.errors.rate?.message}</span>
-                                                        <input className={`p-2 ${reviewForm.formState.errors.rate ? "invalid-input" : "valid-input"}`} type="number"  {...reviewForm.register("rate", { required: "Field required", min: { value: 1, message: "Rating from 1 to 5" }, max: { value: 5, message: "Rating from 1 to 5" } })}></input>
+                                                        <span className={`text-sm min-h-5  text-red-400 transition-all ${createReviewForm.formState.errors.rate?.message ? 'opacity-100' : 'opacity-0'}`} role="alert">{createReviewForm.formState.errors.rate?.message}</span>
+                                                        <input className={`p-2 ${createReviewForm.formState.errors.rate ? "invalid-input" : "valid-input"}`} type="number"  {...createReviewForm.register("rate", { required: "Field required", min: { value: 1, message: "Rating from 1 to 5" }, max: { value: 5, message: "Rating from 1 to 5" } })}></input>
                                                     </label>
                                                 </div>
                                             </div>
                                             <div className="flex flex-col items-start w-full h-full">
                                                 <label className='flex flex-col w-full'> <span className='text-xl'>Description</span>
-                                                    <span className={`text-sm min-h-5  text-red-400 transition-all ${reviewForm.formState.errors.description?.message ? 'opacity-100' : 'opacity-0'}`} role="alert">{reviewForm.formState.errors.description?.message}</span>
-                                                    <textarea className={`w-full h-100 ${reviewForm.formState.errors.description ? "invalid-input" : "valid-input"}`} {...reviewForm.register("description", { required: "Field required" })}></textarea>
+                                                    <span className={`text-sm min-h-5  text-red-400 transition-all ${createReviewForm.formState.errors.description?.message ? 'opacity-100' : 'opacity-0'}`} role="alert">{createReviewForm.formState.errors.description?.message}</span>
+                                                    <textarea className={`w-full h-100 ${createReviewForm.formState.errors.description ? "invalid-input" : "valid-input"}`} {...createReviewForm.register("description", { required: "Field required" })}></textarea>
                                                 </label>
                                             </div>
-                                            <button className="auth-button" type="submit">Sign in</button>
+                                            <button className="auth-button mb-10" type="submit">Create Review</button>
                                         </form>
                                     )}
                                 </>
                             )}
-                            <div className="login-error">{reviewFormInfo ? reviewFormInfo : ""}</div>
                         </>
                         ) :
                         (
+                            // login
                             <div className='flex flex-col items-center justify-center gap-10'>
                                 <span className='text-lg'>Please login before you add your review:</span>
                                 <Link className='review-login-button' to='/login'>Log In</Link>
                             </div>
                         )
                     }
+                    {/* popup */}
+                    {showPopup && (
+                        <ReviewPopup status={reviewFormInfo.status} message={reviewFormInfo.message} onClose={() => setShowPopup(false)} />
+                    )}
                 </div>
             </div>
         </div >

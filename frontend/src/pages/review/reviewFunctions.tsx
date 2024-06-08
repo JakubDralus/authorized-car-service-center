@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
-import { useMutation, useQuery } from "react-query";
+import { UseFormReturn } from "react-hook-form";
+import { UseQueryResult, useMutation, useQuery } from "react-query";
 
 export interface ReviewData {
     title: string,
@@ -12,15 +13,26 @@ interface CreateUpdateMutationArgs {
     token: string | null;
 }
 
+export interface ReviewStatus{
+    status: string,
+    message: string
+}
+
 //create review
-export const useCreateReview = (setReviewFormInfo: React.Dispatch<React.SetStateAction<string>>, token: string | null) => {
+export const useCreateReview = (setReviewFormInfo: React.Dispatch<React.SetStateAction<ReviewStatus>>, token: string | null) => {
     return useMutation({
         mutationFn: ({ reviewData, token }: CreateUpdateMutationArgs) => createReview(reviewData, token),
         onSuccess: (data) => {
-            setReviewFormInfo(data.message);
+            setReviewFormInfo({
+                status: "Success",
+                message: data.message
+            });
         },
         onError: (error: AxiosError<Error, any>) => {
-            setReviewFormInfo("Error creating review.");
+            setReviewFormInfo({
+                status: "Error",
+                message: "Error creating review."
+            });
         },
     })
 }
@@ -35,15 +47,22 @@ const createReview = async (reviewData: ReviewData, token: string | null) => {
 }
 
 
+
 //update review
-export const useUpdateReview = (setReviewFormInfo: React.Dispatch<React.SetStateAction<string>>, token: string | null) => {
+export const useUpdateReview = (setReviewFormInfo: React.Dispatch<React.SetStateAction<ReviewStatus>>, token: string | null) => {
     return useMutation({
         mutationFn: ({ reviewData, token }: CreateUpdateMutationArgs) => updateReview(reviewData, token),
         onSuccess: (data) => {
-            setReviewFormInfo(data.message);
+            setReviewFormInfo({
+                status: "Success",
+                message: data.message
+            });
         },
         onError: (error: AxiosError<Error, any>) => {
-            setReviewFormInfo("Error creating review.");
+            setReviewFormInfo({
+                status: "Error",
+                message: "Error updating review."
+            });
         },
     })
 }
@@ -58,6 +77,7 @@ const updateReview = async (reviewData: ReviewData, token: string | null) => {
 }
 
 
+
 //get review
 export interface ReviewReadDto {
     reviewId: number,
@@ -68,16 +88,30 @@ export interface ReviewReadDto {
     userId: number
 }
 
+interface ReviewApiResponse {
+    timeStamp: string,
+    status: number,
+    success: boolean,
+    message: string,
+    data: ReviewReadDto
+}
 
-export const useGetReview = (token: string | null) => {
+
+export const useGetReview = (token: string | null, updateForm : UseFormReturn<ReviewData, any, undefined>): UseQueryResult<ReviewApiResponse, Error> => {
     return useQuery({
         queryKey:['userReview', token],
         queryFn: () => fetchUserReview(token),
-        enabled: !!token
+        enabled: !!token,
+        onSuccess: (data) => {
+            updateForm.setValue("rate", data.data.rate);
+            updateForm.setValue("description", data.data.description);
+            updateForm.setValue("title", data.data.title);
+        },
+        retry:0
     });
 }
 
-const fetchUserReview = async (token: string | null) :Promise<string | ReviewReadDto> => {
+const fetchUserReview = async (token: string | null) :Promise<ReviewApiResponse> => {
     const response = await axios.get('http://localhost:8081/api/v1/reviews/user-review', {
         headers: {
             'Authorization': token
