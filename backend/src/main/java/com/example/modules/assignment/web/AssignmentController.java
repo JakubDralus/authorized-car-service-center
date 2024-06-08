@@ -51,6 +51,15 @@ public class AssignmentController {
                 .build();
     }
     
+    @PutMapping("/{id}/update-status/{status}")
+    public ApiResponse<AssignmentDTO> update(@PathVariable Long id, @PathVariable String status) {
+        AssignmentDTO updated = assignmentService.updateStatus(id, status);
+        return ApiResponse.<AssignmentDTO>builder()
+                .message("Assignment %d status changed to %s.".formatted(id, status))
+                .data(updated)
+                .build();
+    }
+    
     @DeleteMapping("/{assignmentId}")
     public ApiResponse<?> delete(@PathVariable Long assignmentId) {
         assignmentService.delete(assignmentId);

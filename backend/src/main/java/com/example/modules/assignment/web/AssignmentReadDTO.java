@@ -3,6 +3,7 @@ package com.example.modules.assignment.web;
 import com.example.modules.manager.web.ManagerReadDTO;
 import com.example.modules.mechanic.web.MechanicReadDTO;
 import com.example.modules.service.web.ServiceReadDTO;
+import com.example.modules.ticket.Ticket;
 import com.example.modules.ticket.web.TicketReadDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class AssignmentReadDTO {
     private String description;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private Ticket.Status status;
     private TicketReadDTO ticket;
     private ManagerReadDTO manager;
     private MechanicReadDTO mechanic;
