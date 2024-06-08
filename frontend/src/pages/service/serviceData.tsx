@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export interface ServiceData {
   serviceId: number;
@@ -21,7 +21,8 @@ export interface ServiceCarouselProps {
 export const fetchFeaturedServices = async () => {
     try {
       const response = await axios.get('http://localhost:8081/api/v1/services/featured-photos');
-      console.log(response.data)
+      // console.log(response.data)
+      console.log('photos fetched');
       return response.data;
     } catch (error) {
       console.error('Error fetching data:', error);
