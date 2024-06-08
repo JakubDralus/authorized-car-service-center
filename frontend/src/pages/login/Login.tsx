@@ -1,11 +1,21 @@
 // import Navbar from "../../components/navbar/Navbar"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "./Login.css"
-import { LoginData, useLoginUser } from "./loginFunctions"
+import { LoginData, LoginStatus, useLoginUser } from "./loginFunctions"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import AuthPopup from "../../components/popups/AuthPopup"
 
 const Login = () => {
+    const nav = useNavigate();
+
+    if(localStorage.getItem('token'))
+        nav("/")
+
+    //popup
+
+    const [showPopup, setShowPopup] = useState<boolean>(false);
+
     // animation
     const [expandedSide, setExpandedSide] = useState<'left' | 'right' | null>(null);
     const handleMouseEnter = (side: 'left' | 'right') => {
@@ -16,7 +26,10 @@ const Login = () => {
     };
 
     //form
-    const [loginInfo, setLoginInfo] = useState("");
+    const [loginInfo, setLoginInfo] = useState<LoginStatus>({
+        message: "",
+        status: ""
+    });
 
     const loginForm = useForm<LoginData>({
         defaultValues: {
@@ -26,12 +39,18 @@ const Login = () => {
     })
 
     //mutation
-    const loginMutation = useLoginUser(setLoginInfo);
+    const loginMutation = useLoginUser(setLoginInfo, loginForm);
 
     const onSubmit = async (data: LoginData) => {
-        console.log(data)
         try {
-            loginMutation.mutate(data);
+            loginMutation.mutate(data, {
+                onSuccess: () => {
+                    setShowPopup(true);
+                },
+                onError: () => {
+                    setShowPopup(true);
+                }
+            });
         }
         catch (error) {
             console.log(error)
@@ -74,7 +93,7 @@ const Login = () => {
                                     </div>
                                     <button className="auth-button" type="submit">Sign in</button>
                                 </form>
-                                <div className="login-error">{loginInfo ? loginInfo : ""}</div>
+                                {/* <div className="login-error">{loginInfo ? loginInfo : ""}</div> */}
                             </div>
                         </div>
                     </div>
@@ -91,6 +110,10 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            {/* popup */}
+            {showPopup && (
+                <AuthPopup status={loginInfo.status} message={loginInfo.message} onClose={() => {setShowPopup(false); nav("/")}} />
+            )}
         </>
     )
 }
