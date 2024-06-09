@@ -8,12 +8,17 @@ import { CarForm } from "../../components/ticket_form_components/CarForm";
 import { ConfirmationForm } from "../../components/ticket_form_components/ConfirmationForm";
 import { useQuery } from "react-query";
 import { fetchTicketServices } from "./ticketFormFunctions";
-import { Car, Service, TicketData, Customer, TicketDataContext, CustomerDataContext, CarDataContext, SelectedServiceContext } from "./ticketFormFunctions";
+import { Car, Service, TicketData, Customer, Schedule, TicketDataContext, CustomerDataContext, CarDataContext, SelectedServiceContext, ScheduleDataContext } from "./ticketFormFunctions";
 import Footer from "../../components/footer/Footer";
+
 
 export const TicketForm = () => {
     const [step, setStep] = useState<number>(1);
     const [selectedServices, setSelectedServices] = useState<Service[]>([]);
+    const [selectedDate, setSelectedDate] = useState<Schedule>({
+        date: new Date(0),
+        hour: ''
+    });
     // const [serviceDate, setServiceDate] = useState(null);
     const [carData, setCarData] = useState<Car>({
         model: '',
@@ -66,7 +71,15 @@ export const TicketForm = () => {
                 street: '',
                 postalCode: ''
             }
+        },
+        schedule: {
+            date: null,
+            hour: ''
         }
+    });
+    const [scheduleData, setScheduleData] = useState<Schedule>({
+        date: null,
+        hour: ''
     });
 
     //service fetching
@@ -90,7 +103,6 @@ export const TicketForm = () => {
     useEffect(() => {
         console.log("Updated ticketData's services:", ticketData.services);
     }, [ticketData.services]);
-
 
 
     return (
@@ -118,7 +130,9 @@ export const TicketForm = () => {
                                 </div>
                                 <div className="form-info-box">
                                     <h3 className="text-lg">Scheduled date</h3>
-                                </div>
+                                    <p>{selectedDate && selectedDate.date ? (selectedDate.date.toDateString() != new Date(0).toDateString() ? (selectedDate.date.toDateString()): null) : null}</p>
+                                    <p>{selectedDate.hour}</p>
+                                    </div>
                                 <div className="form-info-box">
                                     <h3 className="text-lg">Car</h3>
                                     {/* todo */}
@@ -158,7 +172,10 @@ export const TicketForm = () => {
                                     </SelectedServiceContext.Provider>
                                 )}
                                 {step === 2 && (
-                                    <ScheduleForm nextStep={nextStep} prevStep={prevStep} />
+                                    <ScheduleDataContext.Provider value={{selectedDate, setSelectedDate}}>
+                                        <ScheduleForm nextStep={nextStep} prevStep={prevStep} />
+                                    </ScheduleDataContext.Provider>
+
                                 )}
                                 {step === 3 && (
                                     <CarDataContext.Provider value={{ carData, setCarData }}>
