@@ -49,8 +49,17 @@ export enum Status {
   CLOSED,    // user picked up the car
 }
 
-// export interface Ticket {
-// }
+export interface Ticket {
+  ticketId: number;
+  description: string;
+  fullCost: number;
+  status: Status;
+  createdAt: string; 
+  lastUpdatedAt: string;
+  customer: User;
+  car: Car;
+  services: Service[];
+}
 
 // TicketRead interface
 export interface TicketRead {
@@ -60,23 +69,36 @@ export interface TicketRead {
   status: Status;
   createdAt: string; // Assuming LocalDateTime will be in ISO format
   lastUpdatedAt: string; // Assuming LocalDateTime will be in ISO format
-  user: UserRead;
+  customer: UserRead;
   car: CarRead;
   services: ServiceRead[];
 }
 
-// AssignmentDTO - send to backend
-export interface Task {
+// AssignmentReadDTO - send to backend
+export interface TaskRead {
   id: string;
   description: string;
-  startTime?: Date;
-  endTime?: Date;
+  startTime?: Date | undefined;
+  endTime?: Date | undefined;
   duration?: number;
   ticket?: TicketRead;
   manager?: ManagerRead;
   mechanic?: MechanicRead | null ;
   service?: ServiceRead;
-};
+}
+
+// full AssignmentDTO from backend
+export interface Assignment {
+  assignmentId: string;
+  description: string;
+  startTime: Date | undefined;
+  endTime: Date | undefined;
+  duration: number;
+  ticket: Ticket;
+  manager: Manager;
+  mechanic: Mechanic;
+  service: Service;
+}
 
 // AssignmentReadDTO interface - from backend
 export interface AssignmentRead {

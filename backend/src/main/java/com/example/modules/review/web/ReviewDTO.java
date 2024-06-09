@@ -1,7 +1,5 @@
 package com.example.modules.review.web;
 
-
-import com.example.modules.user.User;
 import com.example.modules.user.web.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -18,6 +16,7 @@ public class ReviewDTO {
     private Long reviewId;
     private String title;
     private String description;
+    public Short rate;
     private LocalDateTime createdAt;
     private UserDTO user;
 }

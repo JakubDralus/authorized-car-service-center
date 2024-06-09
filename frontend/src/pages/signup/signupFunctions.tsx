@@ -5,10 +5,15 @@ import { UseFormSetError, UseFormReturn } from "react-hook-form";
 
 //---------------SIGN UP-----------------------
 
+export interface RegStatus{
+    status: string,
+    message: string
+}
+
 // --------email validation---------
 
 // custom hook
-export const useValidateEmail = (setEmailValid: React.Dispatch<React.SetStateAction<boolean>>, setRegInfo: React.Dispatch<React.SetStateAction<string>>, setError: UseFormSetError<{email: string;}>) => {
+export const useValidateEmail = (setEmailValid: React.Dispatch<React.SetStateAction<boolean>>, setRegInfo: React.Dispatch<React.SetStateAction<RegStatus>>, setError: UseFormSetError<{email: string;}>) => {
     return useMutation({
         mutationFn: validateEmail,
         onSuccess: (data, variables, context) => {
@@ -26,7 +31,10 @@ export const useValidateEmail = (setEmailValid: React.Dispatch<React.SetStateAct
         },
         onError: (error: AxiosError<Error, any>) => {
             //error login
-            setRegInfo(error.response?.data.message || "An error occurred (email)");
+            setRegInfo({
+                message:"An error occurred during registering (email)",
+                status:"Error"
+            });
         },     
     })
 }
@@ -50,15 +58,21 @@ export interface RegisterData {
 }
 
 //custom hook
-export const useRegisterUser = (setRegInfo: React.Dispatch<React.SetStateAction<string>>, registerForm: UseFormReturn<RegisterData>) => {
+export const useRegisterUser = (setRegInfo: React.Dispatch<React.SetStateAction<RegStatus>>, registerForm: UseFormReturn<RegisterData>) => {
     return useMutation({
         mutationFn: registerUser,
         onSuccess: (data, variables, context) => {
-            setRegInfo(data.message);
+            setRegInfo({
+                message:data.message,
+                status:"Success"
+            });
             registerForm.reset();
         },
         onError: (error: AxiosError<Error, any>) => {
-            setRegInfo(error.response?.data.message || "An error occurred during registering");
+            setRegInfo({
+                message:"An error occurred during registering",
+                status:"Error"
+            });
         },   
     })
 }

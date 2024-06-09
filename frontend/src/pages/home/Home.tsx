@@ -2,17 +2,17 @@ import Navbar from "../../components/navbar/Navbar"
 import Footer from "../../components/footer/Footer"
 import "./Home.css"
 import { Link } from "react-router-dom"
-import HomeCard from "../../components/service_card/HomeCard"
 import ServiceCarousel from "../../components/service_carousel/ServiceCarousel"
-import { fetchFeaturedServices, findServiceDataById, ServiceCarouselProps, ServiceData } from '../service/serviceData';
+import { fetchFeaturedServices } from '../service/serviceData';
 import { useQuery } from 'react-query';
 
 const Home = () =>{
     const {data, error, isLoading} = useQuery(['featuredServices'], fetchFeaturedServices);
-
+    
     return (
         <>
-            <Navbar/>
+            <Navbar />
+
             <div className="home-container">
                 <div className="home-banner">
                     <div className="banner-wrapper">
@@ -30,7 +30,7 @@ const Home = () =>{
                     </div>
                 </div>
                 <div className="home-example-services">
-                    {isLoading ? (<div className="spinner"></div>) : (<ServiceCarousel serviceData={data} />)}
+                    {isLoading ? (<div className="pt-10"><div className="spinner "></div></div>) : (<ServiceCarousel serviceData={data} />)}
                 </div>
 
                 {/* maybe something more, we'll see */}

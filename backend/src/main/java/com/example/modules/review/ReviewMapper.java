@@ -1,6 +1,7 @@
 package com.example.modules.review;
 
 import com.example.modules.review.web.ReviewDTO;
+import com.example.modules.review.web.ReviewReadDTO;
 import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.UserRepository;
@@ -21,8 +22,20 @@ public class ReviewMapper implements IMapper<Review, ReviewDTO> {
                 .reviewId(review.getReviewId())
                 .title(review.getTitle())
                 .description(review.getDescription())
+                .rate(review.getRate())
                 .createdAt(review.getCreatedAt())
                 .user(userMapper.toDto(review.getUser()))
+                .build();
+    }
+
+    public ReviewReadDTO toReadDto(Review review) {
+        return ReviewReadDTO.builder()
+                .reviewId(review.getReviewId())
+                .title(review.getTitle())
+                .description(review.getDescription())
+                .rate(review.getRate())
+                .createdAt(review.getCreatedAt())
+                .userId(review.getUser().getUserId())
                 .build();
     }
 
@@ -31,6 +44,7 @@ public class ReviewMapper implements IMapper<Review, ReviewDTO> {
         review.setTitle(reviewDTO.getTitle());
         review.setDescription(reviewDTO.getDescription());
         review.setCreatedAt(reviewDTO.getCreatedAt());
+        review.setRate(reviewDTO.getRate());
         if(reviewDTO.getUser() != null) setUser(reviewDTO, review);
     }
 

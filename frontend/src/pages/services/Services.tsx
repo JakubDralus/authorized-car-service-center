@@ -3,7 +3,7 @@ import Navbar from "../../components/navbar/Navbar"
 import Footer from "../../components/footer/Footer"
 import { Link } from "react-router-dom";
 import { useQuery } from 'react-query';
-import { fetchFeaturedServices, findServiceDataById, ServiceCarouselProps, ServiceData, classSelector } from '../service/serviceData';
+import { fetchFeaturedServices, ServiceData, classSelector } from '../service/serviceData';
 
 
 

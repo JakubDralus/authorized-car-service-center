@@ -1,9 +1,11 @@
 package com.example.modules.manager;
 
 import com.example.modules.manager.web.ManagerDTO;
+import com.example.modules.manager.web.ManagerReadDTO;
 import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.web.UserDTO;
+import com.example.modules.user.web.UserReadDTO;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,6 +24,14 @@ public class ManagerMapper implements IMapper<Manager, ManagerDTO> {
                 .managerId(manager.getManagerId())
                 .salary(manager.getSalary())
                 .user(modelMapper.map(manager.getUser(), UserDTO.class))
+                .build();
+    }
+    
+    public ManagerReadDTO toReadDto(Manager manager) {
+        return ManagerReadDTO.builder()
+                .managerId(manager.getManagerId())
+                .salary(manager.getSalary())
+                .user(modelMapper.map(manager.getUser(), UserReadDTO.class))
                 .build();
     }
     

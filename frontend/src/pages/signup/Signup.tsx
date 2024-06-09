@@ -1,11 +1,20 @@
 import "./Signup.css";
 import "../../assets/index.css"
 import { useState } from "react";
-import { useValidateEmail, useRegisterUser, RegisterData } from "./signupFunctions";
-import { Link } from "react-router-dom";
+import { useValidateEmail, useRegisterUser, RegisterData, RegStatus } from "./signupFunctions";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import AuthPopup from "../../components/popups/AuthPopup";
 
 const Signup = () => {
+    const nav = useNavigate()
+    // if(localStorage.getItem('token')){
+    //     nav("/")
+    // }
+
+    //popup
+    const [showPopup, setShowPopup] = useState<boolean>(false);
+
     //animation
     const [expandedSide, setExpandedSide] = useState<'left' | 'right' | null>(null);
     const handleMouseEnter = (side: 'left' | 'right') => {
@@ -17,7 +26,10 @@ const Signup = () => {
 
     //registration
     const [emailValid, setEmailValid] = useState(false);
-    const [regInfo, setRegInfo] = useState("");
+    const [regInfo, setRegInfo] = useState<RegStatus>({
+        message: "",
+        status: ""
+    });
 
     //register form
     const registerForm = useForm<RegisterData>({
@@ -56,7 +68,14 @@ const Signup = () => {
 
     const onSubmit = async (data: RegisterData) => {
         try {
-            registerMutation.mutate(data);
+            registerMutation.mutate(data, {
+                onSuccess: () => {
+                    setShowPopup(true);
+                },
+                onError: () => {
+                    setShowPopup(true);
+                }
+            });
         }
         catch (error) {
             console.log(error);
@@ -118,7 +137,6 @@ const Signup = () => {
                                 <Link to="/login" className="text-gray-400 transition-all hover:text-black">Log in</Link>
                             </div>
                         </div>
-                        <div className="min-h-3">{regInfo ? regInfo : ""}</div>
                     </div>
                 </div>
                 <div
@@ -132,6 +150,10 @@ const Signup = () => {
                     </div>
                 </div>
             </div>
+            {/* popup */}
+            {showPopup && (
+                <AuthPopup status={regInfo.status} message={regInfo.message} onClose={() => {setShowPopup(false); nav("/login")}} />
+            )}
         </>
     )
 }
