@@ -2,9 +2,11 @@ package com.example.modules.assignment;
 
 import com.example.modules.assignment.web.AssignmentDTO;
 import com.example.modules.assignment.web.AssignmentReadDTO;
+import com.example.modules.auth.JwtService;
 import com.example.modules.ticket.Ticket;
 import com.example.modules.ticket.TicketRepository;
 import com.example.shared.CrudService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -23,9 +25,20 @@ public class AssignmentService implements CrudService<AssignmentDTO> {
     private final AssignmentMapper assignmentMapper;
     private final TicketRepository ticketRepository;
     private final ModelMapper modelMapper;
+    private final JwtService jwtService;
     
     public List<AssignmentReadDTO> getAll() {
         return assignmentRepository.findAll()
+                .stream()
+                .map(assignmentMapper::toReadDto)
+                .toList();
+    }
+    
+    public List<AssignmentReadDTO> getAllByMechanic(String token) {
+        String email = jwtService.extractClaim(token.substring(7), Claims::getSubject);
+//        System.out.println(email);
+        
+        return assignmentRepository.findAllByMechanic_UserEmail(email)
                 .stream()
                 .map(assignmentMapper::toReadDto)
                 .toList();

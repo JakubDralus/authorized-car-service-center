@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
     List<Assignment> findByTicketTicketId(Long ticketId);
+    List<Assignment> findAllByMechanic_UserEmail(String email);
 }
