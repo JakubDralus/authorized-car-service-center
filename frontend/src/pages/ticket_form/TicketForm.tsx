@@ -9,6 +9,7 @@ import { ConfirmationForm } from "../../components/ticket_form_components/Confir
 import { useQuery } from "react-query";
 import { fetchTicketServices } from "./ticketFormFunctions";
 import { Car, Service, TicketData, Customer, TicketDataContext, CustomerDataContext, CarDataContext, SelectedServiceContext } from "./ticketFormFunctions";
+import Footer from "../../components/footer/Footer";
 
 export const TicketForm = () => {
     const [step, setStep] = useState<number>(1);
@@ -59,7 +60,7 @@ export const TicketForm = () => {
             lastName: '',
             telephoneNumber: '',
             email: '',
-            address:{
+            address: {
                 country: '',
                 city: '',
                 street: '',
@@ -69,13 +70,13 @@ export const TicketForm = () => {
     });
 
     //service fetching
-    const {data, isLoading} = useQuery(
+    const { data, isLoading } = useQuery(
         ['ticketServices'],
         fetchTicketServices
     );
 
     const scrollRef = useRef<HTMLDivElement>(null);
-    
+
     const nextStep = () => {
         setStep(prevStep => prevStep + 1);
         scrollRef.current?.scrollIntoView()
@@ -91,7 +92,7 @@ export const TicketForm = () => {
     }, [ticketData.services]);
 
 
-    
+
     return (
         <>
             <Navbar />
@@ -149,7 +150,7 @@ export const TicketForm = () => {
                                 <div className={`${step >= 5 ? 'text-red-500' : ''}`}>Summary</div>
                             </div>
                         </div>
-                        <div className="w-full h-full bg-gray-50 p-7" ref={scrollRef}>
+                        <div className="w-full h-full bg-gray-50 p-7 mb-10" ref={scrollRef}>
                             <TicketDataContext.Provider value={{ ticketData, setTicketData }}>
                                 {step === 1 && (
                                     <SelectedServiceContext.Provider value={{ selectedServices, setSelectedServices }}>
@@ -177,6 +178,7 @@ export const TicketForm = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     )
 }

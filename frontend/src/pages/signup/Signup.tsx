@@ -8,9 +8,9 @@ import AuthPopup from "../../components/popups/AuthPopup";
 
 const Signup = () => {
     const nav = useNavigate()
-    if(localStorage.getItem('token')){
-        nav("/")
-    }
+    // if(localStorage.getItem('token')){
+    //     nav("/")
+    // }
 
     //popup
     const [showPopup, setShowPopup] = useState<boolean>(false);
