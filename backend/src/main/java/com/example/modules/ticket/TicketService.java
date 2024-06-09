@@ -92,7 +92,10 @@ public class TicketService implements CrudService<TicketDTO> {
         String email = jwtService.extractClaim(token.substring(7), Claims::getSubject);
         User customer = userRepository.findByEmail(email).orElseThrow();
 
-        if(ticketUserDTO.getCustomer().getAddress() != null){
+        if(!ticketUserDTO.getCustomer().getAddress().getCountry().isEmpty()
+                && !ticketUserDTO.getCustomer().getAddress().getCity().isEmpty()
+                && !ticketUserDTO.getCustomer().getAddress().getStreet().isEmpty()
+                && !ticketUserDTO.getCustomer().getAddress().getPostalCode().isEmpty()){
             if(customer.getAddress() == null){
                 Address address = Address.builder()
                         .city(ticketUserDTO.getCustomer().getAddress().getCity())
