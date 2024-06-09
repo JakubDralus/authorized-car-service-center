@@ -9,12 +9,12 @@ function classNames(...classes: string[]) {
 }
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const userName = 'John Doe'; // Example user name
 
   function handleLogOut() {
-    setIsLoggedIn(false);
     // invalidate local storage
+    localStorage.clear()
   }
 
   return (
@@ -46,7 +46,7 @@ const Navbar = () => {
         </div>
         
         <div className="flex items-center space-x-4">
-          {isLoggedIn ? (
+          {localStorage.getItem('token') ? (
             <>
               <div className="inset-y-0 right-0 flex items-center pr-2 static ">
                 <button
