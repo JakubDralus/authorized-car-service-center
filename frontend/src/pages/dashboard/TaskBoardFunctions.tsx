@@ -46,7 +46,17 @@ export const updateAssignment = async (task: TaskRead) => {
     throw error;
   }
 };
-
+export const updateTaskStatus = async (assignmentId: string, status: string): Promise<ApiResponse<Assignment>> => {
+  try {
+    const response = await axios.put<ApiResponse<Assignment>>(`http://localhost:8081/api/v1/assignments/${assignmentId}/update-status/${status}`);
+    console.log(`Task ${assignmentId} status updated to ${status}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating task ${assignmentId} status:`, error);
+    throw error;
+  }
+};
 // Function to update ticket status
 export const updateTicketStatus = async (ticketId: number, status: string) => {
   try {

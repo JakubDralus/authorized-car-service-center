@@ -42,11 +42,11 @@ export interface UserRead {
 type Role = 'Admin' | 'User' | 'Mechanic' | 'Manager' | 'Accountant';
 
 export enum Status {
-  REQUESTED, // waiting for approval from manager
-  PENDING,   // approved scheduled for work
-  DOING,     // working on the car
-  DONE,      // done working
-  CLOSED,    // user picked up the car
+  REQUESTED = "REQUESTED",
+  PENDING = "PENDING",
+  DOING = "DOING",
+  DONE = "DONE",
+  CLOSED = "CLOSED"
 }
 
 export interface Ticket {
@@ -98,6 +98,7 @@ export interface Assignment {
   manager: Manager;
   mechanic: Mechanic;
   service: Service;
+  status: Status;
 }
 
 // AssignmentReadDTO interface - from backend
@@ -110,6 +111,7 @@ export interface AssignmentRead {
   manager: ManagerRead;
   mechanic: MechanicRead;
   service: ServiceRead;
+  status: Status;
 }
 
 export interface Car {
@@ -172,3 +174,4 @@ export interface ServiceRead {
   name: string;
   cost: number;
 }
+

@@ -1,21 +1,13 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ApiResponse, Assignment, Service } from '../../../api/model';
-import { fetchAssignment,updateAssignment } from '../../../pages/dashboard/TaskBoardFunctions';
+import { ApiResponse, Assignment, Service, AssignmentRead, Status } from '../../../api/model';
+import { fetchAssignment,updateTaskStatus } from '../../../pages/dashboard/TaskBoardFunctions';
 import Dropdown from './Dropdown';
 
 interface TaskDialogProps {
   taskId: string;
   open: boolean;
   setOpen: (open: boolean) => void;
-}
-
-enum Status {
-  REQUESTED = 'REQUESTED',
-  PENDING = 'PENDING',
-  DOING = 'DOING',
-  DONE = 'DONE',
-  CLOSED = 'CLOSED',
 }
 
 const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) => {
@@ -48,11 +40,10 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
     if (task) {
       try {
 
-        // await updateAssignment(task);
-
+        const updatedTask = await updateTaskStatus(task.assignmentId, status.toString());
+        console.log('Task status updated:', updatedTask.data);
         // // Update the status of the task directly in the state
-        // const updatedTask: TaskRead = { ...task, ticket: { ...task.ticket, status: status } };
-        // setTask(updatedTask);
+        setTask(updatedTask.data);
 
         // Close the dialog
         setOpen(false);
@@ -73,7 +64,7 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
                 {task ? (
                   <>
                     <h2 className="text-xl font-semibold">{task.ticket.description}</h2>
-                    <p><strong>Status:</strong> {task.ticket.status}</p>
+                    <p><strong>Status:</strong> {task.status}</p>
                     <p><strong>Full Cost:</strong> {task.ticket.fullCost}</p>
                     <p><strong>Created At:</strong> {new Date(task.ticket.createdAt).toLocaleString()}</p>
                     <p><strong>Last Updated At:</strong> {new Date(task.ticket.lastUpdatedAt).toLocaleString()}</p>
@@ -97,7 +88,7 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
                       <label htmlFor="status" className="block text-sm font-medium text-gray-700">
                         Status
                       </label>
-                      <Dropdown status={status} onChange={handleStatusChange} />
+                      <Dropdown status={task.status} onChange={handleStatusChange} />
                     </div>
                   </>
                 ) : (

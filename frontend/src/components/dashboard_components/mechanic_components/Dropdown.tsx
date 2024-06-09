@@ -1,16 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { Status } from '../../../api/model';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
-}
-enum Status {
-  REQUESTED = 'REQUESTED',
-  PENDING = 'PENDING',
-  DOING = 'DOING',
-  DONE = 'DONE',
-  CLOSED = 'CLOSED',
 }
 
 interface DropdownProps {
@@ -18,12 +12,16 @@ interface DropdownProps {
   onChange: (status: Status) => void;
 }
 
+
 const Dropdown: React.FC<DropdownProps> = ({ status, onChange }) => {
+
+  const [currentStatus, setStatus] = useState<Status>(status);
+
   return (
     <Menu as="div" className="relative inline-block text-left w-full">
       <div>
         <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          {status}
+          {currentStatus}
           <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
         </MenuButton>
       </div>
@@ -43,7 +41,9 @@ const Dropdown: React.FC<DropdownProps> = ({ status, onChange }) => {
                 {({ active }) => (
                   <a
                     href="#"
-                    onClick={() => onChange(statusOption)}
+                    onClick={() => {
+                      setStatus(statusOption as Status);
+                      onChange(statusOption as Status)}}
                     className={classNames(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block px-4 py-2 text-sm'
