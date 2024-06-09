@@ -93,3 +93,15 @@ export const fetchAssignment = async (id: string | number): Promise<ApiResponse<
   // console.log(data);
   return data;
 };
+
+export const fetchAssignmentsByMechanic = async (token: string): Promise<ApiResponse<AssignmentRead[]>> => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  const { data } = await axios.get<ApiResponse<AssignmentRead[]>>(`http://localhost:8081/api/v1/my-tasks`, config);
+  console.log('assignments fetched for mechanic');
+  return data;
+};

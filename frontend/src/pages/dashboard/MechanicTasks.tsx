@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import { fetchAssignments } from "./TaskBoardFunctions";
+import { fetchAssignments, fetchAssignmentsByMechanic } from "./TaskBoardFunctions";
 import AssignmentDialog from "../../components/dashboard_components/mechanic_components/AssignmentDialog";
 import { AssignmentRead, Status } from '../../api/model';
 
@@ -10,12 +10,14 @@ const MechanicTasks: React.FC = () => {
   const [assignments, setAssignments] = useState<AssignmentRead[]>([]);
   const [selectedStatus, setSelectedStatus] = useState<Status | null>(null);
 
+  const token = localStorage.getItem('token') as string;
+
   const {
     data: responseAssignmentsData, 
     refetch: refetchAssignments,  
     isLoading: isLoadingAssignments, 
     error: assignmentsError 
-  } = useQuery("assignments", fetchAssignments);
+  } = useQuery("assignments", () => fetchAssignmentsByMechanic(token));
 
   useEffect(() => {
     if (responseAssignmentsData) {
