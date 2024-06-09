@@ -29,7 +29,6 @@ export const TicketForm = () => {
         mileage: -1,
     });
     const [customerData, setCustomerData] = useState<Customer>({
-        userId: -1,
         firstName: '',
         lastName: '',
         telephoneNumber: '',
@@ -43,6 +42,7 @@ export const TicketForm = () => {
     });
 
     const [ticketData, setTicketData] = useState<TicketData>({
+        fullCost: -1,
         description: '',
         services: [{
             serviceId: -1,
@@ -60,7 +60,6 @@ export const TicketForm = () => {
             mileage: -1
         },
         customer: {
-            userId: -1,
             firstName: '',
             lastName: '',
             telephoneNumber: '',

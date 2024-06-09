@@ -32,7 +32,6 @@ export interface Address{
 }
 
 export interface Customer {
-    userId: number,
     firstName: string,
     lastName: string,
     telephoneNumber: string,
@@ -41,6 +40,7 @@ export interface Customer {
 }
 
 export interface TicketData {
+    fullCost: number,
     description: string,
     services: Service[],
     car: Car,

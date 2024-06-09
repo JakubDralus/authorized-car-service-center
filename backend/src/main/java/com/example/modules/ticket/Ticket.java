@@ -4,6 +4,7 @@ import com.example.modules.car.Car;
 import com.example.modules.reserved_hours.ReservedHours;
 import com.example.modules.service.ServiceModel;
 import com.example.modules.user.User;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,11 +35,11 @@ public class Ticket {
     
     @CreationTimestamp
     private LocalDateTime createdAt;
-
     
     @UpdateTimestamp
     private LocalDateTime lastUpdatedAt;
-    
+
+    @Nullable
     private LocalDateTime finishedAt;
     
     @ManyToOne
