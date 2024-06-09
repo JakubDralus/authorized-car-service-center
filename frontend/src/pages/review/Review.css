@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.review-banner{
+    background-image: url("../../assets/review-banner.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 550px;
+}
+
+.review-login-button{
+    text-decoration: none;
+    color:white;
+    border: 1px solid white;
+    padding: 12px 18px;
+    border-radius: 22px;
+    width:200px;
+    text-align: center;
+    background-color: var(--buttons-color);
+    transition: all 0.2s ease-in-out;
+
+    margin-bottom: 3rem;
+}
+
+.review-login-button:hover{
+    background-color: var(--buttons-color-hover);
+}

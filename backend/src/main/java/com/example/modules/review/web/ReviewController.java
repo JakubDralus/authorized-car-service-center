@@ -1,5 +1,6 @@
 package com.example.modules.review.web;
 
+import com.example.modules.auth.JwtService;
 import com.example.modules.review.ReviewService;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,36 @@ public class ReviewController {
         reviewService.delete(reviewId);
         return ApiResponse.<ReviewDTO>builder()
                 .message("Review deleted.")
+                .build();
+    }
+
+
+    //user review
+
+    @GetMapping("/user-review")
+    public ApiResponse<ReviewReadDTO> getUserReview(@RequestHeader("Authorization") String token) {
+        ReviewReadDTO dto = reviewService.getReviewByToken(token);
+        return ApiResponse.<ReviewReadDTO>builder()
+                .message("Review fetched.")
+                .data(dto)
+                .build();
+    }
+
+    @PostMapping("/user-review")
+    public ApiResponse<ReviewReadDTO> createUserReview(@RequestHeader("Authorization") String token, @RequestBody ReviewCreateDto reviewCreateDto) {
+        ReviewReadDTO dto = reviewService.createUserReview(token, reviewCreateDto);
+        return ApiResponse.<ReviewReadDTO>builder()
+                .message("Review created.")
+                .data(dto)
+                .build();
+    }
+
+    @PutMapping("/user-review")
+    public ApiResponse<ReviewReadDTO> updateUserReview(@RequestHeader("Authorization") String token, @RequestBody ReviewCreateDto reviewUpdateDto) {
+        ReviewReadDTO dto = reviewService.updateUserReview(token, reviewUpdateDto);
+        return ApiResponse.<ReviewReadDTO>builder()
+                .message("Review updated.")
+                .data(dto)
                 .build();
     }
 }

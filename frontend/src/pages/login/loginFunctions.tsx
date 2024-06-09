@@ -1,8 +1,14 @@
 import axios, { AxiosError } from "axios";
+import { UseFormReturn } from "react-hook-form";
 import { useMutation } from "react-query";
 // import { useNavigate } from "react-router-dom";
 
 // --------------login-------------------
+export interface LoginStatus{
+    status: string,
+    message: string
+}
+
 export interface LoginData {
     email: string;
     password: string;
@@ -10,26 +16,26 @@ export interface LoginData {
 
 
 //custom hook
-export const useLoginUser = (setLoginInfo: React.Dispatch<React.SetStateAction<string>>) => {
-    //const navigate = useNavigate();
-
+export const useLoginUser = (setLoginInfo: React.Dispatch<React.SetStateAction<LoginStatus>>, loginForm: UseFormReturn<LoginData, any, undefined>) => {
     return useMutation({
         mutationFn: loginUser,
         onSuccess: (data, variables, context) => {
-            //succesfull login
-            setLoginInfo(data.message);
+            setLoginInfo({
+                status: "Success",
+                message: data.message
+            });
             localStorage.setItem("token", data.data.token);
             localStorage.setItem("firstName", data.data.firstName);
             localStorage.setItem("lastName", data.data.lastName);
             localStorage.setItem("role", data.data.role);
-            //redirect to home page after successfull login
-            // setTimeout(() => {
-            //     navigate("/")
-            // }, 1500)
+            loginForm.reset()
         },
         onError: (error: AxiosError<Error, any>) => {
             //error login
-            setLoginInfo("User does not exist");
+            setLoginInfo({
+                status: "Error",
+                message: "Error while logging in."
+            });
         },
     })
 }

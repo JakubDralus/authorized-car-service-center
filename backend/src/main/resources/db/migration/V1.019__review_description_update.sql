@@ -1,0 +1,2 @@
+ALTER TABLE review
+    ALTER COLUMN description TYPE TEXT

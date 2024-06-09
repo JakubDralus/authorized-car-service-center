@@ -11,6 +11,7 @@ import AssignTasks from './pages/dashboard/AssignTasks';
 import { TicketForm } from './pages/ticket_form/TicketForm';
 import UserTable from './components/dashboard_components/Usertable';
 import PageNotFound from './pages/PageNotFound';
+import Review from './pages/review/Review';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           {/* rest of the dashboard ... */}
         </Route>
         <Route path='/ticket-form' errorElement={<div>404 not found</div>} element={<TicketForm/>}/>
+        <Route path='/review' errorElement={<div>404 not found</div>} element={<Review/>}/>
       </Routes>
     </BrowserRouter>
   );
