@@ -102,7 +102,6 @@ export const TicketForm = () => {
         console.log("Updated ticketData's services:", ticketData.services);
     }, [ticketData.services]);
 
-
     
     return (
         <>

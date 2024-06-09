@@ -1,5 +1,6 @@
 package com.example.modules.ticket;
 
+import com.example.modules.address.Address;
 import com.example.modules.car.Car;
 import com.example.modules.car.CarMapper;
 import com.example.modules.car.CarRepository;
@@ -17,6 +18,7 @@ import com.example.modules.ticket.web.TicketReadDTO;
 import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.UserRepository;
+import com.example.modules.user.web.UserDTO;
 import com.example.modules.user.web.UserReadDTO;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
@@ -83,8 +85,16 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
         if (ticketDTO.getCustomer() != null) setCustomer(ticketDTO, ticket);
         if (ticketDTO.getCar() != null) setCar(ticketDTO, ticket);
         if (ticketDTO.getServices() != null) setServices(ticketDTO, ticket); // Set services
+        setReservedHour(ticketDTO, ticket);
     }
-    
+
+    private void setReservedHour(TicketDTO ticketDTO, Ticket ticket) {
+        ReservedHours reservedHours = ticket.getCarReturnDate();
+        if (reservedHours == null) reservedHours = new ReservedHours();
+        reservedHoursMapper.toEntity(ticketDTO.getCarReturnDate(), reservedHours);
+        ticket.setCarReturnDate(reservedHours);
+    }
+
     private void setServices(TicketDTO ticketDTO, Ticket ticket) {
         List<Long> serviceIds = ticketDTO.getServices()
                 .stream()
@@ -93,11 +103,12 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
         List<ServiceModel> services = serviceRepository.findAllById(serviceIds);
         ticket.setServices(services);
     }
-    
+
     private void setCar(TicketDTO ticketDTO, Ticket ticket) {
         Car car = carRepository.findById(ticketDTO.getCar().getCarId()).orElseThrow();
         ticket.setCar(car);
     }
+
     
     private void setCustomer(TicketDTO ticketDTO, Ticket ticket) {
         User user = userRepository.findById(ticketDTO.getCustomer().getUserId()).orElseThrow();

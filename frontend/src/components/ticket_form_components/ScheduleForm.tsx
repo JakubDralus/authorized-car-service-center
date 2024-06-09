@@ -184,7 +184,7 @@ const addDateDate = (date: Date | null) => {
                 <button className='ticket-form-button' onClick={prevStep}>
                     Prev
                 </button>
-                <button className='ticket-form-button' onClick={nextStep}>
+                <button className='ticket-form-button' onClick={checkSelectedDate}>
                     Next
                 </button>
             </div>
