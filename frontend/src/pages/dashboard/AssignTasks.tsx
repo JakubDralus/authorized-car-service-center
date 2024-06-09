@@ -132,20 +132,6 @@ const AssignTasks = () => {
           console.error('Error updating assignment:', error);
           sourceTasks.splice(source.index, 0, movedTask);
         }
-      } else {
-        // Create a new assignment for the moved task
-        try {
-          console.log('Creating new assignment for task:', movedTask);
-          const createdAssignment = await createAssignment(movedTask);
-          if (createdAssignment && createdAssignment.data && createdAssignment.data.data) {
-            movedTask.id = createdAssignment.data.data.assignmentId.toString();
-          } else {
-            throw new Error('Invalid response from createAssignment');
-          }
-        } catch (error) {
-          console.error('Error creating assignment:', error);
-          sourceTasks.splice(source.index, 0, movedTask);
-        }
       }
   
       // Update the columns
