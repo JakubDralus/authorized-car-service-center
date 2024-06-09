@@ -101,7 +101,7 @@ export const fetchAssignmentsByMechanic = async (token: string): Promise<ApiResp
     }
   };
 
-  const { data } = await axios.get<ApiResponse<AssignmentRead[]>>(`http://localhost:8081/api/v1/my-tasks`, config);
+  const { data } = await axios.get<ApiResponse<AssignmentRead[]>>(`http://localhost:8081/api/v1/assignments/my-tasks`, config);
   console.log('assignments fetched for mechanic');
   return data;
 };
