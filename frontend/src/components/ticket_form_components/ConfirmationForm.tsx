@@ -46,6 +46,10 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
                     <div>
                         <span className="ticket-form-decor"></span>
                         <h2 className="text-2xl">Scheduled date</h2>
+                        <div className="flex flex-col">
+                            <span>Date: {ticketDataContext?.ticketData.schedule.date?.toDateString()}</span>
+                            <span>Time: {ticketDataContext?.ticketData.schedule.hour}</span>
+                        </div>
                     </div>
                 </div>
                 <div className="w-full flex flex-col items-start justify-center gap-10">

@@ -20,4 +20,5 @@ public interface ServiceRepository extends JpaRepository<ServiceModel, Long> {
 
     @Query("SELECT s FROM ServiceModel s WHERE s.isFeatured = true")
     List<ServiceModel> findAllFeatured();
+
 }

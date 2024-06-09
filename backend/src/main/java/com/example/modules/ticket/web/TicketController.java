@@ -64,4 +64,13 @@ public class TicketController {
                 .message("Ticket deleted.")
                 .build();
     }
+
+    @PostMapping("/create-user-ticket")
+    public ApiResponse<TicketDTO> createUserTicket(@RequestHeader("Authorization") String token, @RequestBody TicketUserDTO ticketUserDTO){
+        TicketDTO created = ticketService.createUserTicket(token, ticketUserDTO);
+        return ApiResponse.<TicketDTO>builder()
+                .message("Ticket created succesfully.")
+                .data(created)
+                .build();
+    }
 }
