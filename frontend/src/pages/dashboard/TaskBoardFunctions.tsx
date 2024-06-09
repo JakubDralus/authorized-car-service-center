@@ -32,7 +32,8 @@ export const updateAssignment = async (task: TaskRead) => {
     ticket: { ticketId: task.ticket?.ticketId },
     mechanic: { mechanicId: task.mechanic?.mechanicId },
     manager: { managerId: task.manager?.managerId ?? 1 }, //get manager id from logged manager
-    service: { serviceId: task.service?.serviceId }
+    service: { serviceId: task.service?.serviceId },
+    status: task.status
   };
   // console.log("payload:");
   // console.log(payload);
