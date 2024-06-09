@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import { fetchAssignments, fetchAssignmentsByMechanic } from "./TaskBoardFunctions";
+import { fetchAssignmentsByMechanic } from "./TaskBoardFunctions";
 import AssignmentDialog from "../../components/dashboard_components/mechanic_components/AssignmentDialog";
 import { AssignmentRead, Status } from '../../api/model';
 
@@ -49,7 +49,6 @@ const MechanicTasks: React.FC = () => {
   if (assignmentsError) {
     return <div className="text-center mt-10 text-red-500">Error fetching assignments</div>;
   }
-
 
   return (
     <div className="container mx-auto p-4">

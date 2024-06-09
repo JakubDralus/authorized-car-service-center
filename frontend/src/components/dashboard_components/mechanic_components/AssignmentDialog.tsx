@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { ApiResponse, Assignment, Service, AssignmentRead, Status } from '../../../api/model';
+import { ApiResponse, Assignment, Service, Status } from '../../../api/model';
 import { fetchAssignment,updateTaskStatus } from '../../../pages/dashboard/TaskBoardFunctions';
 import Dropdown from './Dropdown';
 
@@ -15,7 +15,6 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
   const [status, setStatus] = useState<Status>(Status.REQUESTED);
   const [services, setServices] = useState<Service[]>([]);
 
-
   useEffect(() => {
     if (open && taskId) {
       fetchAssignment(taskId)
@@ -23,7 +22,6 @@ const AssignmentDialog: React.FC<TaskDialogProps> = ({ taskId, open, setOpen }) 
           setTask(response.data);
           setStatus(response.data.ticket.status as unknown as Status);
           setServices(response.data.ticket.services);
-          console.log('dudupson');
         })
         .catch((error: string) => {
           console.log('Failed to fetch task details: ' + error);
