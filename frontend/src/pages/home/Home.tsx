@@ -20,7 +20,7 @@ const Home = () => {
                                 <h1 className="text-5xl font-semibold text-black tracking-wide">Schedule a service appointment</h1>
                                 <span className="text-2xl text-black">Servicing your car can be really fun!</span>
                             </div>
-                            <Link className="no-underline border-solid border border-white text-white rounded-3xl transition-all py-3 px-5 bg-slate-500 text-lg hover:bg-slate-600" to="/">Create new ticket</Link>
+                            <Link className="no-underline border-solid border border-white text-white rounded-3xl transition-all py-3 px-5 bg-slate-500 text-lg hover:bg-slate-600" to="/ticket-form">Create new ticket</Link>
                         </div>
                     </div>
                 </div>
