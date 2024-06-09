@@ -112,12 +112,7 @@ const AssignTasks = () => {
   
       // If dropped to mechanic column, assign mechanic and set status
       movedTask.mechanic = columns[destIndex].mechanic;
-  
-      // Set status to 'PENDING' if it is null
-      if (!movedTask.status) {
-        movedTask.status = 'PENDING';
-      }
-  
+
       destTasks.splice(destination.index, 0, movedTask);
   
       // Check if the task was previously assigned to a different mechanic
@@ -127,23 +122,10 @@ const AssignTasks = () => {
         // Update existing assignment
         try {
           console.log('Updating task:', movedTask);
-          await updateAssignment(movedTask);
-        } catch (error) {
+          updateAssignment(movedTask);
+        } 
+        catch (error) {
           console.error('Error updating assignment:', error);
-          sourceTasks.splice(source.index, 0, movedTask);
-        }
-      } else {
-        // Create a new assignment for the moved task
-        try {
-          console.log('Creating new assignment for task:', movedTask);
-          const createdAssignment = await createAssignment(movedTask);
-          if (createdAssignment && createdAssignment.data && createdAssignment.data.data) {
-            movedTask.id = createdAssignment.data.data.assignmentId.toString();
-          } else {
-            throw new Error('Invalid response from createAssignment');
-          }
-        } catch (error) {
-          console.error('Error creating assignment:', error);
           sourceTasks.splice(source.index, 0, movedTask);
         }
       }
@@ -182,8 +164,9 @@ const AssignTasks = () => {
         // Wait for all assignments to be created
         await Promise.all(createAssignmentPromises);
         await updateTicketStatus(ticketId, "PENDING");
-        await refetchAssignments();
-        await refetchTickets();
+        refetchAssignments();
+        refetchTickets();
+
         newColumns = [...columns];
         newColumns[sourceIndex].tasks = sourceTasks;
         newColumns[destIndex].tasks = destTasks;
