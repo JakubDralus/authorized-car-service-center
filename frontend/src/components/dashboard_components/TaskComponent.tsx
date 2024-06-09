@@ -43,7 +43,7 @@ const TaskComponent = ({task}: {task: TaskRead}) => {
         </div>
         {task.ticket && (
           <div>
-            <strong>status: </strong>{task.ticket.status}
+            <strong>status: </strong>{task.status}
           </div>
         )}
       </div>

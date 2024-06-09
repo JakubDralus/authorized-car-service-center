@@ -29,7 +29,7 @@ const AssignTasks = () => {
   useEffect(() => {
     if (responseMechanicsData && responseMechanicsData.data) {
       const mechanicsTasksMap: { [key: string]: TaskRead[] } = {};
-  
+      
       // Initialize the map with empty arrays for each mechanic
       responseMechanicsData.data.forEach(mechanic => {
         mechanicsTasksMap[mechanic.mechanicId] = [];
@@ -47,7 +47,8 @@ const AssignTasks = () => {
             ticket: assignment.ticket,
             manager: assignment.manager,
             mechanic: assignment.mechanic,
-            service: assignment.service
+            service: assignment.service,
+            status: assignment.status
           });
         });
       }
@@ -74,7 +75,8 @@ const AssignTasks = () => {
             ticket: ticket,
             manager: undefined,
             mechanic: undefined,
-            service: service
+            service: service,
+            status: undefined
           }));
           return acc.concat(tasksFromServices);
         }, []) : []

@@ -34,7 +34,7 @@ export default function DashboardNavbar() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <Link 
-                    to={'/dashboard'}
+                    to={'/'}
                     >
                     <img
                       className="h-8 w-auto"
@@ -49,7 +49,6 @@ export default function DashboardNavbar() {
                       className={classNames( location === '/dashboard' ? 'bg-gray-900 text-white':
                         'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium no-underline',
-                        // activeDashboard  ? ' bg-black' : ''
                       )}
                     >
                       Dasboard
@@ -60,7 +59,6 @@ export default function DashboardNavbar() {
                         'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium no-underline'
                       )}
-                      // aria-current={'Assign tasks' === current ? 'page' : undefined}
                     >
                       Assign tasks
                     </Link>
@@ -70,7 +68,6 @@ export default function DashboardNavbar() {
                         'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium no-underline'
                       )}
-                      // aria-current={'Assign tasks' === current ? 'page' : undefined}
                     >
                       Mechanic Tasks
                     </Link>
@@ -80,9 +77,7 @@ export default function DashboardNavbar() {
                         'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium no-underline'
                       )}
-                      // aria-current={'Invoices' === current ? 'page' : undefined}
                     >
-                      
                       Invoices
                     </Link>
                     <Link
@@ -177,7 +172,6 @@ export default function DashboardNavbar() {
                   'text-gray-300 hover:bg-gray-700 hover:text-white',
                   'block rounded-md px-3 py-2 text-base font-medium no-underline'
                 )}
-                // aria-current={'Dashboard' === current ? 'page' : undefined}
               >
                 Dasboard
               </DisclosureButton>
@@ -188,7 +182,6 @@ export default function DashboardNavbar() {
                   'text-gray-300 hover:bg-gray-700 hover:text-white',
                   'block rounded-md px-3 py-2 text-base font-medium no-underline'
                 )}
-                // aria-current={'assign' === current ? 'page' : undefined}
               >
                 Assign tasks
               </DisclosureButton>

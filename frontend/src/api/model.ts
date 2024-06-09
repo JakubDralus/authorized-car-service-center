@@ -85,6 +85,7 @@ export interface TaskRead {
   manager?: ManagerRead;
   mechanic?: MechanicRead | null ;
   service?: ServiceRead;
+  status?: Status;
 }
 
 // full AssignmentDTO from backend
