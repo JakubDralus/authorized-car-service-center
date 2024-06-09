@@ -156,7 +156,6 @@ public class ServiceService implements CrudService<ServiceDTO> {
      * @param serviceId id of the service of which photos are to be returned from
      * @return an immutable list of 2 raw photos: [big, small]
      */
-    // returns
     public List<byte[]> get2Photos(Long serviceId) {
         ServiceModel service = serviceRepository.findById(serviceId).orElseThrow(
                 () -> new NoSuchElementException("service with id [%s] not found".formatted(serviceId))

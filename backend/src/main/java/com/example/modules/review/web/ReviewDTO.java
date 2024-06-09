@@ -1,7 +1,5 @@
 package com.example.modules.review.web;
 
-
-import com.example.modules.user.User;
 import com.example.modules.user.web.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

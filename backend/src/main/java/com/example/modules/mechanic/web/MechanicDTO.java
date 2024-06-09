@@ -1,9 +1,12 @@
 package com.example.modules.mechanic.web;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
 import com.example.modules.user.web.UserDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder

@@ -37,7 +37,7 @@ public class TicketUpdate {
     private Ticket ticket;
     
     public enum Severity {
-        LOW,
+        INFO,
         MEDIUM,
         HIGH
     }

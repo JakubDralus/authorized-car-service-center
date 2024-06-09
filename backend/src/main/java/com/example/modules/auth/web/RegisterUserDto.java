@@ -1,6 +1,5 @@
 package com.example.modules.auth.web;
 
-import com.example.modules.address.web.AddressDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

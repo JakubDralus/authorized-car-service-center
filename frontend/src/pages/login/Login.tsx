@@ -60,7 +60,15 @@ const Login = () => {
         <>
             {/* <Navbar/> */}
             <div className="login-container">
-                <div className="login-logo"><Link to="/">LOGO</Link></div>
+                
+                <Link to="/" className="absolute top-5 left-5 flex items-center">
+                    <img
+                    className="h-10 w-auto"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    alt="Your Company"/>
+                    <div className="ml-3 font-semibold text-lg  hover:text-gray-600">Go back</div>
+                </Link>
+                
                 <div
                     className={`login-left `}
                     onMouseEnter={() => handleMouseEnter('left')}

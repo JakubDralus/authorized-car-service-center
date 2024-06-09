@@ -1,14 +1,12 @@
 package com.example.modules.auth.web;
 
+import com.example.modules.auth.AuthService;
 import com.example.shared.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import com.example.modules.auth.AuthService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/auth")
-@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class AuthController {
     

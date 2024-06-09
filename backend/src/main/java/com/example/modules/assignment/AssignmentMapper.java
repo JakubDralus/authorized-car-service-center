@@ -1,6 +1,7 @@
 package com.example.modules.assignment;
 
 import com.example.modules.assignment.web.AssignmentDTO;
+import com.example.modules.assignment.web.AssignmentReadDTO;
 import com.example.modules.manager.Manager;
 import com.example.modules.manager.ManagerMapper;
 import com.example.modules.manager.ManagerRepository;
@@ -40,10 +41,25 @@ public class AssignmentMapper implements IMapper<Assignment, AssignmentDTO> {
                 .description(assignment.getDescription())
                 .startTime(assignment.getStartTime())
                 .endTime(assignment.getEndTime())
+                .status(assignment.getStatus())
                 .ticket(ticketMapper.toDto(assignment.getTicket()))
                 .manager(managerMapper.toDto(assignment.getManager()))
                 .mechanic(mechanicMapper.toDto(assignment.getMechanic()))
                 .service(serviceMapper.toDto(assignment.getService()))
+                .build();
+    }
+    
+    public AssignmentReadDTO toReadDto(Assignment assignment) {
+        return AssignmentReadDTO.builder()
+                .assignmentId(assignment.getAssignmentId())
+                .description(assignment.getDescription())
+                .startTime(assignment.getStartTime())
+                .endTime(assignment.getEndTime())
+                .status(assignment.getStatus())
+                .ticket(ticketMapper.toReadDto(assignment.getTicket()))
+                .manager(managerMapper.toReadDto(assignment.getManager()))
+                .mechanic(mechanicMapper.toReadDto(assignment.getMechanic()))
+                .service(serviceMapper.toReadDto(assignment.getService()))
                 .build();
     }
     
@@ -52,6 +68,7 @@ public class AssignmentMapper implements IMapper<Assignment, AssignmentDTO> {
         assignment.setDescription(assignmentDTO.getDescription());
         assignment.setStartTime(assignmentDTO.getStartTime());
         assignment.setEndTime(assignmentDTO.getEndTime());
+        assignment.setStatus(assignmentDTO.getStatus());
         
         setTicket(assignmentDTO, assignment);
         setManager(assignmentDTO, assignment);
@@ -60,17 +77,26 @@ public class AssignmentMapper implements IMapper<Assignment, AssignmentDTO> {
     }
     
     private void setTicket(AssignmentDTO assignmentDTO, Assignment assignment) {
-        Ticket ticket = ticketRepository.findById(assignmentDTO.getTicket().getTicketId()).orElseThrow();
+        Long ticketId = assignmentDTO.getTicket().getTicketId();
+        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not present with id " + ticketId)
+        );
         assignment.setTicket(ticket);
     }
     
     private void setManager(AssignmentDTO assignmentDTO, Assignment assignment) {
-        Manager manager = managerRepository.findById(assignmentDTO.getManager().getManagerId()).orElseThrow();
+        Long managerId = assignmentDTO.getManager().getManagerId();
+        Manager manager = managerRepository.findById(managerId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Manager not present with id " + managerId)
+        );
         assignment.setManager(manager);
     }
     
     private void setMechanic(AssignmentDTO assignmentDTO, Assignment assignment) {
-        Mechanic mechanic = mechanicRepository.findById(assignmentDTO.getMechanic().getMechanicId()).orElseThrow();
+        Long mechanicId = assignmentDTO.getMechanic().getMechanicId();
+        Mechanic mechanic = mechanicRepository.findById(mechanicId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Mechanic not present with id " + mechanicId)
+        );
         assignment.setMechanic(mechanic);
     }
     
