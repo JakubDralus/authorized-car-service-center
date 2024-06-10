@@ -49,6 +49,11 @@ export enum Status {
   CLOSED = "CLOSED"
 }
 
+export interface ReservedHours {
+  date: Date;
+  hour: string;
+}
+
 export interface Ticket {
   ticketId: number;
   description: string;
@@ -56,6 +61,7 @@ export interface Ticket {
   status: Status;
   createdAt: string;
   lastUpdatedAt: string;
+  carReturnDate: ReservedHours;
   customer: User;
   car: Car;
   services: Service[];

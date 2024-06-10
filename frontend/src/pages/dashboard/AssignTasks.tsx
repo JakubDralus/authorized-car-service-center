@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { ApiResponse, AssignmentRead, Mechanic, ServiceRead, TaskRead, TicketRead } from "../../api/model";
-import TaskColumn from "../../components/dashboard_components/TaskColumn";
 import { useQuery } from "react-query";
 import { createAssignment, fetchAssignments, fetchMechanics, fetchTickets, updateAssignment, updateTicketStatus } from "./TaskBoardFunctions";
+import TaskColumn from "../../components/dashboard_components/assign_tasks_components/TaskColumn";
 
 // Define types for column and task
 export type TaskColumnType = {

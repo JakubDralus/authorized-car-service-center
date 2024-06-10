@@ -1,6 +1,7 @@
 import { Droppable, Draggable } from "@hello-pangea/dnd";
-import { TaskColumnType } from '../../pages/dashboard/AssignTasks';  // Adjust the import path based on your project structure
 import TaskComponent from './TaskComponent';
+import { TaskColumnType } from "../../../pages/dashboard/AssignTasks";
+import { TaskRead } from "../../../api/model";
 
 const TaskColumn = ({ column }: { column: TaskColumnType }) => (
   <div key={column.id} className='w-72 min-w-72'>
@@ -13,7 +14,7 @@ const TaskColumn = ({ column }: { column: TaskColumnType }) => (
           ref={provided.innerRef}
           {...provided.droppableProps}
         >
-          {column.tasks.map((task, index) => (
+          {column.tasks.map((task: TaskRead, index) => (
             <Draggable key={task.id} draggableId={task.id} index={index}>
               {(provided, snapshot) => (
                 <div

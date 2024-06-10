@@ -1,7 +1,6 @@
 package com.example.modules.ticket.web;
 
 import com.example.modules.car.web.CarDTO;
-import com.example.modules.reserved_hours.ReservedHours;
 import com.example.modules.reserved_hours.web.ReservedHoursDTO;
 import com.example.modules.service.web.ServiceDTO;
 import com.example.modules.ticket.Ticket;
@@ -26,9 +25,9 @@ public class TicketDTO {
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdatedAt;
     private LocalDateTime finishedAt;
+    private ReservedHoursDTO carReturnDate;
     
     private UserDTO customer;
     private CarDTO car;
     private List<ServiceDTO> services;
-    private ReservedHoursDTO carReturnDate;
 }
