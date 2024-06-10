@@ -39,7 +39,7 @@ public class UserMapper implements IMapper<User, UserDTO> {
 
     private void setAddress(UserDTO userDTO, User user) {
         Address address = user.getAddress(); // when editing
-        if (address == null) address = new Address(); // when creating new user
+//        if (address == null) address = new Address(); // when creating new user
         addressMapper.toEntity(userDTO.getAddress(), address);
         user.setAddress(address);
     }

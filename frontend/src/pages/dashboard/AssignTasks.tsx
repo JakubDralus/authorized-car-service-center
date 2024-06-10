@@ -29,7 +29,7 @@ const AssignTasks = () => {
   useEffect(() => {
     if (responseMechanicsData && responseMechanicsData.data) {
       const mechanicsTasksMap: { [key: string]: TaskRead[] } = {};
-  
+      
       // Initialize the map with empty arrays for each mechanic
       responseMechanicsData.data.forEach(mechanic => {
         mechanicsTasksMap[mechanic.mechanicId] = [];
@@ -47,7 +47,8 @@ const AssignTasks = () => {
             ticket: assignment.ticket,
             manager: assignment.manager,
             mechanic: assignment.mechanic,
-            service: assignment.service
+            service: assignment.service,
+            status: assignment.status
           });
         });
       }
@@ -74,7 +75,8 @@ const AssignTasks = () => {
             ticket: ticket,
             manager: undefined,
             mechanic: undefined,
-            service: service
+            service: service,
+            status: undefined
           }));
           return acc.concat(tasksFromServices);
         }, []) : []
@@ -87,48 +89,39 @@ const AssignTasks = () => {
 
   const onDragEnd = async (result: DropResult) => {
     const { source, destination } = result;
-
+  
     if (!destination) return;
-
+  
     if (source.droppableId === destination.droppableId || destination.droppableId === "column0") {
       const columnIndex = columns.findIndex(col => col.id === source.droppableId);
       const newTasks = Array.from(columns[columnIndex].tasks);
       const [removed] = newTasks.splice(source.index, 1);
       newTasks.splice(destination.index, 0, removed);
-
+  
       const newColumns = [...columns];
       newColumns[columnIndex].tasks = newTasks;
       setColumns(newColumns);
-    } 
-    else {
-      // Code for handling tasks moving between columns
+    } else {
       const sourceIndex = columns.findIndex(col => col.id === source.droppableId);
       const destIndex = columns.findIndex(col => col.id === destination.droppableId);
-      // console.log('src index: ' + sourceIndex);
-      // console.log('dest index: ' + destIndex);
-      
+  
       const sourceTasks = Array.from(columns[sourceIndex].tasks);
       const destTasks = Array.from(columns[destIndex].tasks);
   
       const [movedTask] = sourceTasks.splice(source.index, 1);
   
-      // const now = new Date();
-      // movedTask.startTime = now;
-      // if (movedTask.duration) movedTask.endTime = new Date(now.getTime() + movedTask.duration * 24 * 60 * 60 * 1000);
-
-      // If dropped to mechanic column, assign mechanic
+      // If dropped to mechanic column, assign mechanic and set status
       movedTask.mechanic = columns[destIndex].mechanic;
-      // console.log(movedTask);
 
       destTasks.splice(destination.index, 0, movedTask);
-
+  
       // Check if the task was previously assigned to a different mechanic
-      const previouslyAssigned: boolean = columns[sourceIndex].mechanic?.mechanicId !== undefined ;
-      
+      const previouslyAssigned = columns[sourceIndex].mechanic?.mechanicId !== undefined;
+  
       if (previouslyAssigned) {
         // Update existing assignment
         try {
-          console.log('updating task');
+          console.log('Updating task:', movedTask);
           updateAssignment(movedTask);
         } 
         catch (error) {
@@ -136,39 +129,44 @@ const AssignTasks = () => {
           sourceTasks.splice(source.index, 0, movedTask);
         }
       }
-
+  
       // Update the columns
       let newColumns = [...columns];
       newColumns[sourceIndex].tasks = sourceTasks;
       newColumns[destIndex].tasks = destTasks;
       setColumns(newColumns);
-
-      if (previouslyAssigned) return; // as the rest of logic is for first assignment
-      
+  
+      if (previouslyAssigned) return;
+  
       // Check if all tasks from the ticket are assigned to any mechanic
       const ticketId = movedTask.ticket?.ticketId;
       const allTasksAssigned = ticketId && responseTicketData?.data?.find(ticket => ticket.ticketId === ticketId)?.services.every(service => {
         return newColumns.some(column => column.tasks.some(task => task.ticket?.ticketId === ticketId && task.service?.serviceId === service.serviceId && task.mechanic));
       });
-
+  
       if (allTasksAssigned) {
         // Create assignments for each task and update the tasks with the response assignment IDs
         let createAssignmentPromises = newColumns.flatMap(column => column.tasks)
           .filter(task => task.ticket?.ticketId === ticketId)
           .map(async (task) => {
-            const assignment = await createAssignment(task);
-            task.id = assignment?.data.data.assignmentId.toString();
-            console.log("task: ");
-            console.log(task);
-            
-            return assignment;
+            try {
+              const assignment = await createAssignment(task);
+              if (assignment && assignment.data && assignment.data.data) {
+                task.id = assignment.data.data.assignmentId.toString();
+              }
+              return assignment;
+            } catch (error) {
+              console.error('Error creating assignment for task:', task, error);
+              return null;
+            }
           });
-        
+  
         // Wait for all assignments to be created
         await Promise.all(createAssignmentPromises);
         await updateTicketStatus(ticketId, "PENDING");
-        await refetchAssignments();
-        await refetchTickets();
+        refetchAssignments();
+        refetchTickets();
+
         newColumns = [...columns];
         newColumns[sourceIndex].tasks = sourceTasks;
         newColumns[destIndex].tasks = destTasks;

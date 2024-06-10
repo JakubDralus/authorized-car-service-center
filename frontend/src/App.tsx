@@ -8,10 +8,11 @@ import CustomScroll from './components/scroll/CustomScroll';
 import Dashboard from './pages/dashboard/Dashboard';
 import Contact from './pages/contact/Contact';
 import AssignTasks from './pages/dashboard/AssignTasks';
+import MechanicTasks from './pages/dashboard/MechanicTasks';
 import { TicketForm } from './pages/ticket_form/TicketForm';
+import Review from './pages/review/Review';
 import UserTable from './components/dashboard_components/Usertable';
 import PageNotFound from './pages/PageNotFound';
-import Review from './pages/review/Review';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path='/contact' errorElement={<div>404 not found</div>} element={<Contact/>}/>
         <Route path='/dashboard/*' errorElement={<div>404 not found</div>} element={<Dashboard/>}>
           <Route path="assign-tasks" element={<AssignTasks />} />
+          <Route path="mechanic-tasks" element={<MechanicTasks />} />
           {/* invoices, ... */}
           <Route path="users" element={<UserTable />}/>
           {/* rest of the dashboard ... */}

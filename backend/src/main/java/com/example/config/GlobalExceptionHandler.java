@@ -33,4 +33,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleExpiredJwtException(ResponseStatusException ex, WebRequest request) {
         return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
     }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleDefaultException(Exception ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

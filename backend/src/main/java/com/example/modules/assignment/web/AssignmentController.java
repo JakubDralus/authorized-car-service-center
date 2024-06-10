@@ -23,6 +23,21 @@ public class AssignmentController {
                 .build();
     }
     
+    /**
+     * Requires Bearer token to be sent with it. Then it extracts the mechanic credentials and
+     * returns only his assignments.
+     * @param bearerToken token of logged mechanic
+     * @return the assignments that the mechanic is assigned to
+     */
+    @GetMapping("/my-tasks")
+    public ApiResponse<List<AssignmentReadDTO>> getAllByMechanic(@RequestHeader("Authorization") String bearerToken) {
+        List<AssignmentReadDTO> assignmentReadDTOS = assignmentService.getAllByMechanic(bearerToken);
+        return ApiResponse.<List<AssignmentReadDTO>>builder()
+                .message("%d assignments fetched.".formatted(assignmentReadDTOS.size()))
+                .data(assignmentReadDTOS)
+                .build();
+    }
+    
     @GetMapping("/{assignmentId}")
     public ApiResponse<AssignmentDTO> get(@PathVariable Long assignmentId) {
         AssignmentDTO assignmentDTO = assignmentService.get(assignmentId);

@@ -9,6 +9,7 @@ import com.example.modules.user.User;
 import com.example.modules.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +26,6 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
     private final SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     
     
@@ -48,10 +48,15 @@ public class AuthService {
                 .build();
     }
     
+    
     public RegisterResponseDTO registerUser(RegisterUserDto userDto) {
         if(!userDto.getPassword().equals(userDto.getRePassword()))
             return RegisterResponseDTO.builder().message("Passwords do not match.").build();
+            //todo: make api error response and delegate error with exception
 
+        if (!isEmailAvailable(userDto.getEmail()))
+            throw new BadCredentialsException("Email already taken");
+        
         User user = User.builder()
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
