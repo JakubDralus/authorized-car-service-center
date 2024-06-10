@@ -84,7 +84,16 @@ const Signup = () => {
 
     return (
         <>
+            <Link to="/" className="absolute top-5 left-5 flex items-center">
+                <img
+                className="h-10 w-auto"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                alt="Your Company"/>
+                <div className="ml-3 font-semibold text-lg  hover:text-gray-600">Go back</div>
+            </Link>
+            
             <div className="w-full h-screen flex max-[680px]:flex-col">
+                
                 <div
                     className={`h-full w-3/5 bg-white transition-width duration-500 ease-in-out  max-[680px]:w-full`}
                     onMouseEnter={() => handleMouseEnter('left')}
