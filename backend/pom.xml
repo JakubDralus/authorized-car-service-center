@@ -19,9 +19,6 @@
 		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 
-
-
-
 	<dependencies>
 		<!--spring-->
 		<dependency>
@@ -41,7 +38,8 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		jwt-->
+
+		<!--jwt-->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -96,6 +94,5 @@
 			<version>2.20.26</version>
 		</dependency>
 	</dependencies>
-
 
 </project>

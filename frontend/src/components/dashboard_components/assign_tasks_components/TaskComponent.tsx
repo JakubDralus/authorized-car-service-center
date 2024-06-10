@@ -1,4 +1,4 @@
-import { TaskRead } from '../../api/model';
+import { TaskRead } from '../../../api/model';
 import TaskDialog from './TaskDialog';
 
 const TaskComponent = ({task}: {task: TaskRead}) => {

@@ -18,8 +18,8 @@ import java.util.List;
 public class TicketUserDTO {
     private Integer fullCost;
     private String description;
+    private ReservedHoursDTO schedule;
     private List<ServiceTicketDTO> services;
     private CarTicketDTO car;
     private UserTicketDTO customer;
-    private ReservedHoursDTO schedule;
 }

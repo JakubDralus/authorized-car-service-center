@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 import { BellIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 
@@ -18,7 +17,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-md z-50">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
 
         {/* logo */}
