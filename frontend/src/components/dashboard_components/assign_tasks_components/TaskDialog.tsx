@@ -80,7 +80,8 @@ export default function TaskDialog({taskId}: {taskId: string}) {
                         <strong>End Time: </strong> 
                         {task.endTime && new Date(task.endTime).toLocaleString('pl-PL')}
                       </p>
-                      <p className="text-sm text-gray-600"><strong>Duration:</strong> {task.duration} days</p>
+                      {/* <p className="text-sm text-gray-600"><strong>Duration:</strong> {task.duration} days</p> */}
+                      <p className="text-sm text-gray-600"><strong>Status:</strong> {task.status} </p>
                       <hr className='mb-2 mt-1'/>
                       
                       <strong>Ticket</strong>

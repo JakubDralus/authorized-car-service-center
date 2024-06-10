@@ -33,7 +33,7 @@ function App() {
           <Route path="users" element={<UserTable />}/>
           {/* rest of the dashboard ... */}
         </Route>
-        <Route path='/ticket-form' errorElement={<div>404 not found</div>} element={<TicketForm/>}/>
+        <Route path='/ticket-form' errorElement={<div>404 not found</div>} element={<TicketForm />}/>
         <Route path='/review' errorElement={<div>404 not found</div>} element={<Review/>}/>
       </Routes>
     </BrowserRouter>

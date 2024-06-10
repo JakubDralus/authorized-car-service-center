@@ -99,7 +99,6 @@ export const fetchTicketServices = async () => {
       }
 }
 
-
 export const fetchReservedHours = async (date : string) => {
     try {
         let url = `http://localhost:8081/api/v1/reserved_hours/week?date=${date}`;
@@ -109,6 +108,21 @@ export const fetchReservedHours = async (date : string) => {
     }
     catch(error) {
         console.error('Error fetching data:', error);
+        throw error;
+    }
+}
+
+export const fetchService = async (id : string | number | null) => {
+    if (!id) return;
+
+    try {
+        let url = `http://localhost:8081/api/v1/services/${id}`;
+        const response = await axios.get(url)
+        console.log(response.data)
+        return response.data;
+    }
+    catch(error) {
+        console.error('Error fetching service:', error);
         throw error;
     }
 }
