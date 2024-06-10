@@ -8,7 +8,7 @@ const TaskComponent = ({task}: {task: TaskRead}) => {
   return (
     <div>
       <div className='font-bold flex justify-between'>
-        id: {task.id} 
+        id: {task.id}
         {task.mechanic && <TaskDialog taskId={task.id} />}
       </div>
 
@@ -37,13 +37,13 @@ const TaskComponent = ({task}: {task: TaskRead}) => {
         <div>
           {task.manager && (
             <div>
-              <strong>manager: </strong>{task.manager?.user.firstName} {task.manager?.user.lastName} 
+              <strong>manager: </strong>{task.manager?.user.firstName} {task.manager?.user.lastName}
             </div>
           )}
         </div>
         {task.ticket && (
           <div>
-            <strong>status: </strong>{task.ticket.status}
+            <strong>status: </strong>{task.status}
           </div>
         )}
       </div>

@@ -22,9 +22,10 @@ public class AuthController {
     
     @PostMapping("/register/user")
     public ApiResponse<RegisterResponseDTO> registerUser(@RequestBody RegisterUserDto registerUserDto) {
+        RegisterResponseDTO data = authService.registerUser(registerUserDto);
         return ApiResponse.<RegisterResponseDTO>builder()
                 .message("Account created successfully!")
-                .data(authService.registerUser(registerUserDto))
+                .data(data)
                 .build();
     }
 //

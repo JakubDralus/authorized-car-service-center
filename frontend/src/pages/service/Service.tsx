@@ -64,7 +64,7 @@ const Services = () => {
           <div className="schedule-service-container justify-center items-center flex flex-col gap-20">
             <p className="text-3xl">Schedule a service appointment</p>
 
-            <Link to="/ticket-form" className="schedule-service-button">Book an appointment</Link>
+            <Link to="/" className="schedule-service-button">Book an appointment</Link>
           </div>
 
           <ServiceCarousel serviceData={availableServices} currentServiceId={service_id} />

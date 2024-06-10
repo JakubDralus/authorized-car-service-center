@@ -1,6 +1,7 @@
 package com.example.config;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,5 +23,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleExpiredJwtException(ResponseStatusException ex, WebRequest request) {
         return new ResponseEntity<>(ex.getReason(), ex.getStatusCode());
 //        return new ResponseEntity<>(ErrorResponse.builder(ex,ex.getStatusCode(),ex.getDetailMessageCode()).build(), ex.getStatusCode());
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleDefaultException(Exception ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
