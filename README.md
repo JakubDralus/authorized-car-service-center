@@ -3,6 +3,7 @@
 Platform for an authorized car service that contains a user website as well as a system that supoorts 
 an internal management system for scheduling tasks among mechanics/workers.
 
+// more soon
 
 # Technologies
 backend:
@@ -16,4 +17,4 @@ backend:
 
 frontend:
 - React 18.3.1 (with Typescript)
-- Tailwind
+- Tailwind 3.4.3
