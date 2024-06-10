@@ -7,9 +7,10 @@ import { ClientDataForm } from "../../components/ticket_form_components/ClientDa
 import { CarForm } from "../../components/ticket_form_components/CarForm";
 import { ConfirmationForm } from "../../components/ticket_form_components/ConfirmationForm";
 import { useQuery } from "react-query";
-import { fetchTicketServices } from "./ticketFormFunctions";
+import { fetchService, fetchTicketServices } from "./ticketFormFunctions";
 import { Car, Service, TicketData, Customer, Schedule, TicketDataContext, CustomerDataContext, CarDataContext, SelectedServiceContext, ScheduleDataContext } from "./ticketFormFunctions";
 import Footer from "../../components/footer/Footer";
+import { useSearchParams } from "react-router-dom";
 
 
 export const TicketForm = () => {
@@ -19,6 +20,18 @@ export const TicketForm = () => {
         date: new Date(0),
         hour: ''
     });
+    const [searchParams] = useSearchParams();
+
+    useEffect(() => {
+        const serviceId = searchParams.get("service-id");
+        if (serviceId) {
+            fetchService(serviceId).then((response) => {
+                console.log(response.data);
+                setSelectedServices([response.data]);
+            })
+        }
+    }, [searchParams])
+
     // const [serviceDate, setServiceDate] = useState(null);
     const [carData, setCarData] = useState<Car>({
         model: '',

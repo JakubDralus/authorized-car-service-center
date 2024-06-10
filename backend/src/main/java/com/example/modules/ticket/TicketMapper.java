@@ -1,13 +1,11 @@
 package com.example.modules.ticket;
 
-import com.example.modules.address.Address;
 import com.example.modules.car.Car;
 import com.example.modules.car.CarMapper;
 import com.example.modules.car.CarRepository;
 import com.example.modules.reserved_hours.ReservedHours;
 import com.example.modules.reserved_hours.ReservedHoursMapper;
 import com.example.modules.reserved_hours.ReservedHoursRepository;
-import com.example.modules.reserved_hours.ReservedHoursService;
 import com.example.modules.service.ServiceMapper;
 import com.example.modules.service.ServiceModel;
 import com.example.modules.service.ServiceRepository;
@@ -18,7 +16,6 @@ import com.example.modules.ticket.web.TicketReadDTO;
 import com.example.modules.user.User;
 import com.example.modules.user.UserMapper;
 import com.example.modules.user.UserRepository;
-import com.example.modules.user.web.UserDTO;
 import com.example.modules.user.web.UserReadDTO;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +37,6 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
     private final ServiceRepository serviceRepository;
     private final ServiceMapper serviceMapper;
     private final ReservedHoursMapper reservedHoursMapper;
-    private final ReservedHoursRepository reservedHoursRepository;
     private final ModelMapper modelMapper;
     
     @Override
@@ -85,7 +81,7 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
         if (ticketDTO.getCustomer() != null) setCustomer(ticketDTO, ticket);
         if (ticketDTO.getCar() != null) setCar(ticketDTO, ticket);
         if (ticketDTO.getServices() != null) setServices(ticketDTO, ticket); // Set services
-        setReservedHour(ticketDTO, ticket);
+        if (ticketDTO.getCarReturnDate() != null) setReservedHour(ticketDTO, ticket);
     }
 
     private void setReservedHour(TicketDTO ticketDTO, Ticket ticket) {
