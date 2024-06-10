@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { BellIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 
 function classNames(...classes: string[]) {
@@ -10,6 +10,7 @@ function classNames(...classes: string[]) {
 const Navbar = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const userName = 'John Doe'; // Example user name
+  const location = useLocation().pathname;
 
   function handleLogOut() {
     // invalidate local storage
@@ -17,16 +18,18 @@ const Navbar = () => {
   }
 
   return (
-    <header className="bg-white shadow-md z-50">
+    <>
+    <header className="bg-white z-50">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
 
         {/* logo */}
         <Link to={'/'}>
-          <div className="flex items-center space-x-4 my-1">
+          <div className="flex items-center space-x-4 my-1 flex-row">
             <img
               className="h-10 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
               alt="Your Company"/>
+            <h1 className='font-semibold text-xl'>Lambordżambor</h1>
           </div>
         </Link>
 
@@ -137,51 +140,56 @@ const Navbar = () => {
           )}
         </div>
       </div>
-
-      <nav className="bg-white border-t border-gray-200 pt-2">
-        <div className="container mx-auto px-4 flex space-x-8 justify-center h-10 mt-2">
-          <Link
-            to="/"
-            className="text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Home
-          </Link>
-          <Link
-            to="/contact"
-            className="text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Contact
-          </Link>
-          <Link
-            to="/services"
-            className="text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Services
-          </Link>
-          <Link
-            to="/ticket-form"
-            className="text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Ticket Form
-          </Link>
-          <Link
-            to="/review"
-            className="text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Review
-          </Link>
-
-          {/* {isLoggedIn && ()} */}
-          <Link
-            to="/dashboard"
-            className="text-indigo-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Dashboard
-          </Link>
-        </div>
-      </nav>
-
     </header>
+
+    <nav className="bg-white border-t border-gray-200 pt-2 sticky top-0 shadow-md z-50">
+      <div className="container mx-auto px-4 flex space-x-8 justify-center h-10 mt-2">
+        <Link
+          to="/"
+          className={classNames("text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2",
+            location === '/'? "border-b-2" : "")}
+        >
+          Home
+        </Link>
+        <Link
+          to="/contact"
+          className={classNames("text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2",
+            location === '/contact'? "border-b-2" : "")}
+        >
+          Contact
+        </Link>
+        <Link
+          to="/services"
+          className={classNames("text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2",
+            location === '/services'? "border-b-2" : "")}
+        >
+          Services
+        </Link>
+        <Link
+          to="/ticket-form"
+          className={classNames("text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2",
+            location === '/ticket-form'? "border-b-2" : "")}
+        >
+          Ticket Form
+        </Link>
+        <Link
+          to="/review"
+          className={classNames("text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2",
+            location === '/review'? "border-b-2" : "")}
+        >
+          Review
+        </Link>
+
+        {/* {isLoggedIn && ()} */}
+        <Link
+          to="/dashboard"
+          className="text-indigo-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
+        >
+          Dashboard
+        </Link>
+      </div>
+    </nav>
+    </>
   );
 };
 
