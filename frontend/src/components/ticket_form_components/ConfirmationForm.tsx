@@ -57,7 +57,7 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
                         <span className="ticket-form-decor"></span>
                         <h2 className="text-2xl">Car details</h2>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-2">
                         <span>Model: {ticketDataContext?.ticketData.car.model}</span>
                         <span>VIN: {ticketDataContext?.ticketData.car.vin}</span>
                         <span>License plate: {ticketDataContext?.ticketData.car.licensePlate}</span>
@@ -71,16 +71,20 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
                         <span className="ticket-form-decor"></span>
                         <h2 className="text-2xl">Personal data</h2>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-2">
                         <span>First name: {ticketDataContext?.ticketData.customer.firstName}</span>
                         <span>Last name: {ticketDataContext?.ticketData.customer.lastName}</span>
                         <span>Phone number: {ticketDataContext?.ticketData.customer.telephoneNumber}</span>
                         <span>E-mail: {ticketDataContext?.ticketData.customer.email}</span>
-                        <span>Address:</span>
-                        <span>City: {ticketDataContext?.ticketData.customer.address.city}</span>
-                        <span>Street: {ticketDataContext?.ticketData.customer.address.street}</span>
-                        <span>Postal code: {ticketDataContext?.ticketData.customer.address.postalCode}</span>
-                        <span>Country:  {ticketDataContext?.ticketData.customer.address.country}</span>
+                        {ticketDataContext?.ticketData.customer.address && ( 
+                          <div className="flex flex-col mt-6 gap-2">
+                            <span className="font-bold">Address:</span>
+                            <span>City: {ticketDataContext?.ticketData.customer.address.city}</span>
+                            <span>Street: {ticketDataContext?.ticketData.customer.address.street}</span>
+                            <span>Postal code: {ticketDataContext?.ticketData.customer.address.postalCode}</span>
+                            <span>Country:  {ticketDataContext?.ticketData.customer.address.country}</span>
+                          </div>
+                        )}
                     </div>
                 </div>
             </div>

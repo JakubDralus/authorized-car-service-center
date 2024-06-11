@@ -9,7 +9,7 @@ interface ClientDataProps {
 
 export const ClientDataForm: React.FC<ClientDataProps> = ({ prevStep, nextStep }) => {
     const [isAddressVisible, setisAddressVisible] = useState<boolean>(false);
-    const { register, handleSubmit, formState: { errors } } = useForm<CustomerForm>();
+    const { register, handleSubmit, formState: { errors }, getValues } = useForm<CustomerForm>();
     const ticketDataContext = useContext(TicketDataContext);
 
     const toggleAddress = () => {
@@ -34,6 +34,12 @@ export const ClientDataForm: React.FC<ClientDataProps> = ({ prevStep, nextStep }
       }));
       nextStep();
   };
+
+  const validateAddress = () => {
+    const values = getValues("address");
+    const filledFields = Object.values(values).filter(value => value !== "").length;
+    return filledFields === 0 || filledFields === Object.keys(values).length || "Fill all address fields or leave them all empty.";
+}
 
   return (
     <div className="flex items-center justify-center flex-col">
@@ -71,30 +77,31 @@ export const ClientDataForm: React.FC<ClientDataProps> = ({ prevStep, nextStep }
                 <div className="w-full bg-white border-2 border-gray-400 p-3">
                     <div className="flex justify-between items-center cursor-pointer" onClick={toggleAddress}>Address (optional)<div>&#8595;</div></div>
                     {isAddressVisible && (
-                        <div className="py-10 flex flex-col gap-10">
-                            <div className="flex justify-center items-start gap-10 max-[760px]:flex-col">
-                                <label className="flex flex-col gap-3 max-[760px]:flex-col">
-                                    Street
-                                    <input className="address-form-input" type="text" {...register("address.street")} />
-                                </label>
-                                <label className="flex flex-col gap-3">
-                                    City
-                                    <input className="address-form-input" type="text" {...register("address.city")} />
-                                </label>
+                            <div className="py-10 flex flex-col gap-10">
+                                <div className="flex justify-center items-start gap-10 max-[760px]:flex-col">
+                                    <label className="flex flex-col gap-3 max-[760px]:flex-col">
+                                        Street
+                                        <input className="address-form-input" type="text" {...register("address.street", { validate: validateAddress })} />
+                                    </label>
+                                    <label className="flex flex-col gap-3">
+                                        City
+                                        <input className="address-form-input" type="text" {...register("address.city", { validate: validateAddress })} />
+                                    </label>
+                                </div>
+                                <div className="flex justify-center items-start gap-10 max-[760px]:flex-col">
+                                    <label className="flex flex-col gap-3">
+                                        Postal Code
+                                        <input className="address-form-input" type="text" {...register("address.postalCode", { validate: validateAddress, pattern: { value: /^[0-9]{5}$/, message: "Postal code must be 5 digits" } })} />
+                                        {errors.address?.postalCode && <p className="error-message">{errors.address.postalCode.message}</p>}
+                                    </label>
+                                    <label className="flex flex-col gap-3">
+                                        Country
+                                        <input className="address-form-input" type="text" {...register("address.country", { validate: validateAddress })} />
+                                    </label>
+                                </div>
+                                {errors.address && <p className="error-message">{errors.address.message}</p>}
                             </div>
-                            <div className="flex justify-center items-start gap-10 max-[760px]:flex-col">
-                                <label className="flex flex-col gap-3">
-                                    Postal Code
-                                    <input className="address-form-input" type="text" {...register("address.postalCode", { pattern: { value: /^[0-9]{5}$/, message: "Postal code must be 5 digits" } })} />
-                                    {errors.address?.postalCode && <p className="error-message">{errors.address.postalCode.message}</p>}
-                                </label>
-                                <label className="flex flex-col gap-3">
-                                    Country
-                                    <input className="address-form-input" type="text" {...register("address.country")} />
-                                </label>
-                            </div>
-                        </div>
-                    )}
+                        )}
                 </div>
                 <div className="w-full h-full flex justify-between sticky bottom-7 mt-12">
                     <button type="button" className="ticket-form-button" onClick={prevStep}>Prev</button>
