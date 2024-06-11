@@ -145,13 +145,12 @@ export const TicketForm = () => {
                                 <div className="form-info-box">
                                     <h3 className="text-lg">Personal details</h3>
                                     {/* todo */}
-                                    {customerData.email !== '' ? (
                                         <div className="w-full">
-                                            {customerData.telephoneNumber}
+                                            <p> {ticketData.customer.firstName}</p>
+                                            <p> {ticketData.customer.lastName}</p>
+                                            <p> {ticketData.customer.email}</p>
+                                            <p> {ticketData.customer.telephoneNumber}</p>
                                         </div>
-                                    ) : (
-                                        <div></div>
-                                    )}
                                 </div>
                             </div>
                             <div className="w-full flex items-center justify-around bg-gray-100 text-xl p-4">
