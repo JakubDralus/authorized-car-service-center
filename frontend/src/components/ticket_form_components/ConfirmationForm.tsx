@@ -1,5 +1,8 @@
-import { useContext } from "react";
+import { useContext, useState} from "react";
 import { TicketDataContext, useCreateTicket } from "../../pages/ticket_form/ticketFormFunctions";
+import { Dialog } from '@headlessui/react';
+import { useNavigate } from 'react-router-dom';
+
 
 interface ConfirmationFormProps {
     prevStep: () => void,
@@ -11,7 +14,10 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
     const repairDuration = ticketDataContext?.ticketData.services.reduce((sum, service) => sum + service.estimatedRepairTime, 0)
     const token = localStorage.getItem('token');
     const ticketMutation = useCreateTicket(token, ticketDataContext?.ticketData);
-
+    const [ticketCreated, setTicketCreated] = useState(false);
+    const navigate = useNavigate();
+    
+    
     const calcFullCost = () => {
       return ticketDataContext?.ticketData.services.reduce((sum, service) => sum + service.cost, 0)
     }
@@ -19,16 +25,38 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
     const createTicket = () => {
       if (ticketDataContext && ticketDataContext.ticketData) {
         ticketDataContext.ticketData.fullCost = calcFullCost() || 0;
+      }
+      try{
+        ticketMutation.mutate({
+          data: ticketDataContext?.ticketData,
+          token: token
+        });
+        setTicketCreated(true);
+      } catch(error){
+        console.error('Error creating ticket:', error);
+      }
     }
 
-      ticketMutation.mutate({
-        data: ticketDataContext?.ticketData,
-        token: token
-      });
-    }
+    const handleClose = () => {
+      setTicketCreated(false);
+      // Przekierowanie na stronę główną
+      navigate('/');
+    };
 
     return (
         <div className="flex items-center justify-center flex-col">
+          <Dialog open={ticketCreated} onClose={() => setTicketCreated(false)} className="fixed z-10 inset-0 overflow-y-auto">
+                <div className="flex items-center justify-center min-h-screen">
+                    <Dialog.Title className="fixed inset-0 bg-black opacity-30" /> 
+
+                    <div className="bg-white rounded-lg p-8 max-w-md w-full mx-auto z-10">
+                        <Dialog.Title className="text-2xl font-bold mb-4">Success!</Dialog.Title>
+                        <p className="mb-4">Ticket successfully created!</p>
+                        <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" onClick={handleClose}>Close</button>
+                    </div>
+                </div>
+            </Dialog>
+            
             <h2 className="text-2xl mb-20 mt-10">Summary</h2>
             {/* services */}
             <div className="w-full flex flex-col gap-20">
@@ -94,9 +122,9 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
                         <span>Phone number: {ticketDataContext?.ticketData.customer.telephoneNumber}</span>
                         <span>E-mail: {ticketDataContext?.ticketData.customer.email}</span>
                         {ticketDataContext?.ticketData.customer.address.country &&
-ticketDataContext?.ticketData.customer.address.city &&
-ticketDataContext?.ticketData.customer.address.street &&
-ticketDataContext?.ticketData.customer.address.postalCode? ( 
+                        ticketDataContext?.ticketData.customer.address.city &&
+                        ticketDataContext?.ticketData.customer.address.street &&
+                        ticketDataContext?.ticketData.customer.address.postalCode? ( 
                           <div className="flex flex-col mt-6 gap-2">
                             <span className="font-bold">Address:</span>
                             <span>City: {ticketDataContext?.ticketData.customer.address.city}</span>

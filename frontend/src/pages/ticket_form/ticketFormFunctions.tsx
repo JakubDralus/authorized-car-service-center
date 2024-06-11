@@ -140,7 +140,7 @@ export const useCreateTicket = (token: string | null, data: TicketData | undefin
         // });\
         console.log('nie dziala')
     },
-})
+  })
 }
 
 export const CreateTicket = async (data: TicketData | undefined , token: string | null) => {
