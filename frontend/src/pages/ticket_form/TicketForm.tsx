@@ -103,6 +103,7 @@ export const TicketForm = () => {
         console.log("Updated ticketData's services:", ticketData.services);
     }, [ticketData.services]);
 
+    console.log(ticketData);
     return (
         <>
             <Navbar />
@@ -133,14 +134,13 @@ export const TicketForm = () => {
                                     </div>
                                 <div className="form-info-box">
                                     <h3 className="text-lg">Car</h3>
-                                    {/* todo */}
-                                    {carData.model !== '' ? (
+                                    {/* todo */}                              
                                         <div className="w-full">
-                                            {carData.manufacturedYear}
+                                            <p>Model: {ticketData.car.model}</p>
+                                            <p>Color: {ticketData.car.color}</p>
+                                            <p>License Plate: {ticketData.car.licensePlate}</p>
+                                            <p>VIN: {ticketData.car.vin}</p>
                                         </div>
-                                    ) : (
-                                        <div></div>
-                                    )}
                                 </div>
                                 <div className="form-info-box">
                                     <h3 className="text-lg">Personal details</h3>
