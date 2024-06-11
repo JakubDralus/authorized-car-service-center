@@ -1,4 +1,5 @@
 import { FaFacebook, FaInstagram, FaTwitter, FaGithub, FaYoutube } from 'react-icons/fa';
+import { SiOnlyfans } from "react-icons/si";
 
 const Footer = () => {
   return (
@@ -80,6 +81,9 @@ const Footer = () => {
           <p className="text-center text-gray-400 flex text-sm">&copy; 2020 Your Company, Inc. All rights reserved.</p>
 
           <div className="flex justify-center space-x-6 mb-8 h-fit">
+            <a href="/" className="text-gray-400 hover:text-gray-500">
+              <SiOnlyfans size={20} />
+            </a>
             <a href="/" className="text-gray-400 hover:text-gray-500">
               <FaFacebook size={20} />
             </a>

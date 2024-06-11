@@ -11,7 +11,7 @@ const Sidebar = ({ role }: { role: string; }) => {
           <nav className="sm:flex-1 sm:py-2 bg-gray-700 px-2 pb-3">
             <div className="font-normal text-lg text-gray-300 mb-5 ml-3 mt-5">People</div>
             
-            {role === 'admin' ? (
+            {role === 'ADMIN' ? (
               <SidebarLink
               to={'users'}
               label = "Users"

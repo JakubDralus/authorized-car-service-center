@@ -2,9 +2,9 @@ spring:
   config:
     import: optional:file:.env[.properties] # Development properties
   datasource:
-#    url: jdbc:p6spy:postgresql://localhost:5332/aso # docker
+    url: jdbc:p6spy:postgresql://localhost:5332/aso # docker
 #    url: jdbc:p6spy:postgresql://localhost:5432/aso # local
-    url: jdbc:p6spy:postgresql://db:5432/aso # both inside docker
+#    url: jdbc:p6spy:postgresql://db:5432/aso # both inside docker
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     username: postgres
     password: ${POSTGRES_PASSWORD}  # Reference the POSTGRES_PASSWORD variable
