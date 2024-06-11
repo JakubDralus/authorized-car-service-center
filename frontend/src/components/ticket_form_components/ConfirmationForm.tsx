@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TicketDataContext } from "../../pages/ticket_form/ticketFormFunctions";
+import { TicketDataContext, useCreateTicket } from "../../pages/ticket_form/ticketFormFunctions";
 
 interface ConfirmationFormProps {
     prevStep: () => void,
@@ -9,6 +9,15 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
     const ticketDataContext = useContext(TicketDataContext);
     const fullPrice = ticketDataContext?.ticketData.services.reduce((sum, service) => sum + service.cost, 0)
     const repairDuration = ticketDataContext?.ticketData.services.reduce((sum, service) => sum + service.estimatedRepairTime, 0)
+    const token = localStorage.getItem('token');
+    const ticketMutation = useCreateTicket(token, ticketDataContext?.ticketData);
+
+    const createTicket = () => {
+      ticketMutation.mutate({
+        data: ticketDataContext?.ticketData,
+        token: token
+      });
+    }
 
     return (
         <div className="flex items-center justify-center flex-col">
@@ -90,7 +99,7 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
             </div>
             <div className="w-full h-full flex justify-between sticky bottom-7 mt-12">
                 <button className="ticket-form-button" onClick={prevStep}>Prev</button>
-                <button className="ticket-form-button" >Create ticket</button>
+                <button className="ticket-form-button" onClick={createTicket}>Create ticket</button>
             </div>
         </div>
     );

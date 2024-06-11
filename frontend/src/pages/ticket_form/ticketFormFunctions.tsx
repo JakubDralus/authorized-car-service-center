@@ -1,5 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { createContext } from "react";
+import { ApiResponse } from "../../api/model";
+import { useMutation } from "react-query";
 
 // interfaces
 export interface Service {
@@ -112,5 +114,47 @@ export const fetchReservedHours = async (date : string) => {
     catch(error) {
         console.error('Error fetching data:', error);
         throw error;
+    }
+}
+
+interface CreateTicketMutationArgs {
+    data: TicketData | undefined;
+    token: string | null;
+}
+
+export const useCreateTicket = (token: string | null, data: TicketData | undefined) => {
+  return useMutation({
+    mutationFn: ({ data, token }: CreateTicketMutationArgs) => CreateTicket(data, token),
+    onSuccess: (data) => {
+        // setReviewFormInfo({
+        //     status: "Success",
+        //     message: data.message
+        // });
+        console.log(data)
+        console.log('dziala')
+    },
+    onError: (error: AxiosError<Error, any>) => {
+        // setReviewFormInfo({
+        //     status: "Error",
+        //     message: "Error creating review."
+        // });\
+        console.log('nie dziala')
+    },
+})
+}
+
+export const CreateTicket = async (data: TicketData | undefined , token: string | null) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    };
+
+    try {
+      const response: ApiResponse<any> = await axios.post(`http://localhost:8081/api/v1/tickets/create-user-ticket`,data, config);
+      console.log(response);
+    } 
+    catch (error) {
+      console.error(`Error posting ticket:`, error);
     }
 }
