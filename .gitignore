@@ -37,3 +37,5 @@ target/
 **/.DS_Store
 **/*.iml
 /.env
+/backend/.mvn/wrapper/maven-wrapper.jar
+/backend/.mvn/wrapper/MavenWrapperDownloader.java

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { useMutation } from "react-query";
 import { UseFormSetError, UseFormReturn } from "react-hook-form";
 

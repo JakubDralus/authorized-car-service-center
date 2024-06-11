@@ -1,3 +1,4 @@
+import axiosInstance from "../../api/AxiosInstance";
 import axios, { AxiosError } from "axios";
 import { createContext } from "react";
 import { ApiResponse } from "../../api/model";
@@ -89,7 +90,7 @@ export const ScheduleDataContext = createContext<ScheduleDataContextType | undef
 
 export const fetchTicketServices = async () => {
     try {
-        const response = await axios.get('http://localhost:8081/api/v1/services/ticket-services');
+        const response = await axiosInstance.get('http://localhost:8081/api/v1/services/ticket-services');
         return response.data;
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -100,7 +101,7 @@ export const fetchTicketServices = async () => {
 export const fetchReservedHours = async (date : string) => {
     try {
         let url = `http://localhost:8081/api/v1/reserved_hours/week?date=${date}`;
-        const response = await axios.get(url)
+        const response = await axiosInstance.get(url)
         console.log(response.data)
         return response.data
     }
@@ -149,7 +150,7 @@ export const fetchService = async (id : string | number | null) => {
 
     try {
         let url = `http://localhost:8081/api/v1/services/${id}`;
-        const response = await axios.get(url)
+        const response = await axiosInstance.get(url)
         console.log(response.data)
         return response.data;
     }

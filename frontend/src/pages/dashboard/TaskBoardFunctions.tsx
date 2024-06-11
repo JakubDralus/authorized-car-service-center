@@ -1,5 +1,6 @@
+import axiosInstance from "../../api/AxiosInstance";
 import { ApiResponse, Assignment, AssignmentRead, Mechanic, TaskRead, TicketRead } from "../../api/model";
-import axios from "axios";
+// import axiosInstance from "axiosInstance";
 
 // Create an assignment/task for a mechanic
 export const createAssignment = async (task: TaskRead) => {
@@ -14,7 +15,7 @@ export const createAssignment = async (task: TaskRead) => {
   };
   
   try {
-    const response = await axios.post("http://localhost:8081/api/v1/assignments", payload);
+    const response = await axiosInstance.post("/assignments", payload);
     console.log(response.data);
     return response;
   } 
@@ -39,7 +40,7 @@ export const updateAssignment = async (task: TaskRead) => {
   // console.log(payload);
 
   try {
-    await axios.put(`http://localhost:8081/api/v1/assignments/${task.id}`, payload);
+    await axiosInstance.put(`/assignments/${task.id}`, payload);
     // console.log('Assignment updated:', response.data);
     console.log('Assignment updated');
   } catch (error) {
@@ -49,7 +50,7 @@ export const updateAssignment = async (task: TaskRead) => {
 };
 export const updateTaskStatus = async (assignmentId: string, status: string): Promise<ApiResponse<Assignment>> => {
   try {
-    const response = await axios.put<ApiResponse<Assignment>>(`http://localhost:8081/api/v1/assignments/${assignmentId}/update-status/${status}`);
+    const response = await axiosInstance.put<ApiResponse<Assignment>>(`/assignments/${assignmentId}/update-status/${status}`);
     console.log(`Task ${assignmentId} status updated to ${status}`);
     console.log(response.data);
     return response.data;
@@ -61,7 +62,7 @@ export const updateTaskStatus = async (assignmentId: string, status: string): Pr
 // Function to update ticket status
 export const updateTicketStatus = async (ticketId: number, status: string) => {
   try {
-    const response: ApiResponse<any> = await axios.put(`http://localhost:8081/api/v1/tickets/${ticketId}`, { status });
+    const response: ApiResponse<any> = await axiosInstance.put(`/tickets/${ticketId}`, { status });
     console.log(`Ticket ${ticketId} status updated to ${status}`);
     console.log(response);
   } 
@@ -71,25 +72,25 @@ export const updateTicketStatus = async (ticketId: number, status: string) => {
 };
 
 export const fetchTickets = async (): Promise<ApiResponse<TicketRead[]>> => {
-  const { data } = await axios.get<ApiResponse<TicketRead[]>>( "http://localhost:8081/api/v1/tickets/status/requested");
+  const { data } = await axiosInstance.get<ApiResponse<TicketRead[]>>( "/tickets/status/requested");
   console.log('ticket fetch');
   return data;
 };
 
 export const fetchMechanics = async (): Promise<ApiResponse<Mechanic[]>> => {
-  const { data } = await axios.get<ApiResponse<Mechanic[]>>( "http://localhost:8081/api/v1/mechanics");
+  const { data } = await axiosInstance.get<ApiResponse<Mechanic[]>>( "/mechanics");
   console.log('mechanics fetch');
   return data;
 };
 
 export const fetchAssignments = async (): Promise<ApiResponse<AssignmentRead[]>> => {
-  const { data } = await axios.get<ApiResponse<AssignmentRead[]>>(`http://localhost:8081/api/v1/assignments`);
+  const { data } = await axiosInstance.get<ApiResponse<AssignmentRead[]>>(`/assignments`);
   console.log('assignments fetch');
   return data;
 };
 
 export const fetchAssignment = async (id: string | number): Promise<ApiResponse<Assignment>> => {
-  const { data } = await axios.get<ApiResponse<Assignment>>(`http://localhost:8081/api/v1/assignments/${id}`);
+  const { data } = await axiosInstance.get<ApiResponse<Assignment>>(`/assignments/${id}`);
   console.log(`assignment ${id} fetch`);
   // console.log(data);
   return data;
@@ -102,7 +103,7 @@ export const fetchAssignmentsByMechanic = async (token: string): Promise<ApiResp
     }
   };
 
-  const { data } = await axios.get<ApiResponse<AssignmentRead[]>>(`http://localhost:8081/api/v1/assignments/my-tasks`, config);
+  const { data } = await axiosInstance.get<ApiResponse<AssignmentRead[]>>(`/assignments/my-tasks`, config);
   console.log('assignments fetched for mechanic');
   return data;
 };
