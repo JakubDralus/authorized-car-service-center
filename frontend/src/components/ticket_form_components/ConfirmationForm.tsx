@@ -12,7 +12,15 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
     const token = localStorage.getItem('token');
     const ticketMutation = useCreateTicket(token, ticketDataContext?.ticketData);
 
+    const calcFullCost = () => {
+      return ticketDataContext?.ticketData.services.reduce((sum, service) => sum + service.cost, 0)
+    }
+
     const createTicket = () => {
+      if (ticketDataContext && ticketDataContext.ticketData) {
+        ticketDataContext.ticketData.fullCost = calcFullCost() || 0;
+    }
+
       ticketMutation.mutate({
         data: ticketDataContext?.ticketData,
         token: token
