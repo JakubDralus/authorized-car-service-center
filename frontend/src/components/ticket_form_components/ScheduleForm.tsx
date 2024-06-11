@@ -44,22 +44,6 @@ export const ScheduleForm: React.FC<ScheduleFormProps> = ({ prevStep, nextStep }
         }
     }, [data]);
 
-    // useEffect(() => {
-    //     setSelectedTime(null)
-    //     if (selectedDate) {
-    //         addDateDate();
-    //     }
-    // }, [selectedDate]);
-
-    // useEffect(() => {
-    //     if (selectedTime) {
-    //         addDate();
-    //     }
-    // }, [selectedTime]);
-
-
-
-
     const generateTimes = (date: Date | null, reservedHours: string[]): string[] => {
         if (!date) return [];
         const dayOfWeek = date.getDay();
@@ -77,9 +61,9 @@ export const ScheduleForm: React.FC<ScheduleFormProps> = ({ prevStep, nextStep }
 
     const handleTimeClick = (time: string) => {
         if (selectedTime === time) {
-            setSelectedTime(''); // Jeśli ta sama godzina jest już zaznaczona, usuń ją
+            setSelectedTime('');
         } else {
-            setSelectedTime(time); // W przeciwnym razie, zaznacz nową godzinę
+            setSelectedTime(time);
         }
         setSelectedTime(time);
         if (scheduleContext && scheduleContext.setSelectedDate) {
@@ -101,27 +85,29 @@ const addDateDate = (date: Date | null) => {
 
             const selectedButton = document.querySelector('.time-button.selected');
             if (selectedButton) {
-                selectedButton.classList.remove('selected');
+              selectedButton.classList.remove('selected');
+              setSelectedTime(null);
             }
         }
         
     };
-    
 
     const isReserved = (time: string): boolean => {
         return reservedTimes.includes(time);
     };
 
     const checkSelectedDate = () => {
+      if(selectedDate && selectedTime){
         ticketDataContext?.setTicketData((prevTicketData) => ({
-            ...prevTicketData,
-            schedule: {
-                date: selectedDate,
-                hour: selectedTime
-            }
-        }));
+          ...prevTicketData,
+          schedule: {
+              date: selectedDate,
+              hour: selectedTime
+          }
+      }));
 
-        nextStep();
+      nextStep();
+      }
     }
 
 
