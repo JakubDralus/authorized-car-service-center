@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { GoInfo } from "react-icons/go";
-import { ApiResponse, Assignment, Service } from '../../api/model';
+import { ApiResponse, Assignment, Service } from '../../../api/model';
 import { RxCross2 } from "react-icons/rx";
-import { fetchAssignment } from '../../pages/dashboard/TaskBoardFunctions';
+import { fetchAssignment } from '../../../pages/dashboard/TaskBoardFunctions';
 
 export default function TaskDialog({taskId}: {taskId: string}) {
 
-  const [task, setTask] = useState<Assignment | null>(null);
   const [open, setOpen] = useState(false);
+  const [task, setTask] = useState<Assignment | null>(null);
   const [services, setServices] = useState<Service[]>([]);
 
   useEffect(() => {
@@ -29,7 +29,8 @@ export default function TaskDialog({taskId}: {taskId: string}) {
   return (
     <>
     {/* entry */}
-    <div onClick={() => setOpen(true)} className='hover:text-blue-600 cursor-pointer'>
+    <div onClick={() => setOpen(true)} 
+      className='hover:text-blue-600 cursor-pointer'>
       <GoInfo size={25} />
     </div>
 
@@ -79,7 +80,8 @@ export default function TaskDialog({taskId}: {taskId: string}) {
                         <strong>End Time: </strong> 
                         {task.endTime && new Date(task.endTime).toLocaleString('pl-PL')}
                       </p>
-                      <p className="text-sm text-gray-600"><strong>Duration:</strong> {task.duration} days</p>
+                      {/* <p className="text-sm text-gray-600"><strong>Duration:</strong> {task.duration} days</p> */}
+                      <p className="text-sm text-gray-600"><strong>Status:</strong> {task.status} </p>
                       <hr className='mb-2 mt-1'/>
                       
                       <strong>Ticket</strong>
@@ -90,6 +92,9 @@ export default function TaskDialog({taskId}: {taskId: string}) {
                           <p><strong>Status:</strong> {task.ticket.status}</p>
                           <p><strong>Created At:</strong> {new Date(task.ticket.createdAt).toLocaleString('pl-PL')}</p>
                           <p><strong>Last Updated At:</strong> {new Date(task.ticket.lastUpdatedAt).toLocaleString('pl-PL')}</p>
+                          <p><strong>Car return date: </strong> 
+                            {task.ticket.carReturnDate.date.toLocaleString('pl-PL')} {task.ticket.carReturnDate.hour}
+                          </p>
                         </div>
                       )}
                       <div className='mt-2'>
@@ -150,14 +155,15 @@ export default function TaskDialog({taskId}: {taskId: string}) {
                 </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button
-                    type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                  {/* not a button because the dialog would open at the bottom 
+                    https://github.com/tailwindlabs/headlessui/discussions/3211*/}
+                  <div 
+                    className=" cursor-pointer mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                     onClick={() => setOpen(false)}
                     data-autofocus
                   >
                     Close
-                  </button>
+                  </div>
                 </div>
               </DialogPanel>
             </TransitionChild>

@@ -44,7 +44,7 @@ const Services = () => {
     <>
       <Navbar />
       <div className="flex flex-col justify-center">
-        <div className="body-container flex flex-col">
+        <div className="body-container flex flex-col pb-16">
           <div className="image-container">
             <img
               className="service-image"
@@ -61,10 +61,15 @@ const Services = () => {
           <ServiceInformation title={currentService.name} description={currentService.description} />
           <ServiceInformation title={asoText.title} description={asoText.description} />
 
-          <div className="schedule-service-container justify-center items-center flex flex-col gap-20">
+          <div className="schedule-service-container justify-center items-center flex flex-col gap-10">
             <p className="text-3xl">Schedule a service appointment</p>
 
-            <Link to="/" className="schedule-service-button">Book an appointment</Link>
+            <Link className="no-underline text-white rounded-xl transition-all 
+              py-3 px-5 bg-slate-500 text-lg hover:bg-slate-600" 
+              to={`/ticket-form?service-id=${service_id}`}
+            >
+              Create new ticket
+            </Link>
           </div>
 
           <ServiceCarousel serviceData={availableServices} currentServiceId={service_id} />

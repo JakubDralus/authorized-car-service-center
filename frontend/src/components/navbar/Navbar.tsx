@@ -1,33 +1,66 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { BellIcon } from '@heroicons/react/24/outline'
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
+import ProfileDialog from './ProfileDialog';
+import { fetchUser } from './navbarFunctions';
+import { User } from '../../api/model';
+import UserTicketsDialog from './UserTicketsDialog';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Navbar = () => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const userName = 'John Doe'; // Example user name
+  const location = useLocation().pathname;
+  const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null); 
+  const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem('role')) {
+      fetchUser().then(user => {
+        setUser(user);
+      });
+    }
+  },[])
+  
   function handleLogOut() {
-    // invalidate local storage
-    localStorage.clear()
+    localStorage.clear();
+  }
+
+  function isDashboradAvailable(): boolean {
+    const role = localStorage.getItem('role');
+    if (!role) return false;
+    return role !== 'USER';
   }
 
   return (
-    <header className="bg-white shadow-sm">
+    <>
+    {user && (
+      <ProfileDialog
+        user={user}
+        isOpen={isProfileDialogOpen}
+        onClose={() => setIsProfileDialogOpen(false)}
+      />
+    )}
+
+    <UserTicketsDialog
+      isOpen={isTicketDialogOpen}
+      onClose={() => setIsTicketDialogOpen(false)}
+    />
+
+    <header className="bg-white z-40">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
 
         {/* logo */}
         <Link to={'/'}>
-          <div className="flex items-center space-x-4 my-1">
+          <div className="flex items-center space-x-4 my-1 flex-row">
             <img
               className="h-10 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
               alt="Your Company"/>
+            <h1 className='font-semibold text-xl'>Lambordżambor</h1>
           </div>
         </Link>
 
@@ -82,34 +115,49 @@ const Navbar = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg
+                    <MenuItems className="absolute right-0 z-40 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg
                      ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <MenuItem>
                         {({ active }: { active: boolean }) => (
-                          <a
-                            href="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 no-underline')}
+                          <div
+                            onClick={() => setIsProfileDialogOpen(true)}
+                            className={classNames(
+                              active ? 'bg-gray-100' : '',
+                              'cursor-pointer block px-4 py-2 text-sm text-gray-700 no-underline'
+                            )}
                           >
                             Your Profile
-                          </a>
+                          </div>
                         )}
                       </MenuItem>
                       <MenuItem>
                         {({ active }: { active: boolean }) => (
-                          <a
-                            href="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 no-underline')}
+                          <div
+                            onClick={() => setIsTicketDialogOpen(true)}
+                            className={classNames(active ? 'bg-gray-100' : '', 
+                            'cursor-pointer block px-4 py-2 text-sm text-gray-700 no-underline')}
+                          >
+                            My tickets
+                          </div>
+                        )}
+                      </MenuItem>
+                      <MenuItem>
+                        {({ active }: { active: boolean }) => (
+                          <div
+                            className={classNames(active ? 'bg-gray-100' : '', 
+                            'cursor-pointer block px-4 py-2 text-sm text-gray-700 no-underline')}
                           >
                             Settings
-                          </a>
+                          </div>
                         )}
                       </MenuItem>
                       <MenuItem>
                         {({ active }: { active: boolean }) => (
                           <Link
                             to="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 no-underline')}
                             onClick={handleLogOut}
+                            className={classNames(active ? 'bg-gray-100' : '', 
+                              'block px-4 py-2 text-sm text-gray-700 no-underline')}
                           >
                             Sign out
                           </Link>
@@ -138,51 +186,55 @@ const Navbar = () => {
           )}
         </div>
       </div>
-
-      <nav className="bg-white border-t border-gray-200 pt-2">
-        <div className="container mx-auto px-4 flex space-x-8 justify-center h-10 mt-2">
-          <Link
-            to="/"
-            className="text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Home
-          </Link>
-          <Link
-            to="/contact"
-            className="text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Contact
-          </Link>
-          <Link
-            to="/services"
-            className="text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Services
-          </Link>
-          <Link
-            to="/ticket-form"
-            className="text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Ticket Form
-          </Link>
-          <Link
-            to="/review"
-            className="text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Review
-          </Link>
-
-          {/* {isLoggedIn && ()} */}
-          <Link
-            to="/dashboard"
-            className="text-indigo-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
-          >
-            Dashboard
-          </Link>
-        </div>
-      </nav>
-
     </header>
+
+    <nav className="bg-white border-t border-gray-200 pt-2 sticky top-0 shadow-md z-30">
+      <div className="container mx-auto px-4 flex space-x-8 justify-center h-10 mt-2">
+        <Link
+          to="/"
+          className={classNames("text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2",
+            location === '/'? "border-b-2" : "")}
+        >
+          Home
+        </Link>
+        <Link
+          to="/contact"
+          className={classNames("text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2",
+            location === '/contact'? "border-b-2" : "")}
+        >
+          Contact
+        </Link>
+        <Link
+          to="/services"
+          className={classNames("text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2",
+            location === '/services'? "border-b-2" : "")}
+        >
+          Services
+        </Link>
+        <Link
+          to="/ticket-form"
+          className={classNames("text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2",
+            location === '/ticket-form'? "border-b-2" : "")}
+        >
+          Ticket Form
+        </Link>
+        <Link
+          to="/review"
+          className={classNames("text-gray-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2",
+            location === '/review'? "border-b-2" : "")}
+        >
+          Review
+        </Link>
+        {isDashboradAvailable() && (
+        <Link
+          to="/dashboard"
+          className="text-indigo-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
+        >
+          Dashboard
+        </Link>)}
+      </div>
+    </nav>
+    </>
   );
 };
 
