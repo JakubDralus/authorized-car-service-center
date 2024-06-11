@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import ServiceCarousel from "../../components/service_carousel/ServiceCarousel"
 import { fetchFeaturedServices } from '../service/serviceData';
 import { useQuery } from 'react-query';
+import Testimonial from "./Testimonial"
 
 const Home = () => {
     const { data, isLoading } = useQuery(['featuredServices'], fetchFeaturedServices);
@@ -31,9 +32,12 @@ const Home = () => {
                         <span className="text-lg text-center max-w-3xl"> Our service offers you easy and fast solutions, tailored to your needs. Save time and have peace of mind. Servicing your car can really be a pleasure!</span>
                     </div>
                 </div>
-                <div className="home-example-services pb-2">
+                <div className="home-example-services ">
                     {isLoading ? (<div className="pt-10"><div className="spinner "></div></div>) : (<ServiceCarousel serviceData={data} />)}
                 </div>
+
+                <Testimonial/>
+
                 <div className="home-schedule h-96 flex items-center justify-center">
                     <div className="max-w-xl flex flex-col items-center justify-center gap-6 text-white">
                         <h1 className="text-4xl">Book a service appointment</h1>
