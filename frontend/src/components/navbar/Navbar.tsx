@@ -13,21 +13,26 @@ function classNames(...classes: string[]) {
 
 const Navbar = () => {
   const location = useLocation().pathname;
-
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null); 
-
   const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
 
   useEffect(() => {
-    fetchUser().then(response => {
-      setUser(response)
-    });
+    if (localStorage.getItem('role')) {
+      fetchUser().then(user => {
+        setUser(user);
+      });
+    }
   },[])
   
   function handleLogOut() {
-    // invalidate local storage
-    localStorage.clear()
+    localStorage.clear();
+  }
+
+  function isDashboradAvailable(): boolean {
+    const role = localStorage.getItem('role');
+    if (!role) return false;
+    return role !== 'USER';
   }
 
   return (
@@ -220,7 +225,8 @@ const Navbar = () => {
         >
           Review
         </Link>
-        {localStorage.getItem('token') && (<Link
+        {isDashboradAvailable() && (
+        <Link
           to="/dashboard"
           className="text-indigo-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
         >
