@@ -38,7 +38,9 @@ export interface Customer {
     email: string,
     address: Address
 }
-
+export interface CustomerForm extends Customer {
+  description: string;
+}
 export interface TicketData {
     fullCost: number,
     description: string,
