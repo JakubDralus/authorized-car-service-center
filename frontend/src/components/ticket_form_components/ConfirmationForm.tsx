@@ -17,7 +17,6 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
     const [ticketCreated, setTicketCreated] = useState(false);
     const navigate = useNavigate();
     
-    
     const calcFullCost = () => {
       return ticketDataContext?.ticketData.services.reduce((sum, service) => sum + service.cost, 0)
     }
@@ -39,7 +38,6 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
 
     const handleClose = () => {
       setTicketCreated(false);
-      // Przekierowanie na stronę główną
       navigate('/');
     };
 

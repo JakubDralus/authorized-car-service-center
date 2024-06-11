@@ -52,12 +52,6 @@ export interface TicketData {
     schedule: Schedule
 }
 
-
-// export interface ReservedHours {
-//     date: string;
-//     hour: string;
-// }
-
 //for contexts
 export interface ServiceContextType {
     selectedServices: Service[];
@@ -126,18 +120,10 @@ export const useCreateTicket = (token: string | null, data: TicketData | undefin
   return useMutation({
     mutationFn: ({ data, token }: CreateTicketMutationArgs) => CreateTicket(data, token),
     onSuccess: (data) => {
-        // setReviewFormInfo({
-        //     status: "Success",
-        //     message: data.message
-        // });
         console.log(data)
         console.log('dziala')
     },
     onError: (error: AxiosError<Error, any>) => {
-        // setReviewFormInfo({
-        //     status: "Error",
-        //     message: "Error creating review."
-        // });\
         console.log('nie dziala')
     },
   })
