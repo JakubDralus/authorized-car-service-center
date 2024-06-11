@@ -19,7 +19,7 @@ const Navbar = () => {
 
   return (
     <>
-    <header className="bg-white z-50">
+    <header className="bg-white z-40">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
 
         {/* logo */}
@@ -84,7 +84,7 @@ const Navbar = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg
+                    <MenuItems className="absolute right-0 z-40 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg
                      ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <MenuItem>
                         {({ active }: { active: boolean }) => (
@@ -142,7 +142,7 @@ const Navbar = () => {
       </div>
     </header>
 
-    <nav className="bg-white border-t border-gray-200 pt-2 sticky top-0 shadow-md z-50">
+    <nav className="bg-white border-t border-gray-200 pt-2 sticky top-0 shadow-md z-30">
       <div className="container mx-auto px-4 flex space-x-8 justify-center h-10 mt-2">
         <Link
           to="/"
@@ -179,14 +179,12 @@ const Navbar = () => {
         >
           Review
         </Link>
-
-        {/* {isLoggedIn && ()} */}
-        <Link
+        {localStorage.getItem('token') && (<Link
           to="/dashboard"
           className="text-indigo-600 hover:text-gray-800 hover:border-b-2 border-blue-700 px-2"
         >
           Dashboard
-        </Link>
+        </Link>)}
       </div>
     </nav>
     </>

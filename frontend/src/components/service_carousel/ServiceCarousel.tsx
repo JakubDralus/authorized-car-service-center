@@ -53,7 +53,7 @@ const ServiceCarousel: React.FC<ServiceCarouselProps> = ({ serviceData, currentS
           {filteredServiceData.map((service, index) => (
             <div 
             key={index}
-            className={`nav-item ${index === activeIndex ? 'nav-item--active' : ''} text-gray-500` }
+            className={`nav-item ${index === activeIndex ? 'nav-item--active' : ''} text-gray-500 font-medium` }
             onClick={() => handleItemClick(index)}
             >
               {service.name}

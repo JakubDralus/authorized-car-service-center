@@ -44,7 +44,7 @@ const Services = () => {
     <>
       <Navbar />
       <div className="flex flex-col justify-center">
-        <div className="body-container flex flex-col">
+        <div className="body-container flex flex-col pb-16">
           <div className="image-container">
             <img
               className="service-image"
