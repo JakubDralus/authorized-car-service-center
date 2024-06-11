@@ -93,7 +93,10 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
                         <span>Last name: {ticketDataContext?.ticketData.customer.lastName}</span>
                         <span>Phone number: {ticketDataContext?.ticketData.customer.telephoneNumber}</span>
                         <span>E-mail: {ticketDataContext?.ticketData.customer.email}</span>
-                        {ticketDataContext?.ticketData.customer.address && ( 
+                        {ticketDataContext?.ticketData.customer.address.country &&
+ticketDataContext?.ticketData.customer.address.city &&
+ticketDataContext?.ticketData.customer.address.street &&
+ticketDataContext?.ticketData.customer.address.postalCode? ( 
                           <div className="flex flex-col mt-6 gap-2">
                             <span className="font-bold">Address:</span>
                             <span>City: {ticketDataContext?.ticketData.customer.address.city}</span>
@@ -101,7 +104,7 @@ export const ConfirmationForm: React.FC<ConfirmationFormProps> = ({ prevStep }) 
                             <span>Postal code: {ticketDataContext?.ticketData.customer.address.postalCode}</span>
                             <span>Country:  {ticketDataContext?.ticketData.customer.address.country}</span>
                           </div>
-                        )}
+                        ): null}
                     </div>
                 </div>
             </div>
