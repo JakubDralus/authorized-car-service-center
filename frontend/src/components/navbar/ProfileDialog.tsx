@@ -62,7 +62,7 @@ const ProfileDialog: React.FC<ProfileDialogProps> = ({user, isOpen, onClose }) =
                             <span className="font-semibold">Telephone Number:</span> {user.telephoneNumber}
                           </div>
                           {user.address && (<div>
-                            <span className="font-semibold">Address:</span> 
+                            <span className="font-semibold">Address: </span> 
                             {user.address.street}, {user.address.city}, {user.address.postalCode}, {user.address.country}
                           </div>)}
                         </div>

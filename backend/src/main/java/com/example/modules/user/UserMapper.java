@@ -2,6 +2,7 @@ package com.example.modules.user;
 
 import com.example.modules.address.Address;
 import com.example.modules.address.AddressMapper;
+import com.example.modules.address.web.AddressDTO;
 import com.example.modules.user.web.UserDTO;
 import com.example.shared.IMapper;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,16 @@ public class UserMapper implements IMapper<User, UserDTO> {
                 .email(user.getEmail())
                 .createdAt(user.getCreatedAt())
                 .role(user.getRole())
-                .address(addressMapper.toDto(user.getAddress()))
+                .address(getAddress(user))
                 .build();
+    }
+    
+    private AddressDTO getAddress(User user) {
+        Address address = user.getAddress();
+        if (address != null)
+            return addressMapper.toDto(address);
+        else
+            return null;
     }
     
     @Override
@@ -34,7 +43,7 @@ public class UserMapper implements IMapper<User, UserDTO> {
         user.setTelephoneNumber(userDTO.getTelephoneNumber());
         user.setEmail(userDTO.getEmail());
         user.setRole(userDTO.getRole());
-        setAddress(userDTO, user);
+        if (userDTO.getAddress() != null) setAddress(userDTO, user);
     }
 
     private void setAddress(UserDTO userDTO, User user) {

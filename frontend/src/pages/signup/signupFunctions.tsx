@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axiosInstance, { AxiosResponse, AxiosError } from "axios";
 import { useMutation } from "react-query";
 import { UseFormSetError, UseFormReturn } from "react-hook-form";
 
@@ -41,7 +41,7 @@ export const useValidateEmail = (setEmailValid: React.Dispatch<React.SetStateAct
 
 //email validation
 export const validateEmail = async (email: string) => {
-    const res = await axios.post(`http://localhost:8081/api/v1/auth/check-email?email=${email}`);
+    const res = await axiosInstance.post(`/auth/check-email?email=${email}`);
     return res.data;
 }
 
@@ -79,6 +79,6 @@ export const useRegisterUser = (setRegInfo: React.Dispatch<React.SetStateAction<
 
 //registration
 export const registerUser = async (userData: RegisterData) => {
-    const res = await axios.post('http://localhost:8081/api/v1/auth/register/user', userData);
+    const res = await axiosInstance.post('/auth/register/user', userData);
     return res.data;
 }

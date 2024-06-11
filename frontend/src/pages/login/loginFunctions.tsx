@@ -1,4 +1,5 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import axiosInstance from "../../api/AxiosInstance";
 import { UseFormReturn } from "react-hook-form";
 import { useMutation } from "react-query";
 // import { useNavigate } from "react-router-dom";
@@ -42,6 +43,6 @@ export const useLoginUser = (setLoginInfo: React.Dispatch<React.SetStateAction<L
 }
 
 export const loginUser = async (loginData: LoginData) => {
-    const res = await axios.post('http://localhost:8081/api/v1/auth/authenticate', loginData);
+    const res = await axiosInstance.post('http://localhost:8081/api/v1/auth/authenticate', loginData);
     return res.data;
 }

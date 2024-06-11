@@ -1,6 +1,7 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { UseFormReturn } from "react-hook-form";
 import { UseQueryResult, useMutation, useQuery } from "react-query";
+import axiosInstance from "../../api/AxiosInstance";
 
 export interface ReviewData {
     title: string,
@@ -38,7 +39,7 @@ export const useCreateReview = (setReviewFormInfo: React.Dispatch<React.SetState
 }
 
 const createReview = async (reviewData: ReviewData, token: string | null) => {
-    const res = await axios.post('http://localhost:8081/api/v1/reviews/user-review', reviewData, {
+    const res = await axiosInstance.post('/reviews/user-review', reviewData, {
         headers: {
             'Authorization': token
         }
@@ -68,7 +69,7 @@ export const useUpdateReview = (setReviewFormInfo: React.Dispatch<React.SetState
 }
 
 const updateReview = async (reviewData: ReviewData, token: string | null) => {
-    const res = await axios.put('http://localhost:8081/api/v1/reviews/user-review', reviewData, {
+    const res = await axiosInstance.put('/reviews/user-review', reviewData, {
         headers: {
             'Authorization': token
         }
@@ -112,7 +113,7 @@ export const useGetReview = (token: string | null, updateForm : UseFormReturn<Re
 }
 
 const fetchUserReview = async (token: string | null) :Promise<ReviewApiResponse> => {
-    const response = await axios.get('http://localhost:8081/api/v1/reviews/user-review', {
+    const response = await axiosInstance.get('http://localhost:8081/api/v1/reviews/user-review', {
         headers: {
             'Authorization': token
         }
