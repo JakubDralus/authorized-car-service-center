@@ -50,6 +50,7 @@ public class SecurityConfiguration {
                             .requestMatchers(HttpMethod.GET, "api/v1/users/me").permitAll()
                             .requestMatchers("api/v1/users/**").hasAnyAuthority("ADMIN")
                             
+                            .requestMatchers(HttpMethod.GET,"api/v1/services/**").permitAll()
                             .requestMatchers(HttpMethod.GET, "api/v1/services/featured-photos").permitAll()
                             .requestMatchers(HttpMethod.GET, "api/v1/services/available-photos").permitAll()
                             .requestMatchers(HttpMethod.GET, "api/v1/services/ticket-services").permitAll()
