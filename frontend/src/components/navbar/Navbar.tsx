@@ -1,17 +1,30 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { BellIcon } from '@heroicons/react/24/outline'
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
+import ProfileDialog from './ProfileDialog';
+import { fetchUser } from './navbarFunctions';
+import { User } from '../../api/model';
+import UserTicketsDialog from './UserTicketsDialog';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Navbar = () => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const userName = 'John Doe'; // Example user name
   const location = useLocation().pathname;
 
+  const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null); 
+
+  const [isTicketDialogOpen, setIsTicketDialogOpen] = useState(false);
+
+  useEffect(() => {
+    fetchUser().then(response => {
+      setUser(response)
+    });
+  },[])
+  
   function handleLogOut() {
     // invalidate local storage
     localStorage.clear()
@@ -19,6 +32,19 @@ const Navbar = () => {
 
   return (
     <>
+    {user && (
+      <ProfileDialog
+        user={user}
+        isOpen={isProfileDialogOpen}
+        onClose={() => setIsProfileDialogOpen(false)}
+      />
+    )}
+
+    <UserTicketsDialog
+      isOpen={isTicketDialogOpen}
+      onClose={() => setIsTicketDialogOpen(false)}
+    />
+
     <header className="bg-white z-40">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
 
@@ -88,30 +114,45 @@ const Navbar = () => {
                      ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <MenuItem>
                         {({ active }: { active: boolean }) => (
-                          <a
-                            href="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 no-underline')}
+                          <div
+                            onClick={() => setIsProfileDialogOpen(true)}
+                            className={classNames(
+                              active ? 'bg-gray-100' : '',
+                              'cursor-pointer block px-4 py-2 text-sm text-gray-700 no-underline'
+                            )}
                           >
                             Your Profile
-                          </a>
+                          </div>
                         )}
                       </MenuItem>
                       <MenuItem>
                         {({ active }: { active: boolean }) => (
-                          <a
-                            href="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 no-underline')}
+                          <div
+                            onClick={() => setIsTicketDialogOpen(true)}
+                            className={classNames(active ? 'bg-gray-100' : '', 
+                            'cursor-pointer block px-4 py-2 text-sm text-gray-700 no-underline')}
+                          >
+                            My tickets
+                          </div>
+                        )}
+                      </MenuItem>
+                      <MenuItem>
+                        {({ active }: { active: boolean }) => (
+                          <div
+                            className={classNames(active ? 'bg-gray-100' : '', 
+                            'cursor-pointer block px-4 py-2 text-sm text-gray-700 no-underline')}
                           >
                             Settings
-                          </a>
+                          </div>
                         )}
                       </MenuItem>
                       <MenuItem>
                         {({ active }: { active: boolean }) => (
                           <Link
                             to="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 no-underline')}
                             onClick={handleLogOut}
+                            className={classNames(active ? 'bg-gray-100' : '', 
+                              'block px-4 py-2 text-sm text-gray-700 no-underline')}
                           >
                             Sign out
                           </Link>
