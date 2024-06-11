@@ -12,7 +12,7 @@ export interface Mechanic {
   user: User;
 }
 
-interface Address {
+export interface Address {
   addressId: number;
   street: string;
   city: string;
@@ -20,7 +20,7 @@ interface Address {
   country: string;
 }
 
-interface User {
+export interface User {
   userId: number;
   firstName: string;
   lastName: string;
@@ -75,6 +75,7 @@ export interface TicketRead {
   status: Status;
   createdAt: string; // Assuming LocalDateTime will be in ISO format
   lastUpdatedAt: string; // Assuming LocalDateTime will be in ISO format
+  carReturnDate: ReservedHours;
   customer: UserRead;
   car: CarRead;
   services: ServiceRead[];

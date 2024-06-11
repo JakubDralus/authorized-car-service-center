@@ -48,6 +48,14 @@ public class TicketService implements CrudService<TicketDTO> {
                 .toList();
     }
     
+    public List<TicketReadDTO> getAllByUser(String token) {
+        String email = jwtService.extractClaim(token.substring(7), Claims::getSubject);
+        return ticketRepository.findAllByCustomerEmail(email)
+                .stream()
+                .map(ticketMapper::toReadDto)
+                .toList();
+    }
+    
     public List<TicketReadDTO> getAllByStatus(Ticket.Status status) {
         return ticketRepository.findTicketsByStatus(status)
                 .stream()

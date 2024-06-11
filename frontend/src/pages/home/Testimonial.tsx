@@ -11,8 +11,7 @@ export default function Testimonial() {
           <blockquote className="text-center text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
           <p>
             “I brought my car in for a service appointment, and I couldn't be happier with the results! 
-            The team was professional, efficient, and incredibly knowledgeable. They took the time to explain 
-            everything to me and ensured my car was in perfect condition before handing it back. I highly 
+            The team was professional, efficient, and incredibly knowledgeable. I highly 
             recommend their services to anyone looking for quality and reliability. Excellent job!”
           </p>
           </blockquote>

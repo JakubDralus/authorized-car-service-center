@@ -5,7 +5,6 @@ import com.example.modules.car.CarMapper;
 import com.example.modules.car.CarRepository;
 import com.example.modules.reserved_hours.ReservedHours;
 import com.example.modules.reserved_hours.ReservedHoursMapper;
-import com.example.modules.reserved_hours.ReservedHoursRepository;
 import com.example.modules.service.ServiceMapper;
 import com.example.modules.service.ServiceModel;
 import com.example.modules.service.ServiceRepository;
@@ -58,6 +57,7 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
     public TicketReadDTO toReadDto(Ticket ticket) {
         return TicketReadDTO.builder()
                 .ticketId(ticket.getTicketId())
+                .description(ticket.getDescription())
                 .status(ticket.getStatus())
                 .fullCost(ticket.getFullCost())
                 .createdAt(ticket.getCreatedAt())
@@ -104,7 +104,6 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
         Car car = carRepository.findById(ticketDTO.getCar().getCarId()).orElseThrow();
         ticket.setCar(car);
     }
-
     
     private void setCustomer(TicketDTO ticketDTO, Ticket ticket) {
         User user = userRepository.findById(ticketDTO.getCustomer().getUserId()).orElseThrow();

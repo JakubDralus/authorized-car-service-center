@@ -20,6 +20,15 @@ public class TicketController {
         return ticketService.getAll();
     }
     
+    @GetMapping("/my-tickets")
+    public ApiResponse<List<TicketReadDTO>> getLoggedUser(@RequestHeader("Authorization") String bearerToken) {
+        List<TicketReadDTO> userTickets = ticketService.getAllByUser(bearerToken);
+        return ApiResponse.<List<TicketReadDTO>>builder()
+                .message("All user tickets fetched")
+                .data(userTickets)
+                .build();
+    }
+    
     @GetMapping("/status/{status}")
     public ApiResponse<List<TicketReadDTO>> getAllByStatus(@PathVariable String status) {
         List<TicketReadDTO> allRequested = ticketService.getAllByStatus(Ticket.Status.valueOf(status.toUpperCase()));

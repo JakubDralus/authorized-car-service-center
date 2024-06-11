@@ -28,6 +28,7 @@ export const useLoginUser = (setLoginInfo: React.Dispatch<React.SetStateAction<L
             localStorage.setItem("firstName", data.data.firstName);
             localStorage.setItem("lastName", data.data.lastName);
             localStorage.setItem("role", data.data.role);
+            localStorage.setItem("id", data.data.id);
             loginForm.reset()
         },
         onError: (error: AxiosError<Error, any>) => {

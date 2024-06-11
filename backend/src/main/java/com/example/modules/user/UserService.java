@@ -1,9 +1,11 @@
 package com.example.modules.user;
 
+import com.example.modules.auth.JwtService;
 import com.example.modules.user.web.UserDTO;
 
 import com.example.modules.user.web.UserReadDTO;
 import com.example.shared.CrudService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,18 @@ public class UserService implements CrudService<UserDTO> {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final ModelMapper modelMapper;
+    private final JwtService jwtService;
     
     public List<UserDTO> getAll() {
         return userRepository.findAll().stream().map(userMapper::toDto).toList();
+    }
+    
+    public UserDTO getLoggedUser(String token) {
+        String email = jwtService.extractClaim(token.substring(7), Claims::getSubject);
+        
+        return userRepository.findByEmail(email).map(userMapper::toDto).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found")
+        );
     }
     
     @Override
