@@ -1,5 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { createContext } from "react";
+import { ApiResponse } from "../../api/model";
+import { useMutation } from "react-query";
 
 // interfaces
 export interface Service {
@@ -38,7 +40,9 @@ export interface Customer {
     email: string,
     address: Address
 }
-
+export interface CustomerForm extends Customer {
+  description: string;
+}
 export interface TicketData {
     fullCost: number,
     description: string,
@@ -47,12 +51,6 @@ export interface TicketData {
     customer: Customer
     schedule: Schedule
 }
-
-
-// export interface ReservedHours {
-//     date: string;
-//     hour: string;
-// }
 
 //for contexts
 export interface ServiceContextType {
@@ -112,6 +110,40 @@ export const fetchReservedHours = async (date : string) => {
     }
 }
 
+
+interface CreateTicketMutationArgs {
+    data: TicketData | undefined;
+    token: string | null;
+}
+
+export const useCreateTicket = (token: string | null, data: TicketData | undefined) => {
+  return useMutation({
+    mutationFn: ({ data, token }: CreateTicketMutationArgs) => CreateTicket(data, token),
+    onSuccess: (data) => {
+        console.log(data)
+        console.log('dziala')
+    },
+    onError: (error: AxiosError<Error, any>) => {
+        console.log('nie dziala')
+    },
+  })
+}
+
+export const CreateTicket = async (data: TicketData | undefined , token: string | null) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    };
+
+    try {
+      const response: ApiResponse<any> = await axios.post(`http://localhost:8081/api/v1/tickets/create-user-ticket`,data, config);
+      console.log(response);
+    } 
+    catch (error) {
+      console.error(`Error posting ticket:`, error);
+    }
+}
 export const fetchService = async (id : string | number | null) => {
     if (!id) return;
 
@@ -126,3 +158,4 @@ export const fetchService = async (id : string | number | null) => {
         throw error;
     }
 }
+
