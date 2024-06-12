@@ -60,6 +60,7 @@ public class SecurityConfiguration {
                             .requestMatchers("api/v1/assignments/**").hasAnyAuthority("ADMIN", "MANAGER")
                             .requestMatchers("api/v1/mechanics/**").hasAnyAuthority("ADMIN", "MANAGER")
                             .requestMatchers("api/v1/tickets/my-tickets").permitAll()
+                            .requestMatchers("api/v1/tickets/create-user-ticket").permitAll()
                             .requestMatchers("api/v1/tickets/**").hasAnyAuthority("ADMIN", "MANAGER")
 //                            .requestMatchers("api/v1/tickets/**").hasAnyAuthority("ADMIN", "MANAGER")
                     )

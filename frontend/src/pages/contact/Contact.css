@@ -39,7 +39,9 @@
   padding-bottom: 20px;
   padding-left: 20px;
   flex-wrap: wrap;
-  background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgb(132, 24, 255) 100%);
+  /* background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgb(132, 24, 255) 100%); */
+  background: linear-gradient(to bottom right, rgb(182, 212, 255), 40% , rgb(72, 145, 171));     
+
   box-sizing: border-box;
   justify-content: center;
 }

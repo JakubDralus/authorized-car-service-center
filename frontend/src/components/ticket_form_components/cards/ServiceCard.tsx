@@ -52,7 +52,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
     }
 
     return (
-        <div className={`ticket-form-card h-64 bg-red-200 ${isSelected ? 'selected' : ''}`}>
+        <div className={`ticket-form-card h-64 bg-white border-solid border-2 rounded-md ${isSelected ? 'selected' : ''}`}>
             <div className="p-3 h-full flex flex-col justify-between items-start">
                 <div className="text-lg">{service.name}</div>
                 <div className="text-sm">{service.description}</div>

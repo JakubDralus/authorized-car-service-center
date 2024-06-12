@@ -241,7 +241,10 @@ const Contact = () => {
                                         </li>
                                       </ul>
                                       <div className="form-submit">
-                                        <input type="submit" className="submit-button"></input>
+                                        <button type="submit" className="no-underline text-white rounded-xl transition-all 
+                                          py-3 px-6 bg-slate-500 text-lg hover:bg-slate-600 mb-10">
+                                            Send
+                                        </button>
                                       </div>
                                     </div>
                                     <div className="form-footer"></div>

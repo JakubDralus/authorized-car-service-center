@@ -180,7 +180,10 @@ const Review = () => {
                                                         <textarea className={`w-full h-100 p-2 ${createReviewForm.formState.errors.description ? "invalid-input" : "valid-input"}`} {...createReviewForm.register("description", { required: "Field required" })}></textarea>
                                                     </label>
                                                 </div>
-                                                <button className="auth-button mb-10" type="submit">Create Review</button>
+                                                <button className="no-underline text-white rounded-xl transition-all 
+                                                    py-3 px-5 bg-slate-500 text-lg hover:bg-slate-600 mb-10" type="submit">
+                                                        Create Review
+                                                </button>
                                             </form>
                                         )}
                                     </>

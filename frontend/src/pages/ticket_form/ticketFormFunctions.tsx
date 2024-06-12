@@ -145,6 +145,7 @@ export const CreateTicket = async (data: TicketData | undefined , token: string 
       console.error(`Error posting ticket:`, error);
     }
 }
+
 export const fetchService = async (id : string | number | null) => {
     if (!id) return;
 
