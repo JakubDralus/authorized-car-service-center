@@ -79,7 +79,6 @@ export interface ScheduleDataContextType {
     setSelectedDate: React.Dispatch<React.SetStateAction<Schedule>>;
 }
 
-
 //contexts
 export const SelectedServiceContext = createContext<ServiceContextType | undefined>(undefined);
 export const CarDataContext = createContext<CarContextType | undefined>(undefined);
@@ -92,10 +91,11 @@ export const fetchTicketServices = async () => {
     try {
         const response = await axiosInstance.get('http://localhost:8081/api/v1/services/ticket-services');
         return response.data;
-      } catch (error) {
+    } 
+    catch (error) {
         console.error('Error fetching data:', error);
         throw error;
-      }
+    }
 }
 
 export const fetchReservedHours = async (date : string) => {
@@ -111,7 +111,6 @@ export const fetchReservedHours = async (date : string) => {
     }
 }
 
-
 interface CreateTicketMutationArgs {
     data: TicketData | undefined;
     token: string | null;
@@ -122,10 +121,10 @@ export const useCreateTicket = (token: string | null, data: TicketData | undefin
     mutationFn: ({ data, token }: CreateTicketMutationArgs) => CreateTicket(data, token),
     onSuccess: (data) => {
         console.log(data)
-        console.log('dziala')
+        console.log('ticket created')
     },
     onError: (error: AxiosError<Error, any>) => {
-        console.log('nie dziala')
+        console.log(error)
     },
   })
 }
@@ -146,7 +145,7 @@ export const CreateTicket = async (data: TicketData | undefined , token: string 
     }
 }
 
-export const fetchService = async (id : string | number | null) => {
+export const fetchService = async (id : string | number) => {
     if (!id) return;
 
     try {
@@ -160,4 +159,3 @@ export const fetchService = async (id : string | number | null) => {
         throw error;
     }
 }
-

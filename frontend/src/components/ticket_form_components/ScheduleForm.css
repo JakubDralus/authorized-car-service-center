@@ -1,43 +1,45 @@
 .flex-container {
     display: flex;
-    align-items: center; /* Elementy będą wyśrodkowane pionowo */
+    align-items: center;
 }
+
 .react-calendar {
-    font-family: Arial, sans-serif; /* Zmień czcionkę na czytelną */
-    background-color: #fff; /* Biały kolor tła */
-    border-radius: 5px; /* Zaokrąglenie rogów */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Cień */
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
 }
+
 .calendar-container{
     max-width: 600px;
 }
 
 .react-calendar .react-calendar__tile {
-    width: 80px; /* Szerokość kafelków */
-    height: 60px; /* Wysokość kafelków */
-    font-size: 24px; /* Rozmiar czcionki w kafelkach */
-    border-radius: 5px; /* Zaokrąglenie rogów kafelków */
+    width: 80px;
+    height: 60px;
+    font-size: 24px;
+    border-radius: 5px;
 }
 
 .react-calendar .react-calendar__tile:hover {
-    background-color: #f0f0f0; /* Zmiana koloru tła po najechaniu myszką */
+    background-color: #f0f0f0;
 }
 
 .react-calendar .react-calendar__tile--active {
-    background-color: #007bff; /* Kolor tła aktywnego kafelka */
-    color: #fff; /* Kolor tekstu aktywnego kafelka */
+    background-color: #007bff;
+    color: #fff;
 }
 
 .react-calendar .react-calendar__tile--now {
-    background-color: #f0f0f0; /* Kolor dzisiejszego kafelka */
+    background-color: #f0f0f0; 
 }
 
 .react-calendar .react-calendar__tile--rangeStart,
 .react-calendar .react-calendar__tile--rangeEnd,
 .react-calendar .react-calendar__tile--rangeNights {
-    background-color: #007bff; /* Kolor kafelków wybieranego zakresu dat */
-    color: #fff; /* Kolor tekstu na kafelkach wybieranego zakresu dat */
+    background-color: #007bff; 
+    color: #fff;
 }
 
 .flex-container {
@@ -45,8 +47,6 @@
     flex-direction: column;
     align-items: center;
 }
-
-
 
 .time-list {
     margin-top: 20px;
@@ -89,11 +89,11 @@
 }
 
 .time-button.reserved {
-    background-color: rgb(143, 142, 142); /* Kolor tła dla zarezerwowanych godzin */
-    cursor: not-allowed; /* Kursor wskazujący na niedostępność */
+    background-color: rgb(143, 142, 142);
+    cursor: not-allowed;
 }
 
 .time-button.selected {
     background-color: green;
-    color: white; /* Aby tekst był czytelny */
+    color: white;
 }

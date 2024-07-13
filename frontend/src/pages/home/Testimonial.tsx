@@ -22,7 +22,7 @@ export default function Testimonial() {
               alt=""
             />
             <div className="mt-4 flex items-center justify-center space-x-3 text-base">
-              <div className="font-semibold text-gray-900">Rafał Ciołek</div>
+              <div className="font-semibold text-gray-900">Jelly Belly</div>
               <svg viewBox="0 0 2 2" width={3} height={3} aria-hidden="true" className="fill-gray-900">
                 <circle cx={1} cy={1} r={1} />
               </svg>

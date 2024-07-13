@@ -1,17 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { fetchReservedHours, Schedule } from '../../pages/ticket_form/ticketFormFunctions';
 import { useQuery } from 'react-query';
 import Calendar from 'react-calendar';
+import { ScheduleDataContext, TicketDataContext } from "../../pages/ticket_form/ticketFormFunctions";
 import 'react-calendar/dist/Calendar.css';
 import './ScheduleForm.css';
-import { DataInteractive } from '@headlessui/react';
-import { ScheduleDataContext, TicketDataContext } from "../../pages/ticket_form/ticketFormFunctions";
-import { useContext } from "react";
+
 interface ScheduleFormProps {
     nextStep: () => void,
     prevStep: () => void,
 }
-
 
 export const ScheduleForm: React.FC<ScheduleFormProps> = ({ prevStep, nextStep }) => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -104,12 +102,10 @@ const addDateDate = (date: Date | null) => {
               date: selectedDate,
               hour: selectedTime
           }
-      }));
-
+        }));
       nextStep();
       }
     }
-
 
     return (
         <div className="flex items-center justify-center flex-col">

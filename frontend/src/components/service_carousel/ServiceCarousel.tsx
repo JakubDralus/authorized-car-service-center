@@ -8,9 +8,7 @@ const ServiceCarousel: React.FC<ServiceCarouselProps> = ({ serviceData, currentS
 
   const [activeIndex, setActiveIndex] = useState(0);
   const intervalTime = 6500
-  // console.log(currentServiceId)
 
-  // const filteredServiceData = serviceData.filter(service => service.serviceId !== currentServiceId);
   const filteredServiceData = useMemo(
     () => {
       // console.log(serviceData);
@@ -42,19 +40,20 @@ const ServiceCarousel: React.FC<ServiceCarouselProps> = ({ serviceData, currentS
           to={`/service/${filteredServiceData[activeIndex].serviceId}`} 
           state={{service_id: filteredServiceData[activeIndex].serviceId}} 
           className="caroseul-section"
-          >
+        >
           <img className="caroseul-image" src={`data:image/jpeg;base64,${filteredServiceData[activeIndex].smallPhoto}`} alt="service"/>
           <div className="image-overlay"></div>
           <div className="image-section__text">
             <p className="text-white text-4xl font-bold">{filteredServiceData[activeIndex].name}</p>
           </div>
         </Link>
+
         <div className="flex justify-center gap-8 flex-wrap">
           {filteredServiceData.map((service, index) => (
             <div 
-            key={index}
-            className={`nav-item ${index === activeIndex ? 'nav-item--active' : ''} text-gray-500 font-medium` }
-            onClick={() => handleItemClick(index)}
+              key={index}
+              className={`nav-item ${index === activeIndex ? 'nav-item--active' : ''} text-gray-500 font-medium`}
+              onClick={() => handleItemClick(index)}
             >
               {service.name}
             </div>
@@ -70,4 +69,4 @@ const ServiceCarousel: React.FC<ServiceCarouselProps> = ({ serviceData, currentS
   )
 }
 
-export default ServiceCarousel
+export default ServiceCarousel;

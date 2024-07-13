@@ -32,7 +32,6 @@ export const TicketForm = () => {
         }
     }, [searchParams])
 
-    // const [serviceDate, setServiceDate] = useState(null);
     const [carData, setCarData] = useState<Car>({
         model: '',
         manufacturedYear: -1,
@@ -41,6 +40,7 @@ export const TicketForm = () => {
         color: '',
         mileage: -1,
     });
+
     const [customerData, setCustomerData] = useState<Customer>({
         firstName: '',
         lastName: '',
@@ -89,10 +89,6 @@ export const TicketForm = () => {
             hour: ''
         }
     });
-    const [scheduleData, setScheduleData] = useState<Schedule>({
-        date: null,
-        hour: ''
-    });
 
     //service fetching
     const { data, isLoading } = useQuery(
@@ -127,43 +123,45 @@ export const TicketForm = () => {
                             <h1 className="text-4xl text-center py-7">Creating ticket</h1>
                             <div className="flex justify-between items-center w-full gap-1">
                                 <div className="form-info-box">
-                                    <h3 className="text-lg">Selected services</h3>
-                                    {selectedServices ? (
+                                    <h3 className="text-lg font-bold">Selected services</h3>
+                                    {selectedServices && (
                                         <div className="w-full">
                                             {selectedServices.map((service, index) => {
-                                                return (
-                                                    <div key={index}>{service.name}</div>
-                                                )
+                                                return (<div key={index}>{service.name}</div>)
                                             })}
                                         </div>
-                                    ) : (
-                                        <div></div>
                                     )}
                                 </div>
                                 <div className="form-info-box">
-                                    <h3 className="text-lg">Scheduled date</h3>
-                                    <p>{selectedDate && selectedDate.date ? (selectedDate.date.toDateString() != new Date(0).toDateString() ? (selectedDate.date.toDateString()): null) : null}</p>
-                                    <p>{selectedDate.hour}</p>
+                                    <h3 className="text-lg font-bold">Scheduled date</h3>
+                                    <div className="w-full">
+                                        <p>
+                                            {selectedDate && selectedDate.date ? (selectedDate.date.toDateString() != new Date(0).toDateString() 
+                                            ? (selectedDate.date.toDateString()): null) 
+                                            : null}
+                                        </p>
+                                        <p>{selectedDate.hour}</p>
                                     </div>
+                                </div>
                                 <div className="form-info-box">
-                                    <h3 className="text-lg">Car</h3>
-                                    {/* todo */}                              
+                                    <h3 className="text-lg font-bold">Car</h3>
+                                    { ticketData.car.model != ''  && (
                                         <div className="w-full">
                                             <p>Model: {ticketData.car.model}</p>
                                             <p>Color: {ticketData.car.color}</p>
                                             <p>License Plate: {ticketData.car.licensePlate}</p>
                                             <p>VIN: {ticketData.car.vin}</p>
                                         </div>
+                                    )}
                                 </div>
                                 <div className="form-info-box">
-                                    <h3 className="text-lg">Personal details</h3>
-                                    {/* todo */}
-                                        <div className="w-full">
-                                            <p> {ticketData.customer.firstName}</p>
-                                            <p> {ticketData.customer.lastName}</p>
-                                            <p> {ticketData.customer.email}</p>
-                                            <p> {ticketData.customer.telephoneNumber}</p>
-                                        </div>
+                                    <h3 className="text-lg font-bold">Personal details</h3>
+                                    <div className="w-full">
+                                        <p> {ticketData.customer.firstName}</p>
+                                        <p> {ticketData.customer.lastName}</p>
+                                        <p> {ticketData.customer.email}</p>
+                                        <p> {ticketData.customer.telephoneNumber}</p>
+                                    </div>
                                 </div>
                             </div>
                             <div className="w-full flex items-center justify-around bg-gray-100 text-xl p-4">

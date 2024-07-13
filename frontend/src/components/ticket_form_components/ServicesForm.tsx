@@ -25,7 +25,6 @@ export const ServicesForm: React.FC<ServicesFormProps> = ({ nextStep, services }
                 ...prevTicketData,
                 services: serviceContext?.selectedServices ?? []
             }));
-
             nextStep();
         }
     }
