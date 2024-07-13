@@ -13,12 +13,10 @@ public interface ServiceRepository extends JpaRepository<ServiceModel, Long> {
             "SET s.photoBigKey = :photoBigKey, s.photoSmallKey = :photoSmallKey " +
             "WHERE s.serviceId = :serviceId")
     void updatePhotosById(Long serviceId,String photoBigKey, String photoSmallKey);
-
-
+    
     @Query("SELECT s FROM ServiceModel s WHERE s.isAvailable = true AND s.isFeatured = true")
     List<ServiceModel> findAllAvailable();
 
     @Query("SELECT s FROM ServiceModel s WHERE s.isFeatured = true")
     List<ServiceModel> findAllFeatured();
-
 }

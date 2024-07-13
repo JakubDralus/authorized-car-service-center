@@ -17,7 +17,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class TicketReadDTO {
     private Long ticketId;
     private String description;

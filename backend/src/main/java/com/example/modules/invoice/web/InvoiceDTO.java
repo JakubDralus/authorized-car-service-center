@@ -13,7 +13,6 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class InvoiceDTO {
     private Long invoiceId;
-
     private AccountantDTO accountant;
     private TicketDTO ticket;
 }

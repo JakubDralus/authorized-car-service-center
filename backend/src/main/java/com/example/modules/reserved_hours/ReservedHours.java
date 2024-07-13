@@ -1,9 +1,7 @@
 package com.example.modules.reserved_hours;
 
-
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Data

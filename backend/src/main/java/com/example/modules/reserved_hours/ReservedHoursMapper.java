@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ReservedHoursMapper implements IMapper<ReservedHours, ReservedHoursDTO> {
-
-
+    
     @Override
     public ReservedHoursDTO toDto(ReservedHours reservedHours) {
         return ReservedHoursDTO.builder()
@@ -24,5 +23,4 @@ public class ReservedHoursMapper implements IMapper<ReservedHours, ReservedHours
         reservedHours.setDate(reservedHoursDTO.getDate());
         reservedHours.setHour(reservedHoursDTO.getHour());
     }
-
 }

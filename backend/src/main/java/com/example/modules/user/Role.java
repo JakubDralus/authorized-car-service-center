@@ -8,7 +8,6 @@ package com.example.modules.user;
  *     <li>ACCOUNTANT - makes invoices</li>
  *     <li>MANAGER - gives tasks for employees</li>
  *     <li>ADMIN - he a sigma</li>
- *     <li>GUEST?</li>
  * </ol>
  */
 public enum Role {
@@ -17,5 +16,4 @@ public enum Role {
     ACCOUNTANT,
     MANAGER,
     ADMIN,
-//    GUEST
 }

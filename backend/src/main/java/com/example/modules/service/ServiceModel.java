@@ -26,7 +26,4 @@ public class ServiceModel {
     private Boolean isFeatured;
     private String photoBigKey;
     private String photoSmallKey;
-    
-//    @ManyToMany
-//    private List<Ticket> tickets;
 }

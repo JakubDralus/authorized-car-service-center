@@ -48,5 +48,4 @@ public class MechanicService implements CrudService<MechanicDTO> {
         }
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find the provided mechanic.");
     }
-
 }

@@ -91,8 +91,6 @@ public class AuthService {
 //        return RegisterResponseDTO.builder().message("success").build();
 //    }
     
-    
-    
     /**
      * checks if account with this email is already created
      * @param providedEmail email from registration form

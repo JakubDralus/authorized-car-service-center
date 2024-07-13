@@ -60,7 +60,7 @@ public class UserService implements CrudService<UserDTO> {
     @Override
     public UserDTO update(UserDTO userDTO) {
         User user = userRepository.getReferenceById(userDTO.getUserId());
-        userMapper.toEntity(userDTO, user); // apply changes
+        userMapper.toEntity(userDTO, user);
         user = userRepository.save(user);
         return userMapper.toDto(user);
     }

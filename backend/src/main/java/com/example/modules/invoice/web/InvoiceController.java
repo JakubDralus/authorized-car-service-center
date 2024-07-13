@@ -51,5 +51,4 @@ public class InvoiceController {
                 .message("Invoice deleted")
                 .build();
     }
-
 }

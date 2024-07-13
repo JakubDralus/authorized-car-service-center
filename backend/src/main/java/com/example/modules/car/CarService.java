@@ -22,7 +22,9 @@ public class CarService implements CrudService<CarDTO> {
     }
 
     @Override
-    public CarDTO get(Long id){ return carMapper.toDto(carRepository.findById(id).orElseThrow());}
+    public CarDTO get(Long id) {
+        return carMapper.toDto(carRepository.findById(id).orElseThrow());
+    }
 
     @Override
     public CarDTO create(CarDTO carDto) {

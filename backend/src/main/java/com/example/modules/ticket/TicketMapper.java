@@ -62,8 +62,6 @@ public class TicketMapper implements IMapper<Ticket, TicketDTO> {
                 .fullCost(ticket.getFullCost())
                 .createdAt(ticket.getCreatedAt())
                 .lastUpdatedAt(ticket.getLastUpdatedAt())
-//                .customerId(ticket.getCustomer().getUserId())
-//                .carId(ticket.getCar().getCarId())
                 .user(modelMapper.map(ticket.getCustomer(), UserReadDTO.class))
                 .car(carMapper.toReadDto(ticket.getCar()))
                 .carReturnDate(reservedHoursMapper.toDto(ticket.getCarReturnDate()))

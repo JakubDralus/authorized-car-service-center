@@ -111,5 +111,4 @@ public class ServiceController {
     public List<ServiceTicketDTO> getAllAvailableToTicket() {
         return serviceService.getAllAvailableToTicket();
     }
-
 }

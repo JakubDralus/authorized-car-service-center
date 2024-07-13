@@ -1,6 +1,5 @@
 package com.example.modules.car.web;
 
-import com.example.modules.user.web.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

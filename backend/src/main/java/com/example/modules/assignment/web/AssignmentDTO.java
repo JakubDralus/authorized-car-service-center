@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class AssignmentDTO {
     private Long assignmentId;
     private String description;
