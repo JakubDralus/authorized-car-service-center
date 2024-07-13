@@ -18,28 +18,29 @@ This was a university project done in a team of 4 students: <br>
 ## Website
 
 ### Home page
-![img.png](img.png)
+![img](https://github.com/user-attachments/assets/666fbcef-780c-40ca-9f50-dafa09c7dec4)
+
 
 ### Services
-![img_2.png](img_2.png)
+![img_2](https://github.com/user-attachments/assets/0d6c6eaa-82ad-4e3d-bc74-f25c1db175af)
 
 ### Ticket Form
-![img_3.png](img_3.png)
+![img_3](https://github.com/user-attachments/assets/41e56619-2cbf-46c6-acad-e09e8e6c6559)
 
-![img_4.png](img_4.png)
+![img_4](https://github.com/user-attachments/assets/004c7e8e-e342-455b-814b-c25fa46b2abf)
 
 ### Dashboard
-![img_5.png](img_5.png)
+![img_5](https://github.com/user-attachments/assets/a9c5d92a-ce07-4572-a38b-28690e25dd10)
 
-![img_6.png](img_6.png)
+![img_6](https://github.com/user-attachments/assets/f911250b-f528-4cb1-8532-f31982e6aa01)
 
-![img_8.png](img_8.png)
+![img_8](https://github.com/user-attachments/assets/b1c96834-8f8e-4d02-91cc-8b5fa14fb454)
 
 ### Login page
-![img_9.png](img_9.png)
+![img_9](https://github.com/user-attachments/assets/d408862b-8ebf-4a28-9f8d-bd2ab4a9d4e5)
 
 ### Contact and footer
-![img_1.png](img_1.png)
+![img_1](https://github.com/user-attachments/assets/909dfa1a-e712-4480-8e5b-430bf1cdc0fa)
 
 ## Main Product Features
 
