@@ -2,6 +2,7 @@ package com.example.modules.user;
 
 import com.example.modules.address.Address;
 import com.example.modules.address.AddressMapper;
+import com.example.modules.address.AddressRepository;
 import com.example.modules.address.web.AddressDTO;
 import com.example.modules.user.web.UserDTO;
 import com.example.shared.IMapper;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class UserMapper implements IMapper<User, UserDTO> {
     
     private final AddressMapper addressMapper;
+    private final AddressRepository addressRepository;
     
     @Override
     public UserDTO toDto(User user) {
@@ -43,12 +45,20 @@ public class UserMapper implements IMapper<User, UserDTO> {
         user.setTelephoneNumber(userDTO.getTelephoneNumber());
         user.setEmail(userDTO.getEmail());
         user.setRole(userDTO.getRole());
-        if (userDTO.getAddress() != null) setAddress(userDTO, user);
+        setAddress(userDTO, user);
     }
 
     private void setAddress(UserDTO userDTO, User user) {
-        Address address = user.getAddress();
-        addressMapper.toEntity(userDTO.getAddress(), address);
+        Address address = user.getAddress() != null
+                ? user.getAddress()
+                : new Address();
+        
+        AddressDTO addressDTO = userDTO.getAddress() != null
+                ? userDTO.getAddress()
+                : new AddressDTO();
+        
+        addressMapper.toEntity(addressDTO, address);
+        addressRepository.save(address);
         user.setAddress(address);
     }
 }
